@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp_;
 import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
+import de.handler.mobile.android.shopprototype.utils.RoundNetworkImageView;
 
 
 /**
@@ -60,7 +61,7 @@ public class ImageAdapter extends BaseAdapter {
             // Create custom typeface
             Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Thin.ttf");
 
-            CustomNetworkImageView imageViewProduct = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image);
+            RoundNetworkImageView imageViewProduct = (RoundNetworkImageView) view.findViewById(R.id.image_adapter_image);
             TextView textViewDescription = (TextView) view.findViewById(R.id.image_adapter_text);
             textViewDescription.setTypeface(myTypeface);
 
