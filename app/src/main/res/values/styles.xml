@@ -56,4 +56,22 @@
         <item name="android:stretchMode">columnWidth</item>
     </style>
 
+    <style name="style_features_image">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="style_featured_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/transparent_grey_20</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/transparent_white_80</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
 </resources>

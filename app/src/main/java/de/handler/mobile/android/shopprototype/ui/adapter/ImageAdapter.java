@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp_;
 import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
-import de.handler.mobile.android.shopprototype.utils.LocalImageLoader;
 
 
 /**

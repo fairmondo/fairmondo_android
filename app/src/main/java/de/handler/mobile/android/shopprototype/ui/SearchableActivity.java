@@ -2,13 +2,9 @@ package de.handler.mobile.android.shopprototype.ui;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Window;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -73,7 +69,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
             results.add(i, product);
         }
 
-        onSearchResult(results);
+        onProductsSearchResponse(results);
     }
 
 
@@ -85,7 +81,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     }
 
     @Override
-    public void onSearchResult(ArrayList<Product> products) {
+    public void onProductsSearchResponse(ArrayList<Product> products) {
         SearchResultFragment searchResultFragment = new SearchResultFragment_();
 
         Bundle bundle = new Bundle();

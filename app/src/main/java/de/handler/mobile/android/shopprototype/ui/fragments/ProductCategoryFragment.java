@@ -1,10 +1,11 @@
 package de.handler.mobile.android.shopprototype.ui.fragments;
 
 import android.content.Intent;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -17,49 +18,39 @@ import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity_;
+import de.handler.mobile.android.shopprototype.ui.adapter.ImageAdapter;
 import de.handler.mobile.android.shopprototype.ui.adapter.Product;
 
 /**
  * Displays all categories for products
  */
-@EFragment(R.layout.fragment_category)
-public class CategoryFragment extends ListFragment implements OnSearchResultListener {
+@EFragment(R.layout.fragment_product_category)
+public class ProductCategoryFragment extends Fragment implements OnSearchResultListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     public static final String CATEGORY_ARRAY_LIST_EXTRA = "category_string_array_list_extra";
 
     private int mPosition;
-    private ArrayList<String> mCategories;
+    private ArrayList<Product> mProducts;
 
+    @ViewById(R.id.fragment_product_category_progress_bar)
+    ProgressBar progressBar;
 
-    @ViewById(android.R.id.list)
-    ListView listView;
+    @ViewById(R.id.fragment_product_category_gridview)
+    GridView gridView;
 
 
     @AfterViews
     public void init() {
-        mCategories = getArguments().getStringArrayList(CATEGORY_ARRAY_LIST_EXTRA);
-        // TODO create a list adapter and assign categories list to constructor
-        // TODO: set adapter with setAdapter();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(), android.R.layout.simple_list_item_1,
-                mCategories);
-        setListAdapter(adapter);
-    }
-
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        mPosition = position;
-        this.getProducts(mCategories);
+        String category = getArguments().getString(CATEGORY_ARRAY_LIST_EXTRA);
+        this.getProducts(category);
         this.getFakeProducts();
     }
 
 
     @Background
-    public void getProducts(ArrayList<String> categories) {
+    public void getProducts(String category) {
         // TODO: send search to server
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void getFakeProducts() {
@@ -83,15 +74,35 @@ public class CategoryFragment extends ListFragment implements OnSearchResultList
             results.add(i, product);
         }
 
-        onSearchResult(results);
+        onProductsSearchResponse(results);
     }
 
     @Override
-    public void onSearchResult(ArrayList<Product> products) {
+    public void onProductsSearchResponse(ArrayList<Product> products) {
+        mProducts = products;
+        progressBar.setVisibility(View.GONE);
+
+        gridView.setAdapter(new ImageAdapter(getActivity(), products, R.layout.adapter_image_grid_item));
+        gridView.setOnItemClickListener(this);
+        gridView.setOnItemLongClickListener(this);
+    }
+
+    private void startProductGallery() {
         Intent intent = new Intent(getActivity(), ProductGalleryActivity_.class);
         intent.putExtra(ProductGalleryActivity.PAGER_POSITION_EXTRA, mPosition);
-        intent.putParcelableArrayListExtra(ProductGalleryActivity.PRODUCT_ARRAY_LIST_EXTRA, products);
+        intent.putParcelableArrayListExtra(ProductGalleryActivity.PRODUCT_ARRAY_LIST_EXTRA, mProducts);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mPosition = position;
+        this.startProductGallery();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        return false;
     }
 }

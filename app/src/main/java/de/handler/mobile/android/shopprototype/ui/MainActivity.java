@@ -2,26 +2,16 @@ package de.handler.mobile.android.shopprototype.ui;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-
-import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
-import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment;
-import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment_;
-import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
-import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
-
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -33,14 +23,29 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
+import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.shopprototype.interfaces.OnFeaturedProductsListener;
+import de.handler.mobile.android.shopprototype.ui.adapter.Product;
+import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
+import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment_;
+import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
+
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AbstractActivity implements OnCategoriesListener {
+public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnFeaturedProductsListener, AdapterView.OnItemSelectedListener {
 
     @App
     ShopApp app;
 
     @SystemService
     SearchManager searchManager;
+
+    @ViewById(R.id.main_category_spinner)
+    Spinner spinner;
 
     @ViewById(R.id.main_progress_bar)
     ProgressBar progressBar;
@@ -56,7 +61,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void init() {
         this.setupActionBar();
         this.initTitleFragment();
-        this.getCategories();
+        //this.getFeaturedProducts();
+        this.getFakeFeaturedProducts();
+        //this.getCategories();
         this.getFakeCategories();
     }
 
@@ -64,7 +71,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     private void initTitleFragment() {
         TitleFragment titleFragment = new TitleFragment_();
         Bundle bundle = new Bundle();
-        bundle.putString(TitleFragment.IMAGE_URL_STRING_EXTRA, "http://mitmachen.fairmondo.de/wp-content/uploads/2014/09/Profilfoto_Google.jpg");
+        bundle.putInt(TitleFragment.IMAGE_DRAWABLE_EXTRA, R.drawable.fairmondo);
         bundle.putString(TitleFragment.IMAGE_DESCRIPTION_STRING_EXTRA, getString(R.string.fairmondo_slogan));
         titleFragment.setArguments(bundle);
 
@@ -75,9 +82,60 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     @Background
+    public void getFeaturedProducts() {
+        progressBar.setVisibility(View.VISIBLE);
+        // TODO get featured products from server
+    }
+
+    /**
+     * Callback for featured products server response
+     */
+    @Override
+    public void onFeaturesProductsResponse(ArrayList<Product> products) {
+        progressBar.setVisibility(View.GONE);
+        this.initFeatureFragment(products);
+    }
+
+    private void getFakeFeaturedProducts() {
+        ArrayList<Product> products = new ArrayList<Product>();
+        for (int i = 0; i < 3; i++) {
+            Product product = new Product(
+                    (long) i,
+                    "http://www.koellen.de/fileadmin/_migrated/pics/buecher.jpg",
+                    null,
+                    "Bücher",
+                    null, null, null);
+            products.add(i, product);
+        }
+
+        this.onFeaturesProductsResponse(products);
+    }
+
+    private void initFeatureFragment(ArrayList<Product> products) {
+        FeatureFragment featureFragment = new FeatureFragment_();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(FeatureFragment.FEATURED_PRODUCTS_EXTRA, products);
+        featureFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_products_container, featureFragment)
+                .commit();
+    }
+
+
+    @Background
     public void getCategories() {
         progressBar.setVisibility(View.VISIBLE);
         // TODO get categories from server
+    }
+
+    /**
+     * Callback for categories server response
+     */
+    @Override
+    public void onCategoriesResponse(ArrayList<String> categories) {
+        progressBar.setVisibility(View.GONE);
+        this.initSpinner(categories);
     }
 
     private void getFakeCategories() {
@@ -107,19 +165,46 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
+    private void initSpinner(ArrayList<String> categories) {
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+                this, android.R.layout.simple_spinner_item,
+                new ArrayList<CharSequence>());
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Add basic item and categories list to the adapter
+        adapter.add(getString(R.string.spinner_basic_item));
+        adapter.addAll(categories);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setSelected(false);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    /**
+     * Respond to spinner actions
+     */
     @Override
-    public void onCategoriesResponse(ArrayList<String> categories) {
-        progressBar.setVisibility(View.GONE);
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // Get the selected category
+        if (position > 0) {
+            String category = (String) parent.getItemAtPosition(position);
 
-        CategoryFragment categoryFragment = new CategoryFragment_();
+            ProductCategoryFragment categoryFragment = new ProductCategoryFragment_();
+            Bundle bundle = new Bundle();
+            bundle.putString(ProductCategoryFragment.CATEGORY_ARRAY_LIST_EXTRA, category);
+            categoryFragment.setArguments(bundle);
 
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList(CategoryFragment.CATEGORY_ARRAY_LIST_EXTRA, categories);
-        categoryFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_products_container, categoryFragment)
+                    .commit();
+        }
+        // TODO: get products matching category from database
+    }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_categories_container, categoryFragment)
-                .commit();
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 
@@ -137,7 +222,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(
                 new ComponentName(this, SearchableActivity_.class)));
-        searchView.setIconifiedByDefault(true); // Do not iconify the widget; expand it by default
+        searchView.setIconifiedByDefault(true);
 
         return true;
     }

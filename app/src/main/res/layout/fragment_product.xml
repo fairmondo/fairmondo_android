@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:src="@drawable/watermark"/>
+        android:src="@drawable/watermark"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,8 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:id="@+id/fragment_product_image_view"
-            android:layout_weight="3"/>
+            android:layout_weight="3"
+            android:background="@color/transparent_white_20" />
 
         <View
             android:layout_width="match_parent"

@@ -2,12 +2,20 @@
 <resources>
 
     <string name="app_name">Fairmondo</string>
+
+    <!-- action bar -->
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_search">Suche</string>
+
+    <!-- generated strings -->
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="action_search">search</string>
+
     <string name="search_hint">Suche auf Fairmondo</string>
     <string name="product_hint">Fairmondo Produkt</string>
     <string name="fairmondo_slogan">Gutes einfach entdecken</string>
+
+    <!-- spinner basic string -->
+    <string name="spinner_basic_item">"Wähle eine Kategorie"</string>
 
 </resources>

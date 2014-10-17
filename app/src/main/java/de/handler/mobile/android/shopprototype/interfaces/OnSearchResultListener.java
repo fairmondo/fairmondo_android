@@ -9,5 +9,5 @@ import de.handler.mobile.android.shopprototype.ui.adapter.Product;
  * informs the implementing ui element that a search result has arrived
  */
 public interface OnSearchResultListener {
-    public void onSearchResult(ArrayList<Product> products);
+    public void onProductsSearchResponse(ArrayList<Product> products);
 }

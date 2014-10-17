@@ -5,7 +5,7 @@
     android:background="@android:color/white"
     tools:context="android.mobile.handler.de.shopprototype.ui.fragments.TitleFragment">
 
-    <de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"
