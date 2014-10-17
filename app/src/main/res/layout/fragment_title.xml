@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="android.mobile.handler.de.shopprototype.ui.fragments.TitleFragment">
+
+    <de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:paddingBottom="20dp"
+        android:id="@+id/fragment_feature_image"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:layout_alignBottom="@id/fragment_feature_image"
+        android:background="@color/transparent_grey_80"
+        android:id="@+id/fragment_feature_image_description"/>
+
+</RelativeLayout>

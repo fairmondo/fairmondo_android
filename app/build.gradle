@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'android-test'
+
+configurations {
+    apt
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+        resourcePackageName "de.handler.mobile.android.shopprototype"
+    }
+}
+
+androidTest {
+    // configure the set of classes for JUnit tests
+    include '**/*Test.class'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "de.handler.mobile.android.shopprototype"
+        minSdkVersion 11
+        targetSdkVersion 19
+        versionCode 1
+        versionName "0.1"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:gridlayout-v7:19.+'
+    compile 'com.android.support:support-v4:19.+'
+
+    // Android annotations for easy readable code
+    apt 'org.androidannotations:androidannotations:3.+'
+    compile 'org.androidannotations:androidannotations-api:3.+'
+
+    // For Converters in RestServices
+    compile 'org.springframework.android:spring-android-core:1.+'
+    compile 'org.springframework.android:spring-android-rest-template:1.+'
+    compile 'com.google.code.gson:gson:2.2.4'
+
+    // ORM Mapper for android
+    compile 'de.greenrobot:greendao-generator:1.+'
+    compile 'de.greenrobot:greendao:1.+'
+
+    // Image Loader
+    compile 'com.mcxiaoke.volley:library:1.0.+'
+
+    //Test Dependencies
+    // not compiled with compileAndroidTest as the package of test is the same as app.
+    // This again is to special use case of android annotations:
+    // test have to be in the same package as the generated sources only have package visibility
+    compile 'com.squareup.dagger:dagger:1.+'
+    compile 'junit:junit:4.+'
+    compile 'com.squareup:fest-android:1.0.7'
+    compile 'org.robolectric:robolectric:2.+'
+}

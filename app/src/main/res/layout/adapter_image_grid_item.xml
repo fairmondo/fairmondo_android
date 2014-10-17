@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/image_adapter_image"
+        android:contentDescription="@string/product_hint" />
+
+    <TextView
+        style="@style/textview_banner_style_grid_view"
+        android:id="@+id/image_adapter_text" />
+
+</RelativeLayout>
