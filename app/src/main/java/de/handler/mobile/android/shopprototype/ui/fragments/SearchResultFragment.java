@@ -13,10 +13,10 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity_;
 import de.handler.mobile.android.shopprototype.ui.adapter.ImageAdapter;
-import de.handler.mobile.android.shopprototype.ui.adapter.Product;
 
 /**
  * Displays search results in a grid view

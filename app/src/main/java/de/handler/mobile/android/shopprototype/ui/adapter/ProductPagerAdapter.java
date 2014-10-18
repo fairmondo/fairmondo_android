@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
+import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductFragment_;
 

@@ -1,10 +1,6 @@
 package de.handler.mobile.android.shopprototype.ui.fragments;
 
 
-import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.ui.adapter.Product;
-import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
@@ -12,6 +8,11 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.models.Product;
+import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
 
 /**
  * Displays one product

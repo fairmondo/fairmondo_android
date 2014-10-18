@@ -27,7 +27,7 @@ import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnFeaturedProductsListener;
-import de.handler.mobile.android.shopprototype.ui.adapter.Product;
+import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment;

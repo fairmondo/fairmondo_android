@@ -2,7 +2,7 @@ package de.handler.mobile.android.shopprototype.interfaces;
 
 import java.util.ArrayList;
 
-import de.handler.mobile.android.shopprototype.ui.adapter.Product;
+import de.handler.mobile.android.shopprototype.models.Product;
 
 /**
  * Listener for featured Products

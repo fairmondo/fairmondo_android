@@ -1,10 +1,7 @@
 package de.handler.mobile.android.shopprototype.ui;
 
 
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Window;
 
 import org.androidannotations.annotations.AfterInject;
@@ -15,7 +12,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.ui.adapter.Product;
+import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.adapter.ProductPagerAdapter;
 
 /**

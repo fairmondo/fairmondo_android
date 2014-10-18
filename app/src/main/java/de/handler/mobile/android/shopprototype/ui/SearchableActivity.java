@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.shopprototype.ui.adapter.Product;
+import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment_;
 

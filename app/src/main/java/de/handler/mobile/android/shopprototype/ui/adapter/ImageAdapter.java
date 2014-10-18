@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp_;
-import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
+import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.utils.RoundNetworkImageView;
 
 
@@ -48,40 +48,37 @@ public class ImageAdapter extends BaseAdapter {
 
     public View getView(int position, View view, ViewGroup parent) {
 
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // Recycled view pattern
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(mLayoutFile, parent, false);
+        }
 
-        //if (view == null) {
-            // Get layout
-            // Changed this from recycled view pattern to actual pattern
-            // as it showed the tags in unpredictable order, sometimes twice, sometimes false
-            view = inflater.inflate(mLayoutFile, null);
+        // Create custom typeface
+        Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Thin.ttf");
 
-        //} else {
-            // Create custom typeface
-            Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Thin.ttf");
+        RoundNetworkImageView imageViewProduct = (RoundNetworkImageView) view.findViewById(R.id.image_adapter_image);
+        TextView textViewDescription = (TextView) view.findViewById(R.id.image_adapter_text);
+        textViewDescription.setTypeface(myTypeface);
 
-            RoundNetworkImageView imageViewProduct = (RoundNetworkImageView) view.findViewById(R.id.image_adapter_image);
-            TextView textViewDescription = (TextView) view.findViewById(R.id.image_adapter_text);
-            textViewDescription.setTypeface(myTypeface);
+        if (mProducts.size() < 1) {
+            textViewDescription.setVisibility(View.GONE);
+            imageViewProduct.setVisibility(View.GONE);
+        }
 
-            if (mProducts.size() < 1) {
-                textViewDescription.setVisibility(View.GONE);
-                imageViewProduct.setVisibility(View.GONE);
-            }
+        String description = mProducts.get(position).getDescription();
+        String url = mProducts.get(position).getImageUrl();
 
-            String description = mProducts.get(position).getDescription();
-            String url = mProducts.get(position).getImageUrl();
+        ShopApp_ app = (ShopApp_) mContext.getApplicationContext();
 
-            ShopApp_ app = (ShopApp_) mContext.getApplicationContext();
+        ImageLoader imageLoader = app.getImageLoader();
+        imageViewProduct.setImageUrl(url, imageLoader);
+        imageViewProduct.setErrorImageResId(R.drawable.watermark);
 
-            ImageLoader imageLoader = app.getImageLoader();
-            imageViewProduct.setImageUrl(url, imageLoader);
-            imageViewProduct.setErrorImageResId(R.drawable.watermark);
+        // Set text
+        textViewDescription.setText(description);
 
-            // Set text
-            textViewDescription.setText(description);
-        //}
         return view;
     }
 }

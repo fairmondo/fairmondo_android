@@ -1,4 +1,4 @@
-package de.handler.mobile.android.shopprototype.ui.adapter;
+package de.handler.mobile.android.shopprototype.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
