@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:weightSum="9">
 
-        <de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView
+        <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"

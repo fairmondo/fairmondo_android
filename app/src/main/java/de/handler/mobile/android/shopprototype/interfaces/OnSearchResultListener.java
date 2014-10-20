@@ -3,7 +3,8 @@ package de.handler.mobile.android.shopprototype.interfaces;
 
 import java.util.ArrayList;
 
-import de.handler.mobile.android.shopprototype.models.Product;
+import de.handler.mobile.android.shopprototype.database.Product;
+
 
 /**
  * informs the implementing ui element that a search result has arrived

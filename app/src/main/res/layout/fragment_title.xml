@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:paddingBottom="20dp"
-        android:id="@+id/fragment_feature_image"/>
+        android:id="@+id/fragment_title_image"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -18,8 +18,8 @@
         android:gravity="center"
         android:textSize="12sp"
         android:textColor="@android:color/white"
-        android:layout_alignBottom="@id/fragment_feature_image"
+        android:layout_alignBottom="@id/fragment_title_image"
         android:background="@color/transparent_grey_80"
-        android:id="@+id/fragment_feature_image_description"/>
+        android:id="@+id/fragment_title_image_description"/>
 
 </RelativeLayout>

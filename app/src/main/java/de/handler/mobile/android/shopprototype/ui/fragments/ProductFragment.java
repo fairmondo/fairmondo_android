@@ -11,8 +11,8 @@ import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.models.Product;
-import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
+import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
 
 /**
  * Displays one product
@@ -43,10 +43,10 @@ public class ProductFragment extends Fragment {
         Product product = getArguments().getParcelable(PRODUCT_EXTRA);
 
         if (product != null) {
-            productImageView.setImageUrl(product.getImageUrl(), app.getImageLoader());
+            productImageView.setImageUrl("https://assets0.fairmondo.de/system/images/001/492/069/medium/dh201_plan_hw10_red_%281%29.jpg?1401609159", app.getImageLoader());
             titleTextView.setText(product.getTitle());
-            descriptionTextView.setText(product.getDescription());
-            priceTextView.setText(String.valueOf(product.getPrice()) + " €");
+            descriptionTextView.setText(product.getContent());
+            priceTextView.setText(String.valueOf(product.getBasic_price_cents() / 100) + " €");
         }
     }
 }

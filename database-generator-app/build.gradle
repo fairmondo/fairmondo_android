@@ -1,0 +1,22 @@
+apply plugin: 'application'
+apply plugin: 'java'
+
+mainClassName = "pl.surecase.eu.MyDaoGenerator"
+// edit output direction
+outputDir = "../app/src/main/java/"
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // ORM Mapper for android
+    compile 'de.greenrobot:greendao-generator:1.+'
+    compile 'de.greenrobot:greendao:1.+'
+}
+
+task createDocs {
+    def docs = file(outputDir)
+    docs.mkdirs()
+}
+
+run {
+    args outputDir
+}

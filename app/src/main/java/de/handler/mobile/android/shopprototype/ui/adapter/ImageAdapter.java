@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp_;
-import de.handler.mobile.android.shopprototype.models.Product;
-import de.handler.mobile.android.shopprototype.utils.RoundNetworkImageView;
+import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.util.RoundNetworkImageView;
 
 
 /**
@@ -67,8 +67,8 @@ public class ImageAdapter extends BaseAdapter {
             imageViewProduct.setVisibility(View.GONE);
         }
 
-        String description = mProducts.get(position).getDescription();
-        String url = mProducts.get(position).getImageUrl();
+        String description = mProducts.get(position).getContent();
+        String url = "https://assets3.fairmondo.de/system/images/000/031/643/medium/08S.jpg?1387458269";
 
         ShopApp_ app = (ShopApp_) mContext.getApplicationContext();
 

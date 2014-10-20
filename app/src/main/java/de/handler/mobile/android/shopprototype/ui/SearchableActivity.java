@@ -14,8 +14,8 @@ import org.androidannotations.annotations.EActivity;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.database.Product;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment_;
 
@@ -57,15 +57,10 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
         ArrayList<Product> results = new ArrayList<Product>();
         for (int i = 0; i < 50; i++) {
-            Product product = new Product(
-                    (long) i,
-                    "http://i.ebayimg.com/t/Kinder-Kassettenrekorder-Bontempi-Recorder-/00/s/MTIwMFgxNjAw/z/nDQAAOSwY45UQAet/$_35.JPG",
-                    "CD- & Kassettenrekorder",
-                    "Kinder-Kassettenrekorder Bontempi Recorder",
-                    "gut funktionierender Kasettenrecorder, Lieferung ohne Netzkabel und ohne Batterien, benötigt 4 Baby ( C ) Zellen",
-                    Double.valueOf("12.50"),
-                    tags);
-
+            Product product = new Product((long) i);
+            product.setTitle("TestTitle");
+            product.setContent("TestContent");
+            product.setBasic_price_cents(200);
             results.add(i, product);
         }
 

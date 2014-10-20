@@ -15,8 +15,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.database.Product;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity_;
 import de.handler.mobile.android.shopprototype.ui.adapter.ImageAdapter;
@@ -62,15 +62,10 @@ public class ProductCategoryFragment extends Fragment implements OnSearchResultL
 
         ArrayList<Product> results = new ArrayList<Product>();
         for (int i = 0; i < 50; i++) {
-            Product product = new Product(
-                    (long) i,
-                    "http://i.ebayimg.com/t/Anatomische-Pinzetten-14-16-18-20-25-30-35-oder-40cm-gerade-oder-gebogen-/00/s/ODAwWDgwMA==/$%28KGrHqFHJEIE88cr2Pb+BPZ4dZ4WQ!~~60_35.JPG",
-                    "CD- & Kassettenrekorder",
-                    "Kinder-Kassettenrekorder Bontempi Recorder",
-                    "gut funktionierender Kasettenrecorder, Lieferung ohne Netzkabel und ohne Batterien, benötigt 4 Baby ( C ) Zellen",
-                    Double.valueOf("12.50"),
-                    tags);
-
+            Product product = new Product((long) i);
+            product.setTitle("TestTitle");
+            product.setContent("TestContent");
+            product.setBasic_price_cents(1201);
             results.add(i, product);
         }
 

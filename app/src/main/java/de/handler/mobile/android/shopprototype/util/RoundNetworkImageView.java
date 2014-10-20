@@ -1,4 +1,4 @@
-package de.handler.mobile.android.shopprototype.utils;
+package de.handler.mobile.android.shopprototype.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

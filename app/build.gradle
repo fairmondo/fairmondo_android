@@ -59,14 +59,14 @@ dependencies {
     apt 'org.androidannotations:androidannotations:3.+'
     compile 'org.androidannotations:androidannotations-api:3.+'
 
+    // ORM Mapper for android
+    compile 'de.greenrobot:greendao-generator:1.+'
+    compile 'de.greenrobot:greendao:1.+'
+
     // For Converters in RestServices
     compile 'org.springframework.android:spring-android-core:1.+'
     compile 'org.springframework.android:spring-android-rest-template:1.+'
     compile 'com.google.code.gson:gson:2.2.4'
-
-    // ORM Mapper for android
-    compile 'de.greenrobot:greendao-generator:1.+'
-    compile 'de.greenrobot:greendao:1.+'
 
     // Image Loader
     compile 'com.mcxiaoke.volley:library:1.0.+'

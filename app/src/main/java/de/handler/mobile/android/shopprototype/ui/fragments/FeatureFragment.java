@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.models.Product;
-import de.handler.mobile.android.shopprototype.utils.CustomNetworkImageView;
+import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
 
 /**
  * Displays featured products when nothing is selected in category spinner
@@ -43,7 +43,7 @@ public class FeatureFragment extends Fragment {
 
         for (int i = 0; i < featuredProductsImageViews.size(); i++) {
             featuredProductsImageViews.get(i).setImageUrl(
-                    products.get(i).getImageUrl(),
+                    "https://assets0.fairmondo.de/system/images/001/492/069/medium/dh201_plan_hw10_red_%281%29.jpg?1401609159",
                     app.getImageLoader());
             featuredProductsTitles.get(i).setText(products.get(i).getTitle());
         }

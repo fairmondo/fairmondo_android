@@ -4,8 +4,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
-import org.androidannotations.annotations.EActivity;
-
 import de.handler.mobile.android.shopprototype.R;
 
 /**
@@ -22,7 +20,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
         final ActionBar actionBar = getSupportActionBar();
 
         // make action bar transparent
-        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.transparent_white_80));
+        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.fairmondo_blue_light));
         actionBar.setStackedBackgroundDrawable(new ColorDrawable(R.color.transparent_white_80));
         actionBar.setSplitBackgroundDrawable(new ColorDrawable(R.color.transparent_white_80));
 

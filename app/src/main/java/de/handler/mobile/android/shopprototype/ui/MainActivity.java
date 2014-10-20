@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.database.Product;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnFeaturedProductsListener;
-import de.handler.mobile.android.shopprototype.models.Product;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment;
@@ -99,12 +99,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     private void getFakeFeaturedProducts() {
         ArrayList<Product> products = new ArrayList<Product>();
         for (int i = 0; i < 3; i++) {
-            Product product = new Product(
-                    (long) i,
-                    "http://www.koellen.de/fileadmin/_migrated/pics/buecher.jpg",
-                    null,
-                    "Bücher",
-                    null, null, null);
+            Product product = new Product((long) i);
+            product.setTitle("TestTitle");
+            product.setContent("TestContent");
+            product.setBasic_price_cents(1200);
             products.add(i, product);
         }
 

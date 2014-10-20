@@ -17,5 +17,6 @@
 
     <!-- spinner basic string -->
     <string name="spinner_basic_item">"Wähle eine Kategorie"</string>
+    <string name="fragment_filter_search_in_title">In Artikelbeschreibung suchen</string>
 
 </resources>
