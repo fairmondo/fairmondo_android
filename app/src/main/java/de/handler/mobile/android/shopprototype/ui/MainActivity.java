@@ -102,7 +102,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             Product product = new Product((long) i);
             product.setTitle("TestTitle");
             product.setContent("TestContent");
-            product.setBasic_price_cents(1200);
+            product.setBasic_price_cents(1201);
             products.add(i, product);
         }
 

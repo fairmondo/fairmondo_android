@@ -729,6 +729,7 @@ public class Product implements android.os.Parcelable {
         small_and_precious_eu_small_enterprise = dest.readByte() != 0;
         upcycling_reason = dest.readString();
         slug = dest.readString();
+
         transport_pickup = dest.readByte() != 0;
         transport_type1 = dest.readByte() != 0;
         transport_type2 = dest.readByte() != 0;
@@ -741,6 +742,7 @@ public class Product implements android.os.Parcelable {
         payment_paypal = dest.readByte() != 0;
         payment_cash_on_delivery = dest.readByte() != 0;
         payment_invoice = dest.readByte() != 0;
+
         payment_cash_on_delivery_price_cents = dest.readInt();
         basic_price_cents = dest.readInt();
         basic_price_amount = dest.readString();

@@ -2,6 +2,8 @@ package de.handler.mobile.android.shopprototype.ui;
 
 
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 
 import org.androidannotations.annotations.AfterInject;
@@ -54,5 +56,33 @@ public class ProductGalleryActivity extends AbstractActivity {
         // Set up the ViewPager with the sections adapter.
         viewPager.setAdapter(productPagerAdapter);
         viewPager.setCurrentItem(position, true);
+    }
+
+
+    /**
+     * ActionBar settings
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.product, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                this.openSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSettings() {
+
     }
 }

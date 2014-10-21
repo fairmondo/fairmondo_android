@@ -46,6 +46,7 @@ public class ProductFragment extends Fragment {
             productImageView.setImageUrl("https://assets0.fairmondo.de/system/images/001/492/069/medium/dh201_plan_hw10_red_%281%29.jpg?1401609159", app.getImageLoader());
             titleTextView.setText(product.getTitle());
             descriptionTextView.setText(product.getContent());
+            //TODO: also display cents
             priceTextView.setText(String.valueOf(product.getBasic_price_cents() / 100) + " €");
         }
     }
