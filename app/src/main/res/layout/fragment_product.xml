@@ -18,28 +18,29 @@
         android:orientation="vertical"
         android:weightSum="9">
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:layout_weight="3">-->
 
-        <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:id="@+id/fragment_product_image_view"
-            android:background="@color/transparent_white_20" />
+            <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:id="@+id/fragment_product_image_view"
+                android:background="@color/transparent_white_20" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fragment_product_cart_add_image_button"
-            android:layout_alignEnd="@id/fragment_product_image_view"
-            android:layout_alignRight="@id/fragment_product_image_view"
-            android:layout_alignBottom="@id/fragment_product_image_view"
-            android:background="@drawable/round_button"/>
+            <!--<ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_product_cart_add_image_button"
+                android:layout_alignEnd="@id/fragment_product_image_view"
+                android:layout_alignRight="@id/fragment_product_image_view"
+                android:layout_alignBaseline="@id/fragment_product_image_view"
+                android:background="@drawable/round_button"/>
 
-        </RelativeLayout>
+        </RelativeLayout>-->
 
         <View
             android:layout_width="match_parent"
@@ -72,8 +73,6 @@
             android:paddingRight="50dp"
             android:id="@+id/fragment_product_price"
             android:layout_weight="2"/>
-
-
     </LinearLayout>
 
 </RelativeLayout>

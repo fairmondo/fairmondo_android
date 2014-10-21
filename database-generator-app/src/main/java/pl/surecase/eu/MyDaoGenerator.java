@@ -11,27 +11,7 @@ public class MyDaoGenerator {
     public static void main(String[] args) throws Exception {
         Schema schema = new Schema(1000, "de.handler.mobile.android.shopprototype.database");
         addProductCategoryRelation(schema);
-        addImage(schema);
         new DaoGenerator().generateAll(schema, args[0]);
-    }
-
-    private static void addImage(Schema schema) {
-        Entity image = schema.addEntity("Image");
-        image.addIdProperty();
-        image.addStringProperty("image_file_name");
-        image.addStringProperty("image_content_type");
-        image.addIntProperty("image_file_size");
-        image.addDateProperty("image_updated_at");
-        image.addDateProperty("created_at");
-        image.addDateProperty("updated_at");
-        image.addIntProperty("imageable_id");
-        image.addStringProperty("type");
-        image.addBooleanProperty("is_title");
-        image.addStringProperty("external_url");
-        image.addBooleanProperty("image_processing");
-
-        image.setHasKeepSections(true);
-        image.implementsInterface("android.os.Parcelable");
     }
 
     private static void addProductCategoryRelation(Schema schema) {

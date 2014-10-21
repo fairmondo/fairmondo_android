@@ -1,4 +1,4 @@
-package de.handler.mobile.android.shopprototype.rest.model;
+package de.handler.mobile.android.shopprototype.rest.json.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

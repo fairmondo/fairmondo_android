@@ -19,4 +19,9 @@
     <string name="spinner_basic_item">"Wähle eine Kategorie"</string>
     <string name="fragment_filter_search_in_title">In Artikelbeschreibung suchen</string>
 
+    <!-- rest error handler strings -->
+    <string name="server_error">Fehler bei der Server-Kommunikation</string>
+    <string name="server_temporarily_not_available">Der Server ist gerade nicht erreichbar…</string>
+    <string name="server_method_not_available">Die Methode ist auf dem Server nicht vorhanden</string>
+
 </resources>

@@ -8,14 +8,15 @@ import android.view.Window;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.database.Product;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.shopprototype.rest.RestController;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment_;
 
@@ -25,6 +26,11 @@ import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment
 @EActivity(R.layout.activity_search)
 public class SearchableActivity extends AbstractActivity implements OnSearchResultListener {
 
+
+    public static final String QUERY_STRING_EXTRA = "query_string_extra";
+
+    @Bean
+    RestController restController;
 
     @AfterInject
     public void overlayActionBar() {
@@ -36,51 +42,33 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     public void init() {
         this.setupActionBar();
 
+        String query;
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-
-            this.sendFakeProduct(query);
-
-            //this.searchProducts(query);
+            query = intent.getStringExtra(SearchManager.QUERY);
+        } else {
+            query = getIntent().getStringExtra(QUERY_STRING_EXTRA);
         }
+
+        this.searchProducts(query);
     }
 
 
-    private void sendFakeProduct(String query) {
-        ArrayList<String> tags = new ArrayList<String>(4);
-        tags.add("Musik");
-        tags.add("Spielzeug");
-        tags.add("Kind");
-        tags.add("Kassette");
-
-        ArrayList<Product> results = new ArrayList<Product>();
-        for (int i = 0; i < 50; i++) {
-            Product product = new Product((long) i);
-            product.setTitle("TestTitle");
-            product.setContent("TestContent");
-            product.setBasic_price_cents(200);
-            results.add(i, product);
-        }
-
-        onProductsSearchResponse(results);
-    }
-
-
-    @Background
-    public void searchProducts(String query) {
+    private void searchProducts(String query) {
         Log.d(getLocalClassName().toUpperCase(),
                 "Search string: \"" + query + "\" successfully transferred to SearchableActivity");
-        // TODO: search here
+
+        restController.setListener(this);
+        restController.getProduct(query);
     }
 
     @Override
-    public void onProductsSearchResponse(ArrayList<Product> products) {
+    public void onProductsSearchResponse(ArrayList<Article> articles) {
         SearchResultFragment searchResultFragment = new SearchResultFragment_();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(SearchResultFragment.SEARCH_RESULT_EXTRA, products);
+        bundle.putParcelableArrayList(SearchResultFragment.SEARCH_RESULT_EXTRA, articles);
         searchResultFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()

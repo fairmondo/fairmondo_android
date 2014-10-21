@@ -11,7 +11,7 @@ import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
 
 /**
@@ -40,14 +40,14 @@ public class ProductFragment extends Fragment {
 
     @AfterViews
     public void init() {
-        Product product = getArguments().getParcelable(PRODUCT_EXTRA);
+        Article product = getArguments().getParcelable(PRODUCT_EXTRA);
 
         if (product != null) {
-            productImageView.setImageUrl("https://assets0.fairmondo.de/system/images/001/492/069/medium/dh201_plan_hw10_red_%281%29.jpg?1401609159", app.getImageLoader());
+            productImageView.setImageUrl(product.getTitle_image_url(), app.getImageLoader());
             titleTextView.setText(product.getTitle());
-            descriptionTextView.setText(product.getContent());
+            descriptionTextView.setText(product.getSlug());
             //TODO: also display cents
-            priceTextView.setText(String.valueOf(product.getBasic_price_cents() / 100) + " €");
+            priceTextView.setText(String.valueOf(product.getPrice_cents() / 100) + " €");
         }
     }
 }

@@ -3,8 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/fragment_search_filters"/>
+
     <GridView
         android:id="@+id/fragment_search_gridview"
+        android:layout_below="@id/fragment_search_filters"
         style="@style/style_grid_item" />
 
 </RelativeLayout>

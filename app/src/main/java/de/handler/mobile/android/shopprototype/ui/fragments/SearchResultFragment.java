@@ -13,7 +13,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity;
 import de.handler.mobile.android.shopprototype.ui.ProductGalleryActivity_;
 import de.handler.mobile.android.shopprototype.ui.adapter.ImageAdapter;
@@ -25,7 +25,7 @@ import de.handler.mobile.android.shopprototype.ui.adapter.ImageAdapter;
 public class SearchResultFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     public static final String SEARCH_RESULT_EXTRA = "search_result_array_list_extra";
-    private ArrayList<Product> mProducts;
+    private ArrayList<Article> mProducts;
 
     @ViewById(R.id.fragment_search_gridview)
     GridView gridView;
@@ -40,6 +40,10 @@ public class SearchResultFragment extends Fragment implements AdapterView.OnItem
         gridView.setAdapter(new ImageAdapter(getActivity(), mProducts, R.layout.adapter_image_grid_item));
         gridView.setOnItemClickListener(this);
         gridView.setOnItemLongClickListener(this);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_search_filters, new FilterFragment_())
+                .commit();
     }
 
     /**

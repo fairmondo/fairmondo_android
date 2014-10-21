@@ -17,6 +17,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
@@ -25,9 +26,10 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.database.Product;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
-import de.handler.mobile.android.shopprototype.interfaces.OnFeaturedProductsListener;
+import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.shopprototype.rest.RestController;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment;
@@ -36,13 +38,16 @@ import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnFeaturedProductsListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnSearchResultListener, AdapterView.OnItemSelectedListener {
 
     @App
     ShopApp app;
 
     @SystemService
     SearchManager searchManager;
+
+    @Bean
+    RestController restController;
 
     @ViewById(R.id.main_category_spinner)
     Spinner spinner;
@@ -61,8 +66,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void init() {
         this.setupActionBar();
         this.initTitleFragment();
-        //this.getFeaturedProducts();
-        this.getFakeFeaturedProducts();
+        this.getFeaturedProducts();
+        //this.getFakeFeaturedProducts();
         //this.getCategories();
         this.getFakeCategories();
     }
@@ -81,35 +86,24 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
-    @Background
-    public void getFeaturedProducts() {
+    private void getFeaturedProducts() {
         progressBar.setVisibility(View.VISIBLE);
         // TODO get featured products from server
+        restController.setListener(this);
+        restController.getProduct("t-shirt");
     }
 
     /**
      * Callback for featured products server response
      */
     @Override
-    public void onFeaturesProductsResponse(ArrayList<Product> products) {
+    public void onProductsSearchResponse(ArrayList<Article> products) {
         progressBar.setVisibility(View.GONE);
         this.initFeatureFragment(products);
     }
 
-    private void getFakeFeaturedProducts() {
-        ArrayList<Product> products = new ArrayList<Product>();
-        for (int i = 0; i < 3; i++) {
-            Product product = new Product((long) i);
-            product.setTitle("TestTitle");
-            product.setContent("TestContent");
-            product.setBasic_price_cents(1201);
-            products.add(i, product);
-        }
 
-        this.onFeaturesProductsResponse(products);
-    }
-
-    private void initFeatureFragment(ArrayList<Product> products) {
+    private void initFeatureFragment(ArrayList<Article> products) {
         FeatureFragment featureFragment = new FeatureFragment_();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(FeatureFragment.FEATURED_PRODUCTS_EXTRA, products);
@@ -119,6 +113,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 .replace(R.id.main_products_container, featureFragment)
                 .commit();
     }
+
+
+
 
 
     @Background
@@ -191,6 +188,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             ProductCategoryFragment categoryFragment = new ProductCategoryFragment_();
             Bundle bundle = new Bundle();
             bundle.putString(ProductCategoryFragment.CATEGORY_ARRAY_LIST_EXTRA, category);
+            bundle.putInt(ProductCategoryFragment.POSITION_INT_EXTRA, position);
             categoryFragment.setArguments(bundle);
 
             getSupportFragmentManager().beginTransaction()

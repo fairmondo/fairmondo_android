@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp_;
-import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.util.RoundNetworkImageView;
 
 
@@ -24,11 +24,11 @@ import de.handler.mobile.android.shopprototype.util.RoundNetworkImageView;
 public class ImageAdapter extends BaseAdapter {
 
     private final int mLayoutFile;
-    private final ArrayList<Product> mProducts;
+    private final ArrayList<Article> mProducts;
     private Context mContext;
 
 
-    public ImageAdapter(Context context, ArrayList<Product> products, int layoutFile) {
+    public ImageAdapter(Context context, ArrayList<Article> products, int layoutFile) {
         mContext = context;
         mProducts = products;
         mLayoutFile = layoutFile;
@@ -67,8 +67,8 @@ public class ImageAdapter extends BaseAdapter {
             imageViewProduct.setVisibility(View.GONE);
         }
 
-        String description = mProducts.get(position).getContent();
-        String url = "https://assets3.fairmondo.de/system/images/000/031/643/medium/08S.jpg?1387458269";
+        String description = mProducts.get(position).getTitle();
+        String url = mProducts.get(position).getTitle_image_url();
 
         ShopApp_ app = (ShopApp_) mContext.getApplicationContext();
 

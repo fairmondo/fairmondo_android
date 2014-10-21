@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
 
 /**
@@ -39,11 +39,18 @@ public class FeatureFragment extends Fragment {
 
     @AfterViews
     public void init() {
-        ArrayList<Product> products = getArguments().getParcelableArrayList(FEATURED_PRODUCTS_EXTRA);
+        ArrayList<Article> products = getArguments().getParcelableArrayList(FEATURED_PRODUCTS_EXTRA);
 
-        for (int i = 0; i < featuredProductsImageViews.size(); i++) {
+        int i;
+        if (products.size() >= featuredProductsImageViews.size()) {
+            i = 0;
+        } else {
+            i = featuredProductsImageViews.size() - products.size();
+        }
+
+        for (; i < featuredProductsImageViews.size(); i++) {
             featuredProductsImageViews.get(i).setImageUrl(
-                    "https://assets0.fairmondo.de/system/images/001/492/069/medium/dh201_plan_hw10_red_%281%29.jpg?1401609159",
+                    products.get(i).getTitle_image_url(),
                     app.getImageLoader());
             featuredProductsTitles.get(i).setText(products.get(i).getTitle());
         }
