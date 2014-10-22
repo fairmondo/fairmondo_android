@@ -2,6 +2,7 @@ package de.handler.mobile.android.shopprototype.ui;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -10,16 +11,18 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
-import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -30,10 +33,11 @@ import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
+import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
-import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment;
-import de.handler.mobile.android.shopprototype.ui.fragments.ProductCategoryFragment_;
+import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
 
@@ -49,11 +53,20 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Bean
     RestController restController;
 
+    @Bean
+    Cart cart;
+
     @ViewById(R.id.main_category_spinner)
     Spinner spinner;
 
     @ViewById(R.id.main_progress_bar)
     ProgressBar progressBar;
+
+    @ViewById(R.id.main_title_container)
+    LinearLayout titleContainer;
+
+
+    private boolean mArticleSelection = false;
 
 
     @AfterInject
@@ -62,12 +75,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
     }
 
+    @AfterInject
+    public void initRestController() {
+        restController.setListener(this);
+    }
+
     @AfterViews
     public void init() {
         this.setupActionBar();
         this.initTitleFragment();
         this.getFeaturedProducts();
-        //this.getFakeFeaturedProducts();
         //this.getCategories();
         this.getFakeCategories();
     }
@@ -87,10 +104,28 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private void getFeaturedProducts() {
-        progressBar.setVisibility(View.VISIBLE);
+        this.changeProgressbarVisibility();
         // TODO get featured products from server
-        restController.setListener(this);
-        restController.getProduct("t-shirt");
+        ArrayList<Article> articles = new ArrayList<Article>(3);
+        for (int i = 0; i < 3; i++) {
+            Article article = new Article((long) i);
+            if (i == 0) {
+                article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_books_big.jpg");
+                article.setTitle("Bücher, Bücher, Bücher!");
+            } else if (i == 1) {
+                article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_coffee_big.jpg");
+                article.setTitle("Gutes Genießen.");
+            } else {
+                article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_discover_big.jpg");
+                article.setTitle("Gutes einfach entdecken");
+            }
+            articles.add(article);
+        }
+        this.initFeatureFragment(articles);
+    }
+
+    private void getProductSelection(String searchRequest, int categoryId) {
+        restController.getProduct(searchRequest, categoryId);
     }
 
     /**
@@ -98,8 +133,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onProductsSearchResponse(ArrayList<Article> products) {
-        progressBar.setVisibility(View.GONE);
-        this.initFeatureFragment(products);
+        this.changeProgressbarVisibility();
+        if (mArticleSelection) {
+            this.initSelectionFragment(products);
+        } else {
+            this.initFeatureFragment(products);
+        }
     }
 
 
@@ -114,13 +153,23 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 .commit();
     }
 
+    private void initSelectionFragment(ArrayList<Article> products) {
+        ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, products);
+        selectionFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_products_container, selectionFragment)
+                .commit();
+    }
 
 
 
 
-    @Background
-    public void getCategories() {
-        progressBar.setVisibility(View.VISIBLE);
+
+    private void getCategories() {
+        this.changeProgressbarVisibility();
         // TODO get categories from server
     }
 
@@ -129,7 +178,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onCategoriesResponse(ArrayList<String> categories) {
-        progressBar.setVisibility(View.GONE);
+        this.changeProgressbarVisibility();
         this.initSpinner(categories);
     }
 
@@ -176,27 +225,23 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         spinner.setOnItemSelectedListener(this);
     }
 
+
     /**
      * Respond to spinner actions
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // Get the selected category
+        // Get the selected category and the products matching the category
         if (position > 0) {
-            String category = (String) parent.getItemAtPosition(position);
-
-            ProductCategoryFragment categoryFragment = new ProductCategoryFragment_();
-            Bundle bundle = new Bundle();
-            bundle.putString(ProductCategoryFragment.CATEGORY_ARRAY_LIST_EXTRA, category);
-            bundle.putInt(ProductCategoryFragment.POSITION_INT_EXTRA, position);
-            categoryFragment.setArguments(bundle);
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_products_container, categoryFragment)
-                    .commit();
+            this.changeProgressbarVisibility();
+            //String category = (String) parent.getItemAtPosition(position);
+            this.getProductSelection("", position);
+            mArticleSelection = true;
         }
         // TODO: get products matching category from database
     }
+
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -230,14 +275,37 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             case R.id.action_settings:
                 this.openSettings();
                 return true;
+            case R.id.action_cart:
+                this.openCart();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openCart() {
+        if (cart.getArticles().size() > 0) {
+            startActivity(new Intent(this, CartActivity_.class));
+        } else {
+            Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();
         }
     }
 
 
     private void openSettings() {
 
+    }
+
+    @UiThread
+    public void changeProgressbarVisibility() {
+        if (progressBar.getVisibility() == View.INVISIBLE) {
+            progressBar.setVisibility(View.VISIBLE);
+            //titleContainer.setVisibility(View.INVISIBLE);
+
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+            //titleContainer.setVisibility(View.VISIBLE);
+        }
     }
 
 }

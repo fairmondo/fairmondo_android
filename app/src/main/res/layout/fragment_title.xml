@@ -17,7 +17,7 @@
         android:layout_height="30sp"
         android:gravity="center"
         android:textSize="12sp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/transparent_white_80"
         android:layout_alignBottom="@id/fragment_title_image"
         android:background="@color/transparent_grey_80"
         android:id="@+id/fragment_title_image_description"/>

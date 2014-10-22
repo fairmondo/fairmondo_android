@@ -8,10 +8,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.rest.RestService;
 
-import java.util.ArrayList;
-
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.shopprototype.rest.json.Article;
 
 /**
  * Encapsulates all communication with the server
@@ -47,12 +44,20 @@ public class RestController {
     @Background
     public void getProduct(String searchString) {
         Articles articles = restService.getProduct(searchString);
-        listener.onProductsSearchResponse(articles.getArticles());
+        if (articles != null && articles.getArticles() != null) {
+            listener.onProductsSearchResponse(articles.getArticles());
+        } else {
+            listener.onProductsSearchResponse(null);
+        }
     }
 
     @Background
     public void getProduct(String searchString, int categoryId) {
         Articles articles = restService.getProduct(searchString, categoryId);
-        listener.onProductsSearchResponse(articles.getArticles());
+        if (articles != null && articles.getArticles() != null) {
+            listener.onProductsSearchResponse(articles.getArticles());
+        } else {
+            listener.onProductsSearchResponse(null);
+        }
     }
 }

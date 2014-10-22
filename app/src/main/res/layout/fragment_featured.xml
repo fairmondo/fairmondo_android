@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/transparent_grey_20">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         <TextView
             android:id="@+id/fragment_feature_text_first"
             style="@style/style_featured_text"
-            android:layout_alignBottom="@id/fragment_feature_image_first"/>
+            android:layout_alignTop="@id/fragment_feature_image_first"/>
 
         <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
             android:id="@+id/fragment_feature_image_second"
@@ -26,7 +27,7 @@
         <TextView
             style="@style/style_featured_text"
             android:id="@+id/fragment_feature_text_second"
-            android:layout_alignBottom="@id/fragment_feature_image_second"/>
+            android:layout_alignTop="@id/fragment_feature_image_second"/>
 
         <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
             android:layout_below="@id/fragment_feature_image_second"
@@ -37,7 +38,7 @@
         <TextView
             style="@style/style_featured_text"
             android:id="@+id/fragment_feature_text_third"
-            android:layout_alignBottom="@id/fragment_feature_image_third"/>
+            android:layout_alignTop="@id/fragment_feature_image_third"/>
 
     </RelativeLayout>
 </ScrollView>

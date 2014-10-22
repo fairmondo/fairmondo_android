@@ -23,5 +23,11 @@
     <string name="server_error">Fehler bei der Server-Kommunikation</string>
     <string name="server_temporarily_not_available">Der Server ist gerade nicht erreichbar…</string>
     <string name="server_method_not_available">Die Methode ist auf dem Server nicht vorhanden</string>
+    <string name="fragment_product_added_to_cart">Produkt in den Warenkorb gelegt</string>
+    <string name="question_buy_products">Die Produkte kaufen?</string>
+    <string name="action_cart">Warenkorb</string>
+    <string name="action_send">Kaufen</string>
+    <string name="cart_has_no_items">Keine Produkte im Warenkorb</string>
+    <string name="fragment_product_removed_from_cart">Produkt entfernt</string>
 
 </resources>

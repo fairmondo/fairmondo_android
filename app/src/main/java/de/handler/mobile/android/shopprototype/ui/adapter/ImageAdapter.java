@@ -30,7 +30,14 @@ public class ImageAdapter extends BaseAdapter {
 
     public ImageAdapter(Context context, ArrayList<Article> products, int layoutFile) {
         mContext = context;
-        mProducts = products;
+
+        if (products != null) {
+            mProducts = products;
+        } else {
+            mProducts = new ArrayList<Article>();
+            // TODO insert dummy product telling the user that no product has been found or don't start view pager
+        }
+
         mLayoutFile = layoutFile;
     }
 

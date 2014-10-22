@@ -25,6 +25,12 @@ public class Article implements Parcelable {
     private FairmondoTag tags;
     private FairmondoSeller seller;
     private FairmondoDonation donation;
+    //TODO count added manually - could cause trouble when sending to server
+    private int count = 0;
+
+    public Article(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -74,6 +80,65 @@ public class Article implements Parcelable {
         return donation;
     }
 
+    public Article() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public void setTitle_image_url(String title_image_url) {
+        this.title_image_url = title_image_url;
+    }
+
+    public void setHtml_url(String html_url) {
+        this.html_url = html_url;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPrice_cents(int price_cents) {
+        this.price_cents = price_cents;
+    }
+
+    public void setVat(int vat) {
+        this.vat = vat;
+    }
+
+    public void setBasic_price_cents(int basic_price_cents) {
+        this.basic_price_cents = basic_price_cents;
+    }
+
+    public void setBasic_price_amount(int basic_price_amount) {
+        this.basic_price_amount = basic_price_amount;
+    }
+
+    public void setTags(FairmondoTag tags) {
+        this.tags = tags;
+    }
+
+    public void setSeller(FairmondoSeller seller) {
+        this.seller = seller;
+    }
+
+    public void setDonation(FairmondoDonation donation) {
+        this.donation = donation;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -90,12 +155,10 @@ public class Article implements Parcelable {
         dest.writeInt(this.vat);
         dest.writeInt(this.basic_price_cents);
         dest.writeInt(this.basic_price_amount);
-        dest.writeParcelable(this.tags, flags);
-        dest.writeParcelable(this.seller, flags);
-        dest.writeParcelable(this.donation, flags);
-    }
-
-    public Article() {
+        dest.writeParcelable(this.tags, 0);
+        dest.writeParcelable(this.seller, 0);
+        dest.writeParcelable(this.donation, 0);
+        dest.writeInt(this.count);
     }
 
     private Article(Parcel in) {
@@ -111,9 +174,10 @@ public class Article implements Parcelable {
         this.tags = in.readParcelable(FairmondoTag.class.getClassLoader());
         this.seller = in.readParcelable(FairmondoSeller.class.getClassLoader());
         this.donation = in.readParcelable(FairmondoDonation.class.getClassLoader());
+        this.count = in.readInt();
     }
 
-    public static final Parcelable.Creator<Article> CREATOR = new Parcelable.Creator<Article>() {
+    public static final Creator<Article> CREATOR = new Creator<Article>() {
         public Article createFromParcel(Parcel source) {
             return new Article(source);
         }

@@ -1,13 +1,16 @@
 package de.handler.mobile.android.shopprototype.ui;
 
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.ui.adapter.ProductPagerAdapter;
 
 /**
@@ -29,6 +33,9 @@ public class ProductGalleryActivity extends AbstractActivity {
 
     @ViewById(R.id.activity_result_pager)
     ViewPager viewPager;
+
+    @Bean
+    Cart cart;
 
 
     @AfterInject
@@ -55,6 +62,7 @@ public class ProductGalleryActivity extends AbstractActivity {
 
         // Set up the ViewPager with the sections adapter.
         viewPager.setAdapter(productPagerAdapter);
+        viewPager.setOffscreenPageLimit(5);
         viewPager.setCurrentItem(position, true);
     }
 
@@ -77,8 +85,19 @@ public class ProductGalleryActivity extends AbstractActivity {
             case R.id.action_settings:
                 this.openSettings();
                 return true;
+            case R.id.action_cart:
+                this.openCart();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openCart() {
+        if (cart.getArticles().size() > 0) {
+            startActivity(new Intent(this, CartActivity_.class));
+        } else {
+            Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();
         }
     }
 

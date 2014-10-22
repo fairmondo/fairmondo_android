@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_white_80">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context="android.mobile.handler.de.shopprototype.ui.fragments.ProductFragment"
+            android:orientation="vertical">
+
+
+            <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:paddingTop="?attr/actionBarSize"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:id="@+id/fragment_product_image_view" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/fragment_product_image_container"
+                android:layout_alignBottom="@id/fragment_product_image_view">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/transparent_white_20"/>
+
+                <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/fragment_product_cart_add_image_button"
+                    android:background="@drawable/custom_button"/>
+
+                <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:layout_toLeftOf="@id/fragment_product_cart_add_image_button"
+                    android:layout_toStartOf="@id/fragment_product_cart_add_image_button"
+                    android:id="@+id/fragment_product_cart_remove_image_button"
+                    android:background="@drawable/custom_button"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:layout_below="@id/fragment_product_image_container"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:id="@+id/fragment_product_title"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"
+                android:layout_below="@id/fragment_product_title"
+                android:textSize="25sp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/default_gap"
+                android:id="@+id/fragment_product_description"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_product_description"
+                android:textSize="30sp"
+                android:gravity="end"
+                android:padding="@dimen/default_gap"
+                android:id="@+id/fragment_product_price"/>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
