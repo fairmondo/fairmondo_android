@@ -1,15 +1,13 @@
-package de.handler.mobile.android.shopprototype.rest.json.model;
+package de.handler.mobile.android.shopprototype.util;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
 
 /**
@@ -18,28 +16,25 @@ import de.handler.mobile.android.shopprototype.rest.json.Article;
 @EBean(scope = EBean.Scope.Singleton)
 public class Cart {
 
-    @Bean
-    RestController restController;
-
     private Context mContext;
+    private HashMap<String, Article> articles;
+
 
     public Cart(Context context) {
         this.mContext = context;
-        this.articles = new ArrayList<Article>();
+        this.articles = new HashMap<String, Article>();
     }
 
-    private ArrayList<Article> articles;
-
-    public ArrayList<Article> getArticles() {
+    public HashMap<String, Article> getArticles() {
         return articles;
     }
 
-    public void addArticle(Article article) {
-        this.articles.add(article);
+    public void addArticle(String key, Article article) {
+        this.articles.put(key, article);
     }
 
-    public void removeArticle(Article article) {
-        this.articles.remove(article);
+    public void removeArticle(String key) {
+        this.articles.remove(key);
     }
 
     public void send() {

@@ -33,13 +33,13 @@ import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
-import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
+import de.handler.mobile.android.shopprototype.util.Cart;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnSearchResultListener, AdapterView.OnItemSelectedListener {

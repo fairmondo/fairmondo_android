@@ -13,10 +13,14 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment_;
+import de.handler.mobile.android.shopprototype.util.Cart;
 
 /**
  * Shows Views related to card transaction
@@ -31,6 +35,7 @@ public class CartActivity extends AbstractActivity {
     LinearLayout productsContainer;
 
 
+
     @AfterInject
     public void overlayActionBar() {
         // Request Action Bar overlay before setting content view a.k.a. before @AfterViews
@@ -40,14 +45,37 @@ public class CartActivity extends AbstractActivity {
     @AfterViews
     public void init() {
         this.setupActionBar();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.startSelectionFragment();
+    }
+
+    private void startSelectionFragment() {
         ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, cart.getArticles());
+        bundle.putParcelableArrayList(
+                ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA,
+                this.convertHashmapToList(cart.getArticles()));
         selectionFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.activity_cart_products_container, selectionFragment)
+                .add(R.id.activity_cart_products_container, selectionFragment)
                 .commit();
+
+        if (cart.getArticles().size() < 1) {
+            this.finish();
+        }
+    }
+
+
+    private ArrayList<Article> convertHashmapToList(HashMap<String, Article> articles) {
+        ArrayList<Article> arrayList = new ArrayList<Article>(articles.size());
+        arrayList.addAll(articles.values());
+        return arrayList;
     }
 
     /**

@@ -24,7 +24,7 @@ import de.handler.mobile.android.shopprototype.ui.adapter.ImageAdapter;
 @EFragment(R.layout.fragment_product_category)
 public class ProductSelectionFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    public static final String SELECTION_ARRAY_LIST_EXTRA = "category_string_array_list_extra";
+    public static final String SELECTION_ARRAY_LIST_EXTRA = "selection_string_array_list_extra";
 
     private int mPosition;
     private ArrayList<Article> mProducts;

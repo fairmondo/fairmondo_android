@@ -17,7 +17,7 @@ import org.androidannotations.annotations.ViewById;
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
-import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
+import de.handler.mobile.android.shopprototype.util.Cart;
 import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
 import de.handler.mobile.android.shopprototype.util.RoundNetworkImageView;
 
@@ -63,7 +63,6 @@ public class ProductFragment extends Fragment {
         addProductImageView.setImageUrl("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/old/buy.png", app.getImageLoader());
         removeProductImageView.setImageUrl("https://openclipart.org/image/100px/svg_to_png/26082/Anselmus_Green_Checkmark_and_Red_Minus_1.png", app.getImageLoader());
 
-        // Product via data variant
         if (mProduct != null) {
             // Create custom typeface
             Typeface myTypeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
@@ -89,10 +88,10 @@ public class ProductFragment extends Fragment {
     public void addToCart() {
         Toast.makeText(getActivity(), getString(R.string.fragment_product_added_to_cart), Toast.LENGTH_SHORT).show();
 
-        if (cart.getArticles().contains(mProduct)) {
+        if (cart.getArticles().containsKey(mProduct.getId().toString())) {
             mProduct.setCount(mProduct.getCount() + 1);
         } else {
-            cart.addArticle(mProduct);
+            cart.addArticle(mProduct.getId().toString(), mProduct);
             mProduct.setCount(1);
         }
 
@@ -109,7 +108,7 @@ public class ProductFragment extends Fragment {
             mProduct.setCount(mProduct.getCount() - 1);
             if (mProduct.getCount() == 0) {
                 removeProductImageView.setVisibility(View.GONE);
-                cart.removeArticle(mProduct);
+                cart.removeArticle(mProduct.getId().toString());
             }
         }
     }

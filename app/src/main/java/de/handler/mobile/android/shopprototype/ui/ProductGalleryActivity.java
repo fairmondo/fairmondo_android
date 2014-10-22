@@ -1,12 +1,10 @@
 package de.handler.mobile.android.shopprototype.ui;
 
 
-import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -18,8 +16,8 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.database.Product;
-import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.ui.adapter.ProductPagerAdapter;
+import de.handler.mobile.android.shopprototype.util.Cart;
 
 /**
  * Displays a ViewPager with the products from the search
@@ -56,7 +54,6 @@ public class ProductGalleryActivity extends AbstractActivity {
     }
 
 
-
     private void setupViewPager(int position, ArrayList<Product> products) {
         ProductPagerAdapter productPagerAdapter = new ProductPagerAdapter(getSupportFragmentManager(), products);
 
@@ -74,7 +71,6 @@ public class ProductGalleryActivity extends AbstractActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.product, menu);
-
         return true;
     }
 
@@ -85,19 +81,8 @@ public class ProductGalleryActivity extends AbstractActivity {
             case R.id.action_settings:
                 this.openSettings();
                 return true;
-            case R.id.action_cart:
-                this.openCart();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void openCart() {
-        if (cart.getArticles().size() > 0) {
-            startActivity(new Intent(this, CartActivity_.class));
-        } else {
-            Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();
         }
     }
 
