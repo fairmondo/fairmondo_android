@@ -9,7 +9,6 @@ import org.androidannotations.annotations.EApplication;
 
 import de.handler.mobile.android.shopprototype.database.DaoMaster;
 import de.handler.mobile.android.shopprototype.database.DaoSession;
-import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.util.CustomImageCache;
 
 /**
@@ -31,7 +30,7 @@ public class ShopApp extends Application {
     private ImageLoader imageLoader;
     private DaoSession daoSession;
 
-    private boolean isAppConnected = false;
+    private boolean isConnected = false;
 
     /**
      * methods for initialization
@@ -60,12 +59,12 @@ public class ShopApp extends Application {
         return imageLoader;
     }
 
-    public boolean isAppConnected() {
-        return isAppConnected;
+    public boolean isConnected() {
+        return isConnected;
     }
 
-    public void setAppConnected(boolean isAppConnected) {
-        this.isAppConnected = isAppConnected;
+    public void setConnected(boolean isAppConnected) {
+        this.isConnected = isAppConnected;
     }
 
 

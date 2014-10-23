@@ -80,9 +80,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         restController.setListener(this);
     }
 
+
     @AfterViews
     public void init() {
+        // method in AbstractActivity
         this.setupActionBar();
+
         this.initTitleFragment();
         this.getFeaturedProducts();
         //this.getCategories();
@@ -159,9 +162,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, products);
         selectionFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_products_container, selectionFragment)
-                .commit();
+        try {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_products_container, selectionFragment)
+                    .commit();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
 

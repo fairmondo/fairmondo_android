@@ -7,12 +7,15 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.ShopApp;
 
 /**
  * Contains a webView for displaying homepages
@@ -26,19 +29,28 @@ public class WebActivity extends AbstractActivity {
     @ViewById(R.id.activity_web_web_view)
     WebView webView;
 
+    @App
+    ShopApp app;
+
 
     @AfterViews
     void init() {
         ActionBar actionBar = this.setupActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String uri = getIntent().getStringExtra(URI);
+        if (app.isConnected()) {
+            String uri = getIntent().getStringExtra(URI);
 
-        if (uri != null && !uri.equals("")) {
-            webView.setWebViewClient(new RedirectWebViewClient());
-            WebSettings webSettings = webView.getSettings();
-            webSettings.setJavaScriptEnabled(true);
-            webView.loadUrl(uri);
+            if (uri != null && !uri.equals("")) {
+                webView.setWebViewClient(new RedirectWebViewClient());
+                WebSettings webSettings = webView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+
+                webView.loadUrl(uri);
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+            this.finish();
         }
     }
 

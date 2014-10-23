@@ -29,5 +29,6 @@
     <string name="action_send">Kaufen</string>
     <string name="cart_has_no_items">Keine Produkte im Warenkorb</string>
     <string name="fragment_product_removed_from_cart">Produkt entfernt</string>
+    <string name="app_not_connected">Die App ist nicht mit dem Internet verbunden</string>
 
 </resources>

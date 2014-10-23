@@ -4,12 +4,23 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.EActivity;
+
 import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.ShopApp;
 
 /**
  * Abstract Activity implemented by all other activities
  */
+@EActivity
 public abstract class AbstractActivity extends ActionBarActivity {
+
+    @App
+    ShopApp app;
+
+    //TODO: make app aware of internet connection state
+
 
     /**
      * ActionBar settings
@@ -30,5 +41,4 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
         return actionBar;
     }
-
 }
