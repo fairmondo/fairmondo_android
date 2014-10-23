@@ -1,4 +1,4 @@
-ShopPrototype
+fairmondo_android
 =============
 
 Simple Shop
