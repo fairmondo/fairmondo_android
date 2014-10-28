@@ -1,11 +1,16 @@
 package de.handler.mobile.android.shopprototype.ui;
 
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
-import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Receiver;
+import org.androidannotations.annotations.SystemService;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
@@ -16,11 +21,30 @@ import de.handler.mobile.android.shopprototype.ShopApp;
 @EActivity
 public abstract class AbstractActivity extends ActionBarActivity {
 
-    @App
-    ShopApp app;
+    @SystemService
+    ConnectivityManager connectivityManager;
 
-    //TODO: make app aware of internet connection state
+    /**
+     * Network receiver
+     * Checks if connectivity changes and reacts to the event
+     * */
+    @Receiver(actions = ConnectivityManager.CONNECTIVITY_ACTION,
+            registerAt = Receiver.RegisterAt.OnResumeOnPause)
+    @Background
+    void onConnectionChange() {
+        this.checkNetworkState();
+        Log.i("FAIRMONDO_APP ", "NETWORKSTATECHANGE");
+    }
 
+    private void checkNetworkState() {
+        ShopApp app = (ShopApp) getApplicationContext();
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            app.setConnected(activeNetwork.isConnected());
+        } else {
+            app.setConnected(false);
+        }
+    }
 
     /**
      * ActionBar settings

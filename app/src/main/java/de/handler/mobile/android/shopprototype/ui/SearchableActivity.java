@@ -3,17 +3,19 @@ package de.handler.mobile.android.shopprototype.ui;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
+import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
@@ -26,17 +28,28 @@ import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment
 @EActivity(R.layout.activity_search)
 public class SearchableActivity extends AbstractActivity implements OnSearchResultListener {
 
-
     public static final String QUERY_STRING_EXTRA = "query_string_extra";
+
+
+    @App
+    ShopApp app;
 
     @Bean
     RestController restController;
+
 
     @AfterInject
     public void overlayActionBar() {
         // Request Action Bar overlay before setting content view a.k.a. before @AfterViews
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
     }
+
+    @AfterInject
+    public void initRestController() {
+        restController.setListener(this);
+    }
+
+
 
     @AfterViews
     public void init() {
@@ -56,11 +69,11 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
 
     private void searchProducts(String query) {
-        Log.d(getLocalClassName().toUpperCase(),
-                "Search string: \"" + query + "\" successfully transferred to SearchableActivity");
-
-        restController.setListener(this);
-        restController.getProduct(query);
+        if (app.isConnected()) {
+            restController.getProduct(query);
+        } else {
+            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

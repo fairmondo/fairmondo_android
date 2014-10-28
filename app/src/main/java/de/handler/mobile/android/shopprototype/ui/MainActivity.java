@@ -128,7 +128,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
     private void getProductSelection(String searchRequest, int categoryId) {
-        restController.getProduct(searchRequest, categoryId);
+        if (app.isConnected()) {
+            this.changeProgressbarVisibility();
+            restController.getProduct(searchRequest, categoryId);
+        } else {
+            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -240,7 +245,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Get the selected category and the products matching the category
         if (position > 0) {
-            this.changeProgressbarVisibility();
             //String category = (String) parent.getItemAtPosition(position);
             this.getProductSelection("", position);
             mArticleSelection = true;

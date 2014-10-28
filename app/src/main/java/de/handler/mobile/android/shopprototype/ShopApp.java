@@ -17,7 +17,6 @@ import de.handler.mobile.android.shopprototype.util.CustomImageCache;
 @EApplication
 public class ShopApp extends Application {
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -66,6 +65,4 @@ public class ShopApp extends Application {
     public void setConnected(boolean isAppConnected) {
         this.isConnected = isAppConnected;
     }
-
-
 }

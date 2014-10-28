@@ -1,17 +1,14 @@
 package de.handler.mobile.android.shopprototype.rest;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
-import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 
@@ -51,37 +48,22 @@ public class RestController {
 
     @Background
     public void getProduct(String searchString) {
-        if (app.isConnected()) {
-
-            Articles articles = restService.getProduct(searchString);
-            if (articles != null && articles.getArticles() != null) {
-                listener.onProductsSearchResponse(articles.getArticles());
-            } else {
-                listener.onProductsSearchResponse(null);
-            }
+        Articles articles = restService.getProduct(searchString);
+        if (articles != null && articles.getArticles() != null) {
+            listener.onProductsSearchResponse(articles.getArticles());
         } else {
-            makeToast();
+            listener.onProductsSearchResponse(null);
         }
     }
 
 
     @Background
     public void getProduct(String searchString, int categoryId) {
-        if (app.isConnected()) {
-            Articles articles = restService.getProduct(searchString, categoryId);
-            if (articles != null && articles.getArticles() != null) {
-                listener.onProductsSearchResponse(articles.getArticles());
-            } else {
-                listener.onProductsSearchResponse(null);
-            }
+        Articles articles = restService.getProduct(searchString, categoryId);
+        if (articles != null && articles.getArticles() != null) {
+            listener.onProductsSearchResponse(articles.getArticles());
         } else {
-            makeToast();
+            listener.onProductsSearchResponse(null);
         }
-    }
-
-
-    @UiThread
-    public void makeToast() {
-        Toast.makeText(mContext, mContext.getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
     }
 }
