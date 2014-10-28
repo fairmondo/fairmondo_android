@@ -33,6 +33,9 @@ import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
+import de.handler.mobile.android.shopprototype.rest.json.model.Category;
+import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment;
@@ -66,7 +69,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     LinearLayout titleContainer;
 
 
-    private boolean mArticleSelection = false;
+    private boolean mSpinnerSelection = false;
+    private ArrayList<Category> mCategories;
 
 
     @AfterInject
@@ -77,7 +81,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @AfterInject
     public void initRestController() {
-        restController.setListener(this);
+        restController.setProductListener(this);
+        restController.setCategoriesListener(this);
     }
 
 
@@ -88,8 +93,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
         this.initTitleFragment();
         this.getFeaturedProducts();
-        //this.getCategories();
-        this.getFakeCategories();
+        this.getCategories();
     }
 
 
@@ -107,7 +111,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private void getFeaturedProducts() {
-        this.changeProgressbarVisibility();
+        this.showProgressbar();
         // TODO get featured products from server
         ArrayList<Article> articles = new ArrayList<Article>(3);
         for (int i = 0; i < 3; i++) {
@@ -129,7 +133,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     private void getProductSelection(String searchRequest, int categoryId) {
         if (app.isConnected()) {
-            this.changeProgressbarVisibility();
+            this.showProgressbar();
             restController.getProduct(searchRequest, categoryId);
         } else {
             Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
@@ -141,8 +145,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onProductsSearchResponse(ArrayList<Article> products) {
-        this.changeProgressbarVisibility();
-        if (mArticleSelection) {
+        this.hideProgressbar();
+        if (mSpinnerSelection) {
             this.initSelectionFragment(products);
         } else {
             this.initFeatureFragment(products);
@@ -177,51 +181,34 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
-
-
-
     private void getCategories() {
-        this.changeProgressbarVisibility();
-        // TODO get categories from server
+        restController.getCategories();
+    }
+
+    private void getSubCategories(int id) {
+        restController.getSubCategories(id);
     }
 
     /**
      * Callback for categories server response
+     * @param categories
      */
     @Override
-    public void onCategoriesResponse(ArrayList<String> categories) {
-        this.changeProgressbarVisibility();
-        this.initSpinner(categories);
-    }
+    public void onCategoriesResponse(ArrayList<Category> categories) {
+        this.hideProgressbar();
 
-    private void getFakeCategories() {
-        ArrayList<String> categories = new ArrayList<String>();
-        categories.add("Kassetten");
-        categories.add("Hormonpräparate");
-        categories.add("Sendung mit der Maus");
-        categories.add("Schallplatten");
-        categories.add("Elektronik");
-        categories.add("Hängematten");
-        categories.add("Kinderspielzeug");
-        categories.add("Arzneimittel");
-        categories.add("Dienstleistungen");
-        categories.add("Antiqitäten & Kunst");
-        categories.add("Fahrzeuge");
-        categories.add("Beauty");
-        categories.add("Briefmarken");
-        categories.add("Bücher");
-        categories.add("Schreibwaren");
-        categories.add("Feinschmecker");
-        categories.add("Filme");
-        categories.add("Garten");
-        categories.add("Haustier");
-        categories.add("Schmuck");
+        ArrayList<String> categoryStrings = new ArrayList<String>(categories.size());
+        for (Category category : categories) {
+            categoryStrings.add(category.getName());
+        }
 
-        this.onCategoriesResponse(categories);
+        mCategories = categories;
+        this.initSpinner(categoryStrings);
     }
 
 
-    private void initSpinner(ArrayList<String> categories) {
+    @UiThread
+    public void initSpinner(ArrayList<String> categories) {
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item,
@@ -246,8 +233,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // Get the selected category and the products matching the category
         if (position > 0) {
             //String category = (String) parent.getItemAtPosition(position);
-            this.getProductSelection("", position);
-            mArticleSelection = true;
+            this.getSubCategories(mCategories.get(position-1).getId());
+            mSpinnerSelection = true;
         }
         // TODO: get products matching category from database
     }
@@ -257,6 +244,34 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+
+    @Override
+    public void onSubCategoriesResponse(ArrayList<Category> categories) {
+        this.hideProgressbar();
+        if (categories.size() < 1) {
+            this.getProductSelection("", app.getLastCategory());
+        } else {
+            this.initCategoryFragment(categories);
+        }
+    }
+
+
+    @UiThread
+    public void initCategoryFragment(ArrayList<Category> categories) {
+        CategoryFragment categoryFragment = new CategoryFragment_();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(CategoryFragment.CATEGORIES_ARRAY_LIST_EXTRA, categories);
+        categoryFragment.setArguments(bundle);
+
+        try {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_products_container, categoryFragment)
+                    .commit();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -307,16 +322,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     }
 
-    @UiThread
-    public void changeProgressbarVisibility() {
-        if (progressBar.getVisibility() == View.INVISIBLE) {
-            progressBar.setVisibility(View.VISIBLE);
-            //titleContainer.setVisibility(View.INVISIBLE);
 
-        } else {
-            progressBar.setVisibility(View.INVISIBLE);
-            //titleContainer.setVisibility(View.VISIBLE);
-        }
+    @UiThread
+    public void showProgressbar() {
+        progressBar.setVisibility(View.VISIBLE);
+        titleContainer.setVisibility(View.INVISIBLE);
     }
 
+    @UiThread
+    public void hideProgressbar() {
+        progressBar.setVisibility(View.INVISIBLE);
+        titleContainer.setVisibility(View.VISIBLE);
+    }
 }

@@ -46,7 +46,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
     @AfterInject
     public void initRestController() {
-        restController.setListener(this);
+        restController.setProductListener(this);
     }
 
 

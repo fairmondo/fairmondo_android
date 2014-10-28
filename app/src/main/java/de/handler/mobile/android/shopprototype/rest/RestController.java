@@ -9,8 +9,12 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.rest.RestService;
 
+import java.util.ArrayList;
+
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 
 /**
  * Encapsulates all communication with the server
@@ -28,7 +32,8 @@ public class RestController {
     ShopApp app;
 
 
-    private OnSearchResultListener listener;
+    private OnSearchResultListener productListener;
+    private OnCategoriesListener categoriesListener;
     private Context mContext;
 
 
@@ -42,17 +47,21 @@ public class RestController {
         restService.setRestErrorHandler(errorHandler);
     }
 
-    public void setListener(OnSearchResultListener listener) {
-        this.listener = listener;
+    public void setProductListener(OnSearchResultListener productListener) {
+        this.productListener = productListener;
+    }
+
+    public void setCategoriesListener(OnCategoriesListener categoriesListener) {
+        this.categoriesListener = categoriesListener;
     }
 
     @Background
     public void getProduct(String searchString) {
         Articles articles = restService.getProduct(searchString);
         if (articles != null && articles.getArticles() != null) {
-            listener.onProductsSearchResponse(articles.getArticles());
+            productListener.onProductsSearchResponse(articles.getArticles());
         } else {
-            listener.onProductsSearchResponse(null);
+            productListener.onProductsSearchResponse(null);
         }
     }
 
@@ -61,9 +70,22 @@ public class RestController {
     public void getProduct(String searchString, int categoryId) {
         Articles articles = restService.getProduct(searchString, categoryId);
         if (articles != null && articles.getArticles() != null) {
-            listener.onProductsSearchResponse(articles.getArticles());
+            productListener.onProductsSearchResponse(articles.getArticles());
         } else {
-            listener.onProductsSearchResponse(null);
+            productListener.onProductsSearchResponse(null);
         }
+    }
+
+
+    @Background
+    public void getCategories() {
+        ArrayList<Category> categories = restService.getCategories();
+        categoriesListener.onCategoriesResponse(categories);
+    }
+
+    @Background
+    public void getSubCategories(int id) {
+        ArrayList<Category> categories = restService.getSubCategories(id);
+        categoriesListener.onSubCategoriesResponse(categories);
     }
 }

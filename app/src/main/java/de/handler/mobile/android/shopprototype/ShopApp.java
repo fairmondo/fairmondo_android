@@ -28,6 +28,7 @@ public class ShopApp extends Application {
     private CustomImageCache imageCache;
     private ImageLoader imageLoader;
     private DaoSession daoSession;
+    private int lastCategory;
 
     private boolean isConnected = false;
 
@@ -64,5 +65,13 @@ public class ShopApp extends Application {
 
     public void setConnected(boolean isAppConnected) {
         this.isConnected = isAppConnected;
+    }
+
+    public int getLastCategory() {
+        return lastCategory;
+    }
+
+    public void setLastCategory(int lastCategory) {
+        this.lastCategory = lastCategory;
     }
 }
