@@ -72,6 +72,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     private boolean mSpinnerSelection = false;
     private ArrayList<Category> mCategories;
 
+    // Time for calculating interval between last back press action and new one
+    // --> exit only when pressed twice
+    private long mLastBackPressTime = System.currentTimeMillis();
+
 
     @AfterInject
     public void overlayActionBar() {
@@ -165,6 +169,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 .commit();
     }
 
+
     private void initSelectionFragment(ArrayList<Article> products) {
         ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
         Bundle bundle = new Bundle();
@@ -174,6 +179,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         try {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_products_container, selectionFragment)
+                    .addToBackStack("selectionFragment")
                     .commit();
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -191,24 +197,24 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     /**
      * Callback for categories server response
-     * @param categories
+     * @param categories a list of available categories
      */
     @Override
     public void onCategoriesResponse(ArrayList<Category> categories) {
+        mCategories = categories;
         this.hideProgressbar();
+        this.initSpinner(categories);
+    }
 
+
+    @UiThread
+    public void initSpinner(ArrayList<Category> categories) {
+        // Get category strings
         ArrayList<String> categoryStrings = new ArrayList<String>(categories.size());
         for (Category category : categories) {
             categoryStrings.add(category.getName());
         }
 
-        mCategories = categories;
-        this.initSpinner(categoryStrings);
-    }
-
-
-    @UiThread
-    public void initSpinner(ArrayList<String> categories) {
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item,
@@ -217,7 +223,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Add basic item and categories list to the adapter
         adapter.add(getString(R.string.spinner_basic_item));
-        adapter.addAll(categories);
+        adapter.addAll(categoryStrings);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setSelected(false);
@@ -236,20 +242,21 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.getSubCategories(mCategories.get(position-1).getId());
             mSpinnerSelection = true;
         }
-        // TODO: get products matching category from database
     }
 
 
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        this.getSubCategories(mCategories.get(parent.getLastVisiblePosition()).getId());
+        mSpinnerSelection = true;
     }
 
 
     @Override
     public void onSubCategoriesResponse(ArrayList<Category> categories) {
         this.hideProgressbar();
+
         if (categories.size() < 1) {
             this.getProductSelection("", app.getLastCategory());
         } else {
@@ -268,6 +275,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         try {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_products_container, categoryFragment)
+                    .addToBackStack("categoryFragment")
                     .commit();
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -334,4 +342,15 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         progressBar.setVisibility(View.INVISIBLE);
         titleContainer.setVisibility(View.VISIBLE);
     }
+
+    // Override onBackPressed for being able to work with fragments
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }
