@@ -47,6 +47,8 @@ import de.handler.mobile.android.shopprototype.util.Cart;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnSearchResultListener, AdapterView.OnItemSelectedListener {
 
+    private static final long AGAIN_PRESS_TIME = 1500;
+
     @App
     ShopApp app;
 
@@ -343,13 +345,19 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         titleContainer.setVisibility(View.VISIBLE);
     }
 
-    // Override onBackPressed for being able to work with fragments
+    // Override onBackPressed for being able to work with fragments.
+    // Also inform the user of the moment the app closes
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 getSupportFragmentManager().popBackStack();
         } else {
-            super.onBackPressed();
+            if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
+                this.mLastBackPressTime = System.currentTimeMillis();
+                Toast.makeText(this, getString(R.string.close_app), Toast.LENGTH_SHORT).show();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
