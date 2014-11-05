@@ -29,6 +29,13 @@ android {
         versionCode 1
         versionName "0.1"
     }
+
+    // Tell Gradle where to find test sources
+    sourceSets {
+        androidTest.setRoot('src/main/java')
+        build.srcDirs = ['build']
+    }
+
     buildTypes {
         release {
             runProguard false
@@ -45,38 +52,52 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/NOTICE'
     }
+
+    configurations.compile {
+        exclude module: 'spring-core'
+        exclude module: 'spring-web'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'classworlds'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-http-shared'
+        exclude module: 'wagon-provider-api'
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:gridlayout-v7:19.+'
-    compile 'com.android.support:support-v4:19.+'
-
-    // Android annotations for easy readable code
-    apt 'org.androidannotations:androidannotations:3.+'
-    compile 'org.androidannotations:androidannotations-api:3.+'
-
-    // ORM Mapper for android
-    compile 'de.greenrobot:greendao-generator:1.+'
-    compile 'de.greenrobot:greendao:1.+'
-
-    // For Converters in RestServices
-    compile 'org.springframework.android:spring-android-core:1.+'
-    compile 'org.springframework.android:spring-android-rest-template:1.+'
-    compile 'com.google.code.gson:gson:2.2.4'
-
-    // Image Loader
-    compile 'com.mcxiaoke.volley:library:1.0.+'
-
-    //Test Dependencies
+    // Test Dependencies
     // not compiled with compileAndroidTest as the package of test is the same as app.
-    // This again is to special use case of android annotations:
-    // test have to be in the same package as the generated sources only have package visibility
-    compile 'com.squareup.dagger:dagger:1.+'
-    compile 'junit:junit:4.+'
+    // This is a special use case of android annotations:
+    // tests have to be in the same package as the sources
+    // as the generated sources only have package visibility
+    compile 'junit:junit:4.11'
+    compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.squareup:fest-android:1.0.7'
-    compile 'org.robolectric:robolectric:2.+'
+    compile 'org.robolectric:robolectric:2.3'
+    // Project Dependencies
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:19.+'
+    // Android annotations for easy readable code
+    apt 'org.androidannotations:androidannotations:3.1'
+    compile 'org.androidannotations:androidannotations-api:3.1'
+    // ORM Mapper for android
+    compile 'de.greenrobot:greendao-generator:1.3.1'
+    compile 'de.greenrobot:greendao:1.3.7'
+    // For Converters in RestServices
+    compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.google.code.gson:gson:2.2.4'
+    // Image Loader
+    compile 'com.mcxiaoke.volley:library:1.0.7'
 }

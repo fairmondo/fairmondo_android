@@ -3,6 +3,7 @@ package de.handler.mobile.android.shopprototype.ui;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -30,9 +31,11 @@ import java.util.ArrayList;
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
+import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment_;
@@ -42,10 +45,11 @@ import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFrag
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
-import de.handler.mobile.android.shopprototype.util.Cart;
+
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnSearchResultListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends AbstractActivity implements OnCategoriesListener,
+        OnDetailedProductListener, OnSearchResultListener, AdapterView.OnItemSelectedListener {
 
     private static final long AGAIN_PRESS_TIME = 1500;
 
@@ -58,8 +62,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Bean
     RestController restController;
 
-    @Bean
-    Cart cart;
 
     @ViewById(R.id.main_category_spinner)
     Spinner spinner;
@@ -77,6 +79,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     // Time for calculating interval between last back press action and new one
     // --> exit only when pressed twice
     private long mLastBackPressTime = System.currentTimeMillis();
+    private int mProductsCount = 0;
+    private ArrayList<Article> mProducts;
 
 
     @AfterInject
@@ -89,6 +93,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void initRestController() {
         restController.setProductListener(this);
         restController.setCategoriesListener(this);
+        restController.setDetailedProductListener(this);
     }
 
 
@@ -121,7 +126,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // TODO get featured products from server
         ArrayList<Article> articles = new ArrayList<Article>(3);
         for (int i = 0; i < 3; i++) {
-            Article article = new Article((long) i);
+            Article article = new Article(i);
             if (i == 0) {
                 article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_books_big.jpg");
                 article.setTitle("Bücher, Bücher, Bücher!");
@@ -151,11 +156,32 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onProductsSearchResponse(ArrayList<Article> products) {
-        this.hideProgressbar();
         if (mSpinnerSelection) {
-            this.initSelectionFragment(products);
+            this.getDetailedProducts(products);
         } else {
+            this.hideProgressbar();
             this.initFeatureFragment(products);
+        }
+    }
+
+    private void getDetailedProducts(ArrayList<Article> products) {
+        // Set products count as listener responds to every product
+        // and app needs to react when all products have finished loading
+        mProductsCount = products.size();
+
+        mProducts = new ArrayList<Article>(products.size());
+        for (Article product : products) {
+            restController.getDetailedProduct(product.getSlug());
+        }
+    }
+
+    @Override
+    public void onDetailedProductResponse(Article article) {
+        mProducts.add(article);
+
+        if (mProducts.size() == mProductsCount) {
+            this.hideProgressbar();
+            this.initSelectionFragment(mProducts);
         }
     }
 
@@ -257,11 +283,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @Override
     public void onSubCategoriesResponse(ArrayList<Category> categories) {
-        this.hideProgressbar();
 
         if (categories.size() < 1) {
             this.getProductSelection("", app.getLastCategory());
         } else {
+            this.hideProgressbar();
             this.initCategoryFragment(categories);
         }
     }
@@ -320,8 +346,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
     private void openCart() {
-        if (cart.getArticles().size() > 0) {
-            startActivity(new Intent(this, CartActivity_.class));
+        Cart cart = app.getCart();
+        if (cart.getLine_item() != null && cart.getLine_item().getRequested_quantity() > 0) {
+            Intent intent = new Intent(this, WebActivity_.class);
+            intent.putExtra(WebActivity.URI, cart.getCart_url());
+            startActivity(intent);
         } else {
             Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();
         }
@@ -361,4 +390,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 }

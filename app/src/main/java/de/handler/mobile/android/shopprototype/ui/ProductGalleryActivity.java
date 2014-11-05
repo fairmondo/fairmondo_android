@@ -8,7 +8,6 @@ import android.view.Window;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.database.Product;
 import de.handler.mobile.android.shopprototype.ui.adapter.ProductPagerAdapter;
-import de.handler.mobile.android.shopprototype.util.Cart;
 
 /**
  * Displays a ViewPager with the products from the search
@@ -31,9 +29,6 @@ public class ProductGalleryActivity extends AbstractActivity {
 
     @ViewById(R.id.activity_result_pager)
     ViewPager viewPager;
-
-    @Bean
-    Cart cart;
 
 
     @AfterInject

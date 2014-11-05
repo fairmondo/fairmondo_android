@@ -7,8 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:paddingTop="?attr/actionBarSize"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         android:id="@+id/fragment_product_image_view" />
 
     <RelativeLayout
@@ -31,15 +30,14 @@
             android:id="@+id/fragment_product_cart_add_image_button"
             android:background="@drawable/custom_button"/>
 
-        <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
+
+        <TextView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_margin="5dp"
-            android:visibility="gone"
             android:layout_toLeftOf="@id/fragment_product_cart_add_image_button"
             android:layout_toStartOf="@id/fragment_product_cart_add_image_button"
-            android:id="@+id/fragment_product_cart_remove_image_button"
-            android:background="@drawable/custom_button"/>
+            android:id="@+id/fragment_product_item_count_text_view"/>
+
 
     </RelativeLayout>
 
@@ -65,23 +63,35 @@
                 android:gravity="center"
                 android:id="@+id/fragment_product_title"/>
 
-            <TextView
+
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="150dp"
+                android:text="@string/fragment_product_description"
                 android:layout_below="@id/fragment_product_title"
-                android:textSize="25sp"
-                android:gravity="center_vertical"
-                android:padding="@dimen/default_gap"
-                android:id="@+id/fragment_product_description"/>
+                android:id="@+id/fragment_product_button_description"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_product_terms"
+                android:layout_below="@id/fragment_product_button_description"
+                android:id="@+id/fragment_product_button_terms"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_product_donation"
+                android:layout_below="@id/fragment_product_button_terms"
+                android:id="@+id/fragment_product_button_fair_percent"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fragment_product_description"
+                android:layout_below="@id/fragment_product_button_fair_percent"
                 android:textSize="30sp"
                 android:gravity="end"
-                android:padding="@dimen/default_gap"
+                android:padding="15dp"
                 android:id="@+id/fragment_product_price"/>
         </RelativeLayout>
     </ScrollView>

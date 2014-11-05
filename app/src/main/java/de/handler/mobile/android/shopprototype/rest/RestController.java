@@ -12,8 +12,12 @@ import org.androidannotations.annotations.rest.RestService;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
+import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 
 /**
@@ -25,6 +29,7 @@ public class RestController {
     @Bean
     RestServiceErrorHandler errorHandler;
 
+
     @RestService
     FairmondoRestService restService;
 
@@ -34,6 +39,8 @@ public class RestController {
 
     private OnSearchResultListener productListener;
     private OnCategoriesListener categoriesListener;
+    private OnDetailedProductListener detailedProductListener;
+    private OnCartChangeListener cartChangeListener;
     private Context mContext;
 
 
@@ -53,6 +60,14 @@ public class RestController {
 
     public void setCategoriesListener(OnCategoriesListener categoriesListener) {
         this.categoriesListener = categoriesListener;
+    }
+
+    public void setDetailedProductListener(OnDetailedProductListener detailedProductListener) {
+        this.detailedProductListener = detailedProductListener;
+    }
+
+    public void setCartChangeListener(OnCartChangeListener cartChangeListener) {
+        this.cartChangeListener = cartChangeListener;
     }
 
     @Background
@@ -78,6 +93,13 @@ public class RestController {
 
 
     @Background
+    public void getDetailedProduct(String slug) {
+        Article article = restService.getDetailedProduct(slug);
+        detailedProductListener.onDetailedProductResponse(article);
+    }
+
+
+    @Background
     public void getCategories() {
         ArrayList<Category> categories = restService.getCategories();
         categoriesListener.onCategoriesResponse(categories);
@@ -87,5 +109,20 @@ public class RestController {
     public void getSubCategories(int id) {
         ArrayList<Category> categories = restService.getSubCategories(id);
         categoriesListener.onSubCategoriesResponse(categories);
+    }
+
+    @Background
+    public void addToCard(int productId) {
+        //if (app.getCookie() != null) {
+        //    restService.setCookie("cart", app.getCookie());
+        //}
+
+        Cart cart = restService.addProductToCart(productId, 1);
+
+        //String cookie = restService.getCookie("cart");
+        //app.setCookie(cookie);
+
+        app.setCart(cart);
+        cartChangeListener.onCartChanged(cart);
     }
 }

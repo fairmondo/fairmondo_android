@@ -31,5 +31,8 @@
     <string name="fragment_product_removed_from_cart">Produkt entfernt</string>
     <string name="app_not_connected">Die App ist nicht mit dem Internet verbunden</string>
     <string name="close_app">Nochmaliges Drücken beendet die Anwendung</string>
+    <string name="fragment_product_description">Beschreibung</string>
+    <string name="fragment_product_terms">AGB</string>
+    <string name="fragment_product_donation">Spende</string>
 
 </resources>

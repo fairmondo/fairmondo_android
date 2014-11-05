@@ -24,6 +24,7 @@ import de.handler.mobile.android.shopprototype.ShopApp;
 public class WebActivity extends AbstractActivity {
 
     public static final String URI = "activity_web_uri";
+    public static final String HTTP_CONTENT = "http_content";
 
 
     @ViewById(R.id.activity_web_web_view)
@@ -38,8 +39,13 @@ public class WebActivity extends AbstractActivity {
         ActionBar actionBar = this.setupActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (app.isConnected()) {
-            String uri = getIntent().getStringExtra(URI);
+        String http = getIntent().getStringExtra(HTTP_CONTENT);
+        String uri = getIntent().getStringExtra(URI);
+
+        if (http != null) {
+            webView.loadData(http, "text/html; charset=UTF-8", null);
+
+        } else if (app.isConnected()) {
 
             if (uri != null && !uri.equals("")) {
                 webView.setWebViewClient(new RedirectWebViewClient());
@@ -48,6 +54,7 @@ public class WebActivity extends AbstractActivity {
 
                 webView.loadUrl(uri);
             }
+
         } else {
             Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
             this.finish();

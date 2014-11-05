@@ -51,13 +51,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/rs" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
@@ -79,40 +79,39 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 19 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="greendao-1.3.7" level="project" />
-    <orderEntry type="library" exported="" name="dagger-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="greendao-generator-1.3.1" level="project" />
-    <orderEntry type="library" exported="" name="freemarker-2.3.20" level="project" />
-    <orderEntry type="library" exported="" name="objenesis-1.3" level="project" />
     <orderEntry type="library" exported="" name="asm-5.0.1" level="project" />
-    <orderEntry type="library" exported="" name="gridlayout-v7-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="objenesis-1.3" level="project" />
+    <orderEntry type="library" exported="" name="dagger-1.2.2" level="project" />
+    <orderEntry type="library" exported="" name="freemarker-2.3.20" level="project" />
     <orderEntry type="library" exported="" name="ant-1.8.0" level="project" />
-    <orderEntry type="library" exported="" name="androidannotations-api-3.2-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="fest-android-1.0.7" level="project" />
-    <orderEntry type="library" exported="" name="maven-ant-tasks-2.1.3" level="project" />
     <orderEntry type="library" exported="" name="sqlite4java-0.282" level="project" />
-    <orderEntry type="library" exported="" name="junit-4.12-beta-2" level="project" />
+    <orderEntry type="library" exported="" name="maven-ant-tasks-2.1.3" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.3" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="robolectric-2.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
-    <orderEntry type="library" exported="" name="vtd-xml-2.11" level="project" />
     <orderEntry type="library" exported="" name="asm-commons-5.0.1" level="project" />
+    <orderEntry type="library" exported="" name="vtd-xml-2.11" level="project" />
     <orderEntry type="library" exported="" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="asm-tree-5.0.1" level="project" />
+    <orderEntry type="library" exported="" name="junit-4.11" level="project" />
     <orderEntry type="library" exported="" name="library-1.0.7" level="project" />
     <orderEntry type="library" exported="" name="fest-assert-core-2.0M10" level="project" />
     <orderEntry type="library" exported="" name="asm-analysis-5.0.1" level="project" />
     <orderEntry type="library" exported="" name="spring-android-rest-template-1.0.1.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="fest-util-1.2.5" level="project" />
     <orderEntry type="library" exported="" name="ant-launcher-1.8.0" level="project" />
-    <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="spring-android-core-1.0.1.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="fest-reflect-1.4.1" level="project" />
-    <orderEntry type="library" exported="" name="robolectric-2.4-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="asm-util-5.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidannotations-api-3.1" level="project" />
   </component>
 </module>
 

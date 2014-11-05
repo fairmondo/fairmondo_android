@@ -9,6 +9,7 @@ import org.androidannotations.annotations.EApplication;
 
 import de.handler.mobile.android.shopprototype.database.DaoMaster;
 import de.handler.mobile.android.shopprototype.database.DaoSession;
+import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.util.CustomImageCache;
 
 /**
@@ -29,6 +30,9 @@ public class ShopApp extends Application {
     private ImageLoader imageLoader;
     private DaoSession daoSession;
     private int lastCategory;
+    private String cookie;
+
+    private Cart cart;
 
     private boolean isConnected = false;
 
@@ -73,5 +77,21 @@ public class ShopApp extends Application {
 
     public void setLastCategory(int lastCategory) {
         this.lastCategory = lastCategory;
+    }
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
