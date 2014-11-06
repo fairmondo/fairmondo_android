@@ -3,7 +3,9 @@ package de.handler.mobile.android.shopprototype.ui;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
+import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
@@ -19,8 +21,8 @@ import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
-import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment;
-import de.handler.mobile.android.shopprototype.ui.fragments.SearchResultFragment_;
+import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment_;
 
 /**
  * Presents the Search Results
@@ -39,12 +41,6 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
 
     @AfterInject
-    public void overlayActionBar() {
-        // Request Action Bar overlay before setting content view a.k.a. before @AfterViews
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-    }
-
-    @AfterInject
     public void initRestController() {
         restController.setProductListener(this);
     }
@@ -53,7 +49,8 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
     @AfterViews
     public void init() {
-        this.setupActionBar();
+        ActionBar actionBar = this.setupActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         String query;
         // Get the intent, verify the action and get the query
@@ -78,14 +75,40 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
     @Override
     public void onProductsSearchResponse(ArrayList<Article> articles) {
-        SearchResultFragment searchResultFragment = new SearchResultFragment_();
+        ProductSelectionFragment searchResultFragment = new ProductSelectionFragment_();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(SearchResultFragment.SEARCH_RESULT_EXTRA, articles);
+        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, articles);
         searchResultFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.activity_search_result_container, searchResultFragment)
                 .commit();
+    }
+
+    /**
+     * ActionBar settings
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.product, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                this.openSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSettings() {
+
     }
 }

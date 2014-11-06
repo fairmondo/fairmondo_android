@@ -4,6 +4,7 @@ package de.handler.mobile.android.shopprototype.ui.fragments;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
+import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,10 +22,8 @@ import de.handler.mobile.android.shopprototype.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
-import de.handler.mobile.android.shopprototype.ui.WebActivity;
 import de.handler.mobile.android.shopprototype.ui.WebActivity_;
 import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
-import de.handler.mobile.android.shopprototype.util.RoundNetworkImageView;
 
 /**
  * Displays one product
@@ -43,9 +42,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView productImageView;
 
-    @ViewById(R.id.fragment_product_cart_add_image_button)
-    RoundNetworkImageView addProductImageView;
-
     @ViewById(R.id.fragment_product_item_count_text_view)
     TextView itemCountTextView;
 
@@ -62,8 +58,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     public void init() {
         restController.setCartChangeListener(this);
 
-        addProductImageView.setImageUrl("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/old/buy.png", app.getImageLoader());
-
         mProduct = getArguments().getParcelable(PRODUCT_EXTRA);
         if (mProduct != null) {
             // Create custom typeface
@@ -74,6 +68,14 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             priceTextView.setTypeface(myTypeface);
 
             productImageView.setImageUrl(mProduct.getTitle_image().getOriginal_url(), app.getImageLoader());
+            //TODO check if working
+            Palette.generateAsync(productImageView.getDrawingCache(), new Palette.PaletteAsyncListener() {
+                public void onGenerated(Palette palette) {
+                    int color = palette.getLightMutedColor(android.R.color.transparent);
+                    productImageView.setBackgroundColor(color);
+                }
+            });
+
             priceTextView.setText(String.valueOf(mProduct.getPrice_cents() / 100) + " €");
 
             getActivity().findViewById(R.id.fragment_product_button_description).setOnClickListener(this);
@@ -84,7 +86,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     }
 
-    @Click(R.id.fragment_product_cart_add_image_button)
+    @Click(R.id.fragment_product_button_buy)
     public void addToCart() {
         restController.addToCard(mProduct.getId());
     }
@@ -104,17 +106,16 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
         switch (v.getId()) {
             case R.id.fragment_product_button_description:
-                intent.putExtra(WebActivity.HTTP_CONTENT, mProduct.getContent_html());
+                intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
                 break;
             case R.id.fragment_product_button_terms:
-                intent.putExtra(WebActivity.HTTP_CONTENT, mProduct.getTerms_html());
+                intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
                 break;
             case R.id.fragment_product_button_fair_percent:
-                intent.putExtra(WebActivity.HTTP_CONTENT, mProduct.getFair_percent_html());
+                intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
                 break;
         }
 
         startActivity(intent);
-
     }
 }

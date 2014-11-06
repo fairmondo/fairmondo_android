@@ -36,7 +36,7 @@ public class Article implements Parcelable {
     private int quantity_available;
     private int vat;
     private int basic_price_cents;
-    private int basic_price_amount;
+    private String basic_price_amount;
 
     private FairmondoTitleImage title_image;
 
@@ -127,7 +127,7 @@ public class Article implements Parcelable {
         return basic_price_cents;
     }
 
-    public int getBasic_price_amount() {
+    public String getBasic_price_amount() {
         return basic_price_amount;
     }
 
@@ -185,7 +185,7 @@ public class Article implements Parcelable {
         this.basic_price_cents = basic_price_cents;
     }
 
-    public void setBasic_price_amount(int basic_price_amount) {
+    public void setBasic_price_amount(String basic_price_amount) {
         this.basic_price_amount = basic_price_amount;
     }
 
@@ -249,7 +249,7 @@ public class Article implements Parcelable {
         dest.writeInt(this.quantity_available);
         dest.writeInt(this.vat);
         dest.writeInt(this.basic_price_cents);
-        dest.writeInt(this.basic_price_amount);
+        dest.writeString(this.basic_price_amount);
         dest.writeParcelable(this.title_image, 0);
         dest.writeTypedList(this.thumbnails);
         dest.writeParcelable(this.tags, 0);
@@ -277,7 +277,7 @@ public class Article implements Parcelable {
         this.quantity_available = in.readInt();
         this.vat = in.readInt();
         this.basic_price_cents = in.readInt();
-        this.basic_price_amount = in.readInt();
+        this.basic_price_amount = in.readString();
         this.title_image = in.readParcelable(FairmondoTitleImage.class.getClassLoader());
         in.readTypedList(thumbnails, FairmondoThumbnails.CREATOR);
         this.tags = in.readParcelable(FairmondoTag.class.getClassLoader());

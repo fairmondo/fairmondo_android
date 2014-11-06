@@ -2,11 +2,10 @@ package de.handler.mobile.android.shopprototype.ui;
 
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -31,16 +30,11 @@ public class ProductGalleryActivity extends AbstractActivity {
     ViewPager viewPager;
 
 
-    @AfterInject
-    public void overlayActionBar() {
-        // Request Action Bar overlay before setting content view a.k.a. before @AfterViews
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-    }
-
 
     @AfterViews
     public void init() {
-        this.setupActionBar();
+        ActionBar actionBar = this.setupActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         ArrayList<Product> products = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
         int position = getIntent().getIntExtra(PAGER_POSITION_EXTRA, 0);

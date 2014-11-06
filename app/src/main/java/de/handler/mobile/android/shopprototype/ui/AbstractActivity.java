@@ -36,7 +36,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
         Log.i("FAIRMONDO_APP ", "NETWORKSTATECHANGE");
     }
 
-    private void checkNetworkState() {
+    public void checkNetworkState() {
         ShopApp app = (ShopApp) getApplicationContext();
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if (activeNetwork != null) {
@@ -55,8 +55,8 @@ public abstract class AbstractActivity extends ActionBarActivity {
         final ActionBar actionBar = getSupportActionBar();
 
         // make action bar transparent
-        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.fairmondo_blue_light));
-        actionBar.setStackedBackgroundDrawable(new ColorDrawable(R.color.transparent_white_80));
+        actionBar.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         actionBar.setSplitBackgroundDrawable(new ColorDrawable(R.color.transparent_white_80));
 
         // title bar and icon

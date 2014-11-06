@@ -9,7 +9,6 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -45,6 +44,8 @@ import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFrag
 import de.handler.mobile.android.shopprototype.ui.fragments.ProductSelectionFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.TitleFragment_;
+import de.handler.mobile.android.shopprototype.ui.fragments.WebFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.WebFragment_;
 
 
 @EActivity(R.layout.activity_main)
@@ -84,12 +85,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     @AfterInject
-    public void overlayActionBar() {
-        // Request Action Bar overlay before setting content view a.k.a. before @AfterViews
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-    }
-
-    @AfterInject
     public void initRestController() {
         restController.setProductListener(this);
         restController.setCategoriesListener(this);
@@ -101,9 +96,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void init() {
         // method in AbstractActivity
         this.setupActionBar();
+        this.checkNetworkState();
 
         this.initTitleFragment();
-        this.getFeaturedProducts();
+        this.initStartFragment();
         this.getCategories();
     }
 
@@ -121,107 +117,28 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
-    private void getFeaturedProducts() {
+    private void initStartFragment() {
         this.showProgressbar();
-        // TODO get featured products from server
-        ArrayList<Article> articles = new ArrayList<Article>(3);
-        for (int i = 0; i < 3; i++) {
-            Article article = new Article(i);
-            if (i == 0) {
-                article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_books_big.jpg");
-                article.setTitle("Bücher, Bücher, Bücher!");
-            } else if (i == 1) {
-                article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_coffee_big.jpg");
-                article.setTitle("Gutes Genießen.");
-            } else {
-                article.setTitle_image_url("https://raw.githubusercontent.com/fairmondo/fairmondo/develop/app/assets/images/welcome/billboard_discover_big.jpg");
-                article.setTitle("Gutes einfach entdecken");
-            }
-            articles.add(article);
-        }
-        this.initFeatureFragment(articles);
-    }
 
-    private void getProductSelection(String searchRequest, int categoryId) {
-        if (app.isConnected()) {
-            this.showProgressbar();
-            restController.getProduct(searchRequest, categoryId);
-        } else {
-            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Callback for featured products server response
-     */
-    @Override
-    public void onProductsSearchResponse(ArrayList<Article> products) {
-        if (mSpinnerSelection) {
-            this.getDetailedProducts(products);
-        } else {
-            this.hideProgressbar();
-            this.initFeatureFragment(products);
-        }
-    }
-
-    private void getDetailedProducts(ArrayList<Article> products) {
-        // Set products count as listener responds to every product
-        // and app needs to react when all products have finished loading
-        mProductsCount = products.size();
-
-        mProducts = new ArrayList<Article>(products.size());
-        for (Article product : products) {
-            restController.getDetailedProduct(product.getSlug());
-        }
-    }
-
-    @Override
-    public void onDetailedProductResponse(Article article) {
-        mProducts.add(article);
-
-        if (mProducts.size() == mProductsCount) {
-            this.hideProgressbar();
-            this.initSelectionFragment(mProducts);
-        }
-    }
-
-
-    private void initFeatureFragment(ArrayList<Article> products) {
-        FeatureFragment featureFragment = new FeatureFragment_();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(FeatureFragment.FEATURED_PRODUCTS_EXTRA, products);
-        featureFragment.setArguments(bundle);
+        bundle.putString(WebFragment.URI, "http://mitmachen.fairmondo.de/anteile-zeichnen/");
+
+        WebFragment webFragment = new WebFragment_();
+        webFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_products_container, featureFragment)
+                .replace(R.id.main_products_container, webFragment)
                 .commit();
     }
 
 
-    private void initSelectionFragment(ArrayList<Article> products) {
-        ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, products);
-        selectionFragment.setArguments(bundle);
 
-        try {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_products_container, selectionFragment)
-                    .addToBackStack("selectionFragment")
-                    .commit();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     private void getCategories() {
         restController.getCategories();
     }
 
-    private void getSubCategories(int id) {
-        restController.getSubCategories(id);
-    }
 
     /**
      * Callback for categories server response
@@ -276,19 +193,22 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        this.getSubCategories(mCategories.get(parent.getLastVisiblePosition()).getId());
-        mSpinnerSelection = true;
+    }
+
+
+    private void getSubCategories(int id) {
+        restController.getSubCategories(id);
     }
 
 
     @Override
     public void onSubCategoriesResponse(ArrayList<Category> categories) {
 
-        if (categories.size() < 1) {
-            this.getProductSelection("", app.getLastCategory());
-        } else {
+        if (categories.size() >= 1) {
             this.hideProgressbar();
             this.initCategoryFragment(categories);
+        } else {
+            this.getProductSelection("", app.getLastCategory());
         }
     }
 
@@ -309,6 +229,90 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             e.printStackTrace();
         }
     }
+
+
+
+    private void getProductSelection(String searchRequest, int categoryId) {
+        if (app.isConnected()) {
+            this.showProgressbar();
+            restController.getProduct(searchRequest, categoryId);
+        } else {
+            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Callback for featured products server response
+     */
+    @Override
+    public void onProductsSearchResponse(ArrayList<Article> products) {
+        if (mSpinnerSelection) {
+            if (products != null && products.size() > 0) {
+                this.getDetailedProducts(products);
+            } else {
+                this.hideProgressbar();
+                this.initSelectionFragment(null);
+            }
+        } else {
+            this.hideProgressbar();
+            this.initFeatureFragment(products);
+        }
+    }
+
+
+
+    private void getDetailedProducts(ArrayList<Article> products) {
+        // Set products count as listener responds to every product
+        // and app needs to react when all products have finished loading
+        mProductsCount = products.size();
+
+        mProducts = new ArrayList<Article>(products.size());
+        for (Article product : products) {
+            restController.getDetailedProduct(product.getSlug());
+        }
+    }
+
+    @Override
+    public void onDetailedProductResponse(Article article) {
+        mProducts.add(article);
+
+        if (mProducts.size() == mProductsCount) {
+            this.hideProgressbar();
+            this.initSelectionFragment(mProducts);
+        }
+    }
+
+
+
+
+    private void initSelectionFragment(ArrayList<Article> products) {
+        ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, products);
+        selectionFragment.setArguments(bundle);
+
+        try {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_products_container, selectionFragment)
+                    .addToBackStack("selectionFragment")
+                    .commit();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initFeatureFragment(ArrayList<Article> products) {
+        FeatureFragment featureFragment = new FeatureFragment_();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(FeatureFragment.FEATURED_PRODUCTS_EXTRA, products);
+        featureFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_products_container, featureFragment)
+                .commit();
+    }
+
+
 
 
     /**
@@ -349,7 +353,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         Cart cart = app.getCart();
         if (cart.getLine_item() != null && cart.getLine_item().getRequested_quantity() > 0) {
             Intent intent = new Intent(this, WebActivity_.class);
-            intent.putExtra(WebActivity.URI, cart.getCart_url());
+            intent.putExtra(WebFragment.URI, cart.getCart_url());
             startActivity(intent);
         } else {
             Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();

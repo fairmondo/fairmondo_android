@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
-import de.handler.mobile.android.shopprototype.ui.WebActivity;
 import de.handler.mobile.android.shopprototype.ui.WebActivity_;
 import de.handler.mobile.android.shopprototype.util.CustomNetworkImageView;
 
@@ -41,23 +40,26 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
     @App
     ShopApp app;
 
+
+    private ArrayList<Article> mProducts = new ArrayList<Article>();
+
     @AfterViews
     public void init() {
-        ArrayList<Article> products = getArguments().getParcelableArrayList(FEATURED_PRODUCTS_EXTRA);
+         mProducts = getArguments().getParcelableArrayList(FEATURED_PRODUCTS_EXTRA);
 
         int i;
-        if (products.size() >= featuredProductsImageViews.size()) {
+        if (mProducts.size() >= featuredProductsImageViews.size()) {
             i = 0;
         } else {
-            i = featuredProductsImageViews.size() - products.size();
+            i = featuredProductsImageViews.size() - mProducts.size();
         }
 
         for (; i < featuredProductsImageViews.size(); i++) {
             featuredProductsImageViews.get(i).setImageUrl(
-                    products.get(i).getTitle_image_url(),
+                    mProducts.get(i).getTitle_image_url(),
                     app.getImageLoader());
             featuredProductsImageViews.get(i).setOnClickListener(this);
-            featuredProductsTitles.get(i).setText(products.get(i).getTitle());
+            featuredProductsTitles.get(i).setText(mProducts.get(i).getTitle());
         }
     }
 
@@ -66,20 +68,29 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         String url = "https://www.fairmondo.de";
 
-        switch (v.getId()) {
-            case R.id.fragment_feature_image_first:
-                url ="https://www.fairmondo.de/categories/bucher";
-                break;
-            case R.id.fragment_feature_image_second:
-                url = "https://www.fairmondo.de/users/coffee-circle?pk_campaign=billboards&pk_kwd=kaffee";
-                break;
-            case R.id.fragment_feature_image_third:
-                url = "https://www.fairmondo.de/libraries/6867?pk_campaign=billboards&pk_kwd=entdecken_unterstuetzen";
-                break;
+        if (mProducts != null) {
+
+            switch (v.getId()) {
+                case R.id.fragment_feature_image_first:
+                    if (mProducts.size() > 0) {
+                        url = mProducts.get(0).getHtml_url();
+                    }
+                    break;
+                case R.id.fragment_feature_image_second:
+                    if (mProducts.size() > 1) {
+                        url = mProducts.get(1).getHtml_url();
+                    }
+                    break;
+                case R.id.fragment_feature_image_third:
+                    if (mProducts.size() > 2) {
+                        url = mProducts.get(2).getHtml_url();
+                    }
+                    break;
+            }
         }
 
         Intent intent = new Intent(getActivity(), WebActivity_.class);
-        intent.putExtra(WebActivity.URI, url);
+        intent.putExtra(WebFragment.URI, url);
         startActivity(intent);
     }
 }

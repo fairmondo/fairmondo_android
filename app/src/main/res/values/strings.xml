@@ -34,5 +34,7 @@
     <string name="fragment_product_description">Beschreibung</string>
     <string name="fragment_product_terms">AGB</string>
     <string name="fragment_product_donation">Spende</string>
+    <string name="fragment_product_buy">Kaufen</string>
+    <string name="fragment_product_selection_empty">Hier gibt es noch keine Produkte</string>
 
 </resources>

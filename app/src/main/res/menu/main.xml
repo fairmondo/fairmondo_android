@@ -11,12 +11,11 @@
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 
     <item android:id="@+id/action_cart"
-        android:icon="@drawable/cart"
+        android:icon="@drawable/cart_black"
         android:title="@string/action_cart"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>

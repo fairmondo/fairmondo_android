@@ -113,14 +113,14 @@ public class RestController {
 
     @Background
     public void addToCard(int productId) {
-        //if (app.getCookie() != null) {
-        //    restService.setCookie("cart", app.getCookie());
-        //}
+        if (app.getCookie() != null) {
+            restService.setCookie("cart", app.getCookie());
+        }
 
         Cart cart = restService.addProductToCart(productId, 1);
 
-        //String cookie = restService.getCookie("cart");
-        //app.setCookie(cookie);
+        String cookie = restService.getCookie("cart");
+        app.setCookie(cookie);
 
         app.setCart(cart);
         cartChangeListener.onCartChanged(cart);

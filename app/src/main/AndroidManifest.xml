@@ -27,7 +27,13 @@
 
         <activity
             android:name=".ui.SearchableActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName="de.handler.mobile.android.shopprototype.ui.MainActivity_" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.handler.mobile.android.shopprototype.ui.MainActivity_" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -37,12 +43,25 @@
 
         <activity
             android:name=".ui.ProductGalleryActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName="de.handler.mobile.android.shopprototype.ui.MainActivity_" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.handler.mobile.android.shopprototype.ui.MainActivity_" />
+
         </activity>
 
         <activity
+            android:theme="@style/BaseTheme"
             android:name=".ui.WebActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName="de.handler.mobile.android.shopprototype.ui.MainActivity_" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.handler.mobile.android.shopprototype.ui.MainActivity_" />
+
         </activity>
 
     </application>

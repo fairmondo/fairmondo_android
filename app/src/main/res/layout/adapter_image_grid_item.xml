@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/image_adapter_grid_item_container">
+
 
     <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
         android:layout_width="100dp"
@@ -15,5 +17,7 @@
     <TextView
         style="@style/textview_banner_style_grid_view"
         android:id="@+id/image_adapter_text" />
+
+
 
 </RelativeLayout>

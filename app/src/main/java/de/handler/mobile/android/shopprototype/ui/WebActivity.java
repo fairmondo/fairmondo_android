@@ -1,21 +1,17 @@
 package de.handler.mobile.android.shopprototype.ui;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.ui.fragments.WebFragment;
+import de.handler.mobile.android.shopprototype.ui.fragments.WebFragment_;
 
 /**
  * Contains a webView for displaying homepages
@@ -23,55 +19,35 @@ import de.handler.mobile.android.shopprototype.ShopApp;
 @EActivity(R.layout.activity_web)
 public class WebActivity extends AbstractActivity {
 
-    public static final String URI = "activity_web_uri";
-    public static final String HTTP_CONTENT = "http_content";
-
-
-    @ViewById(R.id.activity_web_web_view)
-    WebView webView;
-
     @App
     ShopApp app;
-
 
     @AfterViews
     void init() {
         ActionBar actionBar = this.setupActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String http = getIntent().getStringExtra(HTTP_CONTENT);
-        String uri = getIntent().getStringExtra(URI);
+        String http = getIntent().getStringExtra(WebFragment.HTTP_CONTENT);
+        String uri = getIntent().getStringExtra(WebFragment.URI);
 
-        if (http != null) {
-            webView.loadData(http, "text/html; charset=UTF-8", null);
+        Bundle bundle = new Bundle();
+        bundle.putString(WebFragment.URI, uri);
+        bundle.putString(WebFragment.HTTP_CONTENT, http);
 
-        } else if (app.isConnected()) {
+        WebFragment webFragment = new WebFragment_();
+        webFragment.setArguments(bundle);
 
-            if (uri != null && !uri.equals("")) {
-                webView.setWebViewClient(new RedirectWebViewClient());
-                WebSettings webSettings = webView.getSettings();
-                webSettings.setJavaScriptEnabled(true);
+        if (app.isConnected()) {
 
-                webView.loadUrl(uri);
-            }
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.activity_web_container, webFragment)
+                .commit();
         } else {
             Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
             this.finish();
         }
     }
 
-    private class RedirectWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            super.shouldOverrideUrlLoading(view, url);
-            Log.d(getClass().getCanonicalName(), "redirected to: " + url);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-            finish();
-            return true;
-        }
-    }
+
 
 }

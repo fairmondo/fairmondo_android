@@ -19,13 +19,13 @@ androidTest {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.0.1"
 
     defaultConfig {
         applicationId "de.handler.mobile.android.shopprototype"
         minSdkVersion 11
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 1
         versionName "0.1"
     }
@@ -76,6 +76,12 @@ android {
 }
 
 dependencies {
+    // Project Dependencies
+    compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.android.support:support-v4:21.0.+'
+    compile 'com.android.support:palette-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
+
     // Test Dependencies
     // not compiled with compileAndroidTest as the package of test is the same as app.
     // This is a special use case of android annotations:
@@ -84,20 +90,20 @@ dependencies {
     compile 'junit:junit:4.11'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.squareup:fest-android:1.0.7'
-    compile 'org.robolectric:robolectric:2.3'
-    // Project Dependencies
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:support-v4:19.+'
+    compile 'org.robolectric:robolectric:2.4-SNAPSHOT'
+
     // Android annotations for easy readable code
     apt 'org.androidannotations:androidannotations:3.1'
     compile 'org.androidannotations:androidannotations-api:3.1'
+
     // ORM Mapper for android
-    compile 'de.greenrobot:greendao-generator:1.3.1'
     compile 'de.greenrobot:greendao:1.3.7'
+
     // For Converters in RestServices
     compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.3'
+
     // Image Loader
     compile 'com.mcxiaoke.volley:library:1.0.7'
 }

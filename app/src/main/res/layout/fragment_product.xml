@@ -3,97 +3,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:paddingTop="?attr/actionBarSize"
-        android:scaleType="centerInside"
-        android:id="@+id/fragment_product_image_view" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignBottom="@id/fragment_product_image_view">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/transparent_white_20"/>
-
-        <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="5dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:id="@+id/fragment_product_cart_add_image_button"
-            android:background="@drawable/custom_button"/>
-
-
-        <TextView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_toLeftOf="@id/fragment_product_cart_add_image_button"
-            android:layout_toStartOf="@id/fragment_product_cart_add_image_button"
-            android:id="@+id/fragment_product_item_count_text_view"/>
-
-
-    </RelativeLayout>
-
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent_white_80"
-        android:layout_below="@id/fragment_product_image_view">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/fragment_product_main_container"
+        android:background="@color/transparent_white_80">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context="android.mobile.handler.de.shopprototype.ui.fragments.ProductFragment"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:paddingTop="?attr/actionBarSize"
+                android:scaleType="centerInside"
+                android:id="@+id/fragment_product_image_view" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:minHeight="50dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:id="@+id/fragment_product_title"/>
+                android:layout_below="@id/fragment_product_image_view"
+                tools:context="android.mobile.handler.de.shopprototype.ui.fragments.ProductFragment"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:minHeight="50dp"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:id="@+id/fragment_product_title"/>
 
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_description"
-                android:layout_below="@id/fragment_product_title"
-                android:id="@+id/fragment_product_button_description"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_description"
+                    android:layout_below="@id/fragment_product_title"
+                    android:id="@+id/fragment_product_button_description"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_terms"
-                android:layout_below="@id/fragment_product_button_description"
-                android:id="@+id/fragment_product_button_terms"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_terms"
+                    android:layout_below="@id/fragment_product_button_description"
+                    android:id="@+id/fragment_product_button_terms"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_donation"
-                android:layout_below="@id/fragment_product_button_terms"
-                android:id="@+id/fragment_product_button_fair_percent"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_donation"
+                    android:layout_below="@id/fragment_product_button_terms"
+                    android:id="@+id/fragment_product_button_fair_percent"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/fragment_product_button_fair_percent"
-                android:textSize="30sp"
-                android:gravity="end"
-                android:padding="15dp"
-                android:id="@+id/fragment_product_price"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fragment_product_button_fair_percent"
+                    android:textSize="30sp"
+                    android:gravity="end"
+                    android:padding="15dp"
+                    android:id="@+id/fragment_product_price"/>
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/fragment_product_button_buy"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_selector"
+        android:text="@string/fragment_product_buy"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_white_50"
+        android:layout_alignBaseline="@id/fragment_product_button_buy"
+        android:textSize="30sp"
+        android:id="@+id/fragment_product_item_count_text_view"/>
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package de.handler.mobile.android.shopprototype.rest;
 
+import android.util.Log;
+
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EBean;
 import org.springframework.http.HttpHeaders;
@@ -25,13 +27,20 @@ public class HttpResponseInterceptor implements ClientHttpRequestInterceptor {
     @Override
     public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes, ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
         HttpHeaders headers = httpRequest.getHeaders();
-        headers.add("Set-Cookie", app.getCookie());
-        List<String> cookies = httpRequest.getHeaders().get("Set-Cookie");
+        Log.d("\n HTTP_INTERCEPTOR: URI ", httpRequest.getURI().toString());
+
+        //headers.add("Set-Cookie", app.getCookie());
+        List<String> cookies = headers.get("Set-Cookie");
+        //Log.d("\n HTTP_INTERCEPTOR: COOKIES SIZE ", String.valueOf(cookies.size()));
+
+
         ClientHttpResponse response = clientHttpRequestExecution.execute(httpRequest, bytes);
-        cookies = response.getHeaders().get("Set-Cookie");
-        if (cookies.get(0).contains("cart") && app.getCookie() == null) {
-            app.setCookie(cookies.get(0));
-        }
+        Log.d("\n HTTP_INTERCEPTOR: RESPONSE ", response.getStatusText());
+
+        //cookies = response.getHeaders().get("Set-Cookie");
+        //if (cookies.get(0).contains("cart")) {
+        //    app.setCookie(cookies.get(0));
+        //}
         return response;
     }
 }

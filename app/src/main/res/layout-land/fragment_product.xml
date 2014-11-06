@@ -6,12 +6,12 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:background="@color/transparent_white_80">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context="android.mobile.handler.de.shopprototype.ui.fragments.ProductFragment"
             android:orientation="vertical">
 
@@ -23,41 +23,12 @@
                 android:scaleType="centerInside"
                 android:id="@+id/fragment_product_image_view" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/fragment_product_image_container"
-                android:layout_alignBottom="@id/fragment_product_image_view">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@color/transparent_white_20"/>
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_toLeftOf="@id/fragment_product_cart_add_image_button"
-                    android:layout_toStartOf="@id/fragment_product_cart_add_image_button"
-                    android:id="@+id/fragment_product_item_count_text_view"/>
-
-                <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/fragment_product_cart_add_image_button"
-                    android:background="@drawable/custom_button"/>
-
-            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="80dp"
-                android:layout_below="@id/fragment_product_image_container"
+                android:layout_below="@id/fragment_product_image_view"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:id="@+id/fragment_product_title"/>
@@ -94,5 +65,22 @@
                 android:id="@+id/fragment_product_price"/>
         </RelativeLayout>
     </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/fragment_product_button_buy"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_selector"
+        android:text="@string/fragment_product_buy"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_white_50"
+        android:layout_alignBaseline="@id/fragment_product_button_buy"
+        android:textSize="30sp"
+        android:id="@+id/fragment_product_item_count_text_view"/>
 
 </RelativeLayout>
