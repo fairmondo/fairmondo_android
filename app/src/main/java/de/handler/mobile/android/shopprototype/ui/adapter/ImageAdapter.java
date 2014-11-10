@@ -74,7 +74,11 @@ public class ImageAdapter extends BaseAdapter {
         }
 
         String description = mProducts.get(position).getTitle();
-        String url = mProducts.get(position).getTitle_image().getThumb_url();
+
+        String url = mProducts.get(position).getTitle_image_url();
+        if (mProducts.get(position).getTitle_image() != null) {
+            url = mProducts.get(position).getTitle_image().getThumb_url();
+        }
 
         ShopApp_ app = (ShopApp_) mContext.getApplicationContext();
 

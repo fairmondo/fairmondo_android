@@ -2,32 +2,31 @@
 
 buildscript {
     repositories {
-        //jcenter()
         mavenCentral()
         maven {
-            //url 'https://oss.sonatype.org/content/repositories/snapshots/'
-            url 'https://github.com/rockerhieu/mvn-repo/raw/master/'
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:0.13.+'
         // small Gradle plugin that helps out when using an annotation processor
         // --> Android Annotations
         // makes the build code "available" to android studio
         // adds it to the source path
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.+'
+        classpath "com.neenbedankt.gradle.plugins:android-apt:1.2"
         // plugin to use robolectric
-        classpath 'org.robolectric.gradle:gradle-android-test-plugin:0.+'
-
+        // classpath 'org.robolectric.gradle:gradle-android-test-plugin:0.9.+'
+        //classpath 'org.robolectric:robolectric-gradle-plugin:0.13.+'
     }
 }
 
 allprojects {
     repositories {
-        // jcenter()
         mavenCentral()
         maven {
             url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
+        jcenter()
     }
 }

@@ -1,16 +1,19 @@
 package de.handler.mobile.android.shopprototype.rest;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
 
+import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
@@ -113,16 +116,22 @@ public class RestController {
 
     @Background
     public void addToCard(int productId) {
-        if (app.getCookie() != null) {
-            restService.setCookie("cart", app.getCookie());
-        }
+        restService.setCookie("cart", app.getCookie());
 
         Cart cart = restService.addProductToCart(productId, 1);
-
         String cookie = restService.getCookie("cart");
-        app.setCookie(cookie);
 
-        app.setCart(cart);
-        cartChangeListener.onCartChanged(cart);
+        if (cart != null && cart.getCart_id() != 0) {
+            app.setCookie(cookie);
+            app.setCart(cart);
+            cartChangeListener.onCartChanged(cart);
+        } else {
+            this.makeToast();
+        }
+    }
+
+    @UiThread
+    public void makeToast() {
+        Toast.makeText(mContext, mContext.getString(R.string.item_amount_too_big), Toast.LENGTH_SHORT).show();
     }
 }

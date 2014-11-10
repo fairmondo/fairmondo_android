@@ -2,7 +2,6 @@ package de.handler.mobile.android.shopprototype.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -29,21 +28,23 @@ public class WebActivity extends AbstractActivity {
 
         String http = getIntent().getStringExtra(WebFragment.HTTP_CONTENT);
         String uri = getIntent().getStringExtra(WebFragment.URI);
+        String cookie = getIntent().getStringExtra(WebFragment.COOKIE);
 
         Bundle bundle = new Bundle();
         bundle.putString(WebFragment.URI, uri);
         bundle.putString(WebFragment.HTTP_CONTENT, http);
+        bundle.putString(WebFragment.COOKIE, cookie);
 
         WebFragment webFragment = new WebFragment_();
         webFragment.setArguments(bundle);
 
-        if (app.isConnected()) {
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.activity_web_container, webFragment)
-                .commit();
+        if ((uri != null && app.isConnected()) || http != null) {
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.activity_web_container, webFragment)
+                    .commit();
         } else {
-            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
             this.finish();
         }
     }

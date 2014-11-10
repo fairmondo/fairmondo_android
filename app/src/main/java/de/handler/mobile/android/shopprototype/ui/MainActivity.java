@@ -351,9 +351,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     private void openCart() {
         Cart cart = app.getCart();
-        if (cart.getLine_item() != null && cart.getLine_item().getRequested_quantity() > 0) {
+        if (cart != null &&
+                cart.getLine_item() != null &&
+                cart.getLine_item().getRequested_quantity() > 0) {
+
             Intent intent = new Intent(this, WebActivity_.class);
             intent.putExtra(WebFragment.URI, cart.getCart_url());
+            intent.putExtra(WebFragment.COOKIE, app.getCookie());
             startActivity(intent);
         } else {
             Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();

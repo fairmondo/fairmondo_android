@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,6 +27,7 @@ public class WebFragment extends Fragment {
 
     public static final String URI = "activity_web_uri";
     public static final String HTTP_CONTENT = "http_content";
+    public static final String COOKIE = "cart_cookie";
 
     @App
     ShopApp app;
@@ -44,15 +47,27 @@ public class WebFragment extends Fragment {
 
         String http = getArguments().getString(HTTP_CONTENT);
         String uri = getArguments().getString(URI);
+        String cookie = getArguments().getString(COOKIE);
+
 
         if (http != null) {
             webView.loadData(http, "text/html; charset=UTF-8", null);
 
         } else if (uri != null && !uri.equals("")) {
-                webView.setWebViewClient(new RedirectWebViewClient());
-                WebSettings webSettings = webView.getSettings();
-                webSettings.setJavaScriptEnabled(true);
-                webView.loadUrl(uri);
+
+            if (cookie != null) {
+                CookieSyncManager.createInstance(getActivity());
+                CookieManager cookieManager = CookieManager.getInstance();
+                if(app.getCookie() != null){
+                    cookieManager.setCookie(uri, "cart=" + app.getCookie());
+                    CookieSyncManager.getInstance().sync();
+                }
+            }
+
+            webView.setWebViewClient(new RedirectWebViewClient());
+            WebSettings webSettings = webView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            webView.loadUrl(uri);
         }
     }
 

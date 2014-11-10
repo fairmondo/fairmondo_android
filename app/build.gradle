@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-apply plugin: 'android-test'
+//apply plugin: 'robolectric'
 
 configurations {
     apt
@@ -13,10 +13,6 @@ apt {
     }
 }
 
-androidTest {
-    // configure the set of classes for JUnit tests
-    include '**/*Test.class'
-}
 
 android {
     compileSdkVersion 21
@@ -28,13 +24,19 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "0.1"
+//        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
-    // Tell Gradle where to find test sources
-    sourceSets {
-        androidTest.setRoot('src/main/java')
-        build.srcDirs = ['build']
-    }
+//    sourceSets {
+//        androidTest {
+//            setRoot('src/main')
+//        }
+//    }
+
+//    robolectric {
+//        include '**/*Test.class'
+//        exclude '**/espresso/**/*.class'
+//    }
 
     buildTypes {
         release {
@@ -52,27 +54,6 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/NOTICE'
     }
-
-    configurations.compile {
-        exclude module: 'spring-core'
-        exclude module: 'spring-web'
-        exclude module: 'commons-logging'
-        exclude module: 'httpclient'
-        exclude module: 'classworlds'
-        exclude module: 'maven-artifact'
-        exclude module: 'maven-artifact-manager'
-        exclude module: 'maven-error-diagnostics'
-        exclude module: 'maven-model'
-        exclude module: 'maven-project'
-        exclude module: 'maven-settings'
-        exclude module: 'plexus-container-default'
-        exclude module: 'plexus-interpolation'
-        exclude module: 'plexus-utils'
-        exclude module: 'wagon-file'
-        exclude module: 'wagon-http-lightweight'
-        exclude module: 'wagon-http-shared'
-        exclude module: 'wagon-provider-api'
-    }
 }
 
 dependencies {
@@ -82,15 +63,6 @@ dependencies {
     compile 'com.android.support:palette-v7:21.0.+'
     compile 'com.android.support:recyclerview-v7:21.0.+'
 
-    // Test Dependencies
-    // not compiled with compileAndroidTest as the package of test is the same as app.
-    // This is a special use case of android annotations:
-    // tests have to be in the same package as the sources
-    // as the generated sources only have package visibility
-    compile 'junit:junit:4.11'
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    compile 'com.squareup:fest-android:1.0.7'
-    compile 'org.robolectric:robolectric:2.4-SNAPSHOT'
 
     // Android annotations for easy readable code
     apt 'org.androidannotations:androidannotations:3.1'
@@ -106,4 +78,49 @@ dependencies {
 
     // Image Loader
     compile 'com.mcxiaoke.volley:library:1.0.7'
+
+
+/*    //Test Dependencies
+    // not compiled with compileAndroidTest as the package of test is the same as app.
+    // This again is to special use case of android annotations:
+    // test have to be in the same package as the generated sources only have package visibility
+    // Espresso
+    testCompile files('libs/espresso-1.1.jar', 'libs/testrunner-1.1.jar', 'libs/testrunner-runtime-1.1.jar')
+
+    testCompile 'com.google.guava:guava:18.0'
+    testCompile 'com.squareup.dagger:dagger:1.1.0'
+    testCompile 'org.hamcrest:hamcrest-integration:1.1'
+    testCompile 'org.hamcrest:hamcrest-core:1.1'
+    testCompile 'org.hamcrest:hamcrest-library:1.1'
+
+    testCompile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+
+    testCompile('org.robolectric:robolectric:2.4') {
+        exclude module: 'classworlds'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-provider-api'
+    }
+    testCompile 'com.squareup:fest-android:1.0.8'
+
+    apply plugin: 'idea'
+    idea {
+        module {
+            testOutputDir = file('build/test-classes/debug')
+        }
+    }
+*/
 }

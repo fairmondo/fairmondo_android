@@ -67,16 +67,34 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             titleTextView.setTypeface(myTypeface);
             priceTextView.setTypeface(myTypeface);
 
-            productImageView.setImageUrl(mProduct.getTitle_image().getOriginal_url(), app.getImageLoader());
-            //TODO check if working
-            Palette.generateAsync(productImageView.getDrawingCache(), new Palette.PaletteAsyncListener() {
-                public void onGenerated(Palette palette) {
-                    int color = palette.getLightMutedColor(android.R.color.transparent);
-                    productImageView.setBackgroundColor(color);
-                }
-            });
+            productImageView.setImageUrl(mProduct.getTitle_image_url(), app.getImageLoader());
+            if (mProduct.getTitle_image() != null) {
+                productImageView.setImageUrl(mProduct.getTitle_image().getOriginal_url(), app.getImageLoader());
+            }
 
-            priceTextView.setText(String.valueOf(mProduct.getPrice_cents() / 100) + " €");
+            //TODO not yet working
+            productImageView.buildDrawingCache(true);
+            if (productImageView.getDrawingCache() != null) {
+                Palette.generateAsync(productImageView.getDrawingCache(), new Palette.PaletteAsyncListener() {
+                    public void onGenerated(Palette palette) {
+                        int color = palette.getLightMutedColor(android.R.color.transparent);
+                        productImageView.setBackgroundColor(color);
+                    }
+                });
+            }
+
+            StringBuilder price = new StringBuilder(
+                    String.valueOf(mProduct.getPrice_cents()));
+
+            if (price.length() < 3) {
+                if (price.length() < 2) {
+                    price.insert(0, '0');
+                }
+                price.insert(0, '0');
+            }
+
+            price = price.reverse().insert(2, ',').reverse();
+            priceTextView.setText(price + " €");
 
             getActivity().findViewById(R.id.fragment_product_button_description).setOnClickListener(this);
             getActivity().findViewById(R.id.fragment_product_button_terms).setOnClickListener(this);

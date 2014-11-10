@@ -44,4 +44,6 @@ public class CustomNetworkImageView extends NetworkImageView {
     public void setImageUrl(String url, ImageLoader imageLoader) {
         super.setImageUrl(url, imageLoader);
     }
+
+
 }
