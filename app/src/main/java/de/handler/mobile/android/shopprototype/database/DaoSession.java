@@ -21,12 +21,10 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig categoryDaoConfig;
     private final DaoConfig productDaoConfig;
     private final DaoConfig productCategoryDaoConfig;
-    private final DaoConfig imageDaoConfig;
 
     private final CategoryDao categoryDao;
     private final ProductDao productDao;
     private final ProductCategoryDao productCategoryDao;
-    private final ImageDao imageDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -41,25 +39,19 @@ public class DaoSession extends AbstractDaoSession {
         productCategoryDaoConfig = daoConfigMap.get(ProductCategoryDao.class).clone();
         productCategoryDaoConfig.initIdentityScope(type);
 
-        imageDaoConfig = daoConfigMap.get(ImageDao.class).clone();
-        imageDaoConfig.initIdentityScope(type);
-
         categoryDao = new CategoryDao(categoryDaoConfig, this);
         productDao = new ProductDao(productDaoConfig, this);
         productCategoryDao = new ProductCategoryDao(productCategoryDaoConfig, this);
-        imageDao = new ImageDao(imageDaoConfig, this);
 
         registerDao(Category.class, categoryDao);
         registerDao(Product.class, productDao);
         registerDao(ProductCategory.class, productCategoryDao);
-        registerDao(Image.class, imageDao);
     }
     
     public void clear() {
         categoryDaoConfig.getIdentityScope().clear();
         productDaoConfig.getIdentityScope().clear();
         productCategoryDaoConfig.getIdentityScope().clear();
-        imageDaoConfig.getIdentityScope().clear();
     }
 
     public CategoryDao getCategoryDao() {
@@ -72,10 +64,6 @@ public class DaoSession extends AbstractDaoSession {
 
     public ProductCategoryDao getProductCategoryDao() {
         return productCategoryDao;
-    }
-
-    public ImageDao getImageDao() {
-        return imageDao;
     }
 
 }
