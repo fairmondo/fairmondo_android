@@ -1,6 +1,7 @@
 package de.handler.mobile.android.shopprototype.ui.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -49,9 +50,9 @@ public class WebFragment extends Fragment {
             webView.loadData(http, "text/html; charset=UTF-8", null);
 
         } else if (uri != null && !uri.equals("")) {
-
             progressBar.setVisibility(View.VISIBLE);
             if (cookie != null) {
+
                 webView.setWebViewClient(new RedirectWebViewClient(false));
                 if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     CookieSyncManager.createInstance(getActivity());
@@ -100,6 +101,11 @@ public class WebFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
             progressBar.setVisibility(View.GONE);
         }
     }
