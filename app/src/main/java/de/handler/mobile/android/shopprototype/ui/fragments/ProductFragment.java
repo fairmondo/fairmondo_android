@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -50,6 +51,15 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_price)
     TextView priceTextView;
+    
+    @ViewById(R.id.fragment_product_button_description)
+    Button buttonDescription;
+
+    @ViewById(R.id.fragment_product_button_fair_percent)
+    Button buttonFairPercent;
+
+    @ViewById(R.id.fragment_product_button_terms)
+    Button buttonTerms;
 
     private Article mProduct;
 
@@ -96,9 +106,19 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             price = price.reverse().insert(2, ',').reverse();
             priceTextView.setText(price + " €");
 
-            getActivity().findViewById(R.id.fragment_product_button_description).setOnClickListener(this);
-            getActivity().findViewById(R.id.fragment_product_button_terms).setOnClickListener(this);
-            getActivity().findViewById(R.id.fragment_product_button_fair_percent).setOnClickListener(this);
+            buttonDescription.setOnClickListener(this);
+            buttonTerms.setOnClickListener(this);
+            buttonFairPercent.setOnClickListener(this);
+
+            if (mProduct.getContent_html() == null) {
+                buttonDescription.setVisibility(View.GONE);
+            }
+            if (mProduct.getTerms_html() == null) {
+                buttonTerms.setVisibility(View.GONE);
+            }
+            if (mProduct.getFair_percent_html() == null) {
+                buttonFairPercent.setVisibility(View.GONE);
+            }
         }
 
 

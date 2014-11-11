@@ -1,5 +1,6 @@
 package de.handler.mobile.android.shopprototype.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 
@@ -50,5 +51,8 @@ public class WebActivity extends AbstractActivity {
     }
 
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 }

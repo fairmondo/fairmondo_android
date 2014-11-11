@@ -1,10 +1,8 @@
 package de.handler.mobile.android.shopprototype.database;
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
 import java.util.List;
 
 import de.greenrobot.dao.DaoException;
@@ -17,21 +15,17 @@ import de.greenrobot.dao.DaoException;
  */
 public class Category implements android.os.Parcelable {
 
-    private Long id;
+    private Long id = -1L;
     private String name = "";
     private String desc = "";
     private Integer parent_id = -1;
-    /** Not-null value. */
-    private java.util.Date created_at;
-    /** Not-null value. */
-    private java.util.Date updated_at;
-    private Integer lft;
-    private Integer rgt;
-    private Integer depth;
-    private Integer children_count;
-    private Integer weight;
-    private Integer view_columns;
-    private String slug;
+    private Integer lft = -1;
+    private Integer rgt = -1;
+    private Integer depth = 0;
+    private Integer children_count = 0;
+    private Integer weight = 0;
+    private Integer view_columns = 0;
+    private String slug = "";
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -51,13 +45,11 @@ public class Category implements android.os.Parcelable {
         this.id = id;
     }
 
-    public Category(Long id, String name, String desc, Integer parent_id, java.util.Date created_at, java.util.Date updated_at, Integer lft, Integer rgt, Integer depth, Integer children_count, Integer weight, Integer view_columns, String slug) {
+    public Category(Long id, String name, String desc, Integer parent_id, Integer lft, Integer rgt, Integer depth, Integer children_count, Integer weight, Integer view_columns, String slug) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.parent_id = parent_id;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
         this.lft = lft;
         this.rgt = rgt;
         this.depth = depth;
@@ -103,26 +95,6 @@ public class Category implements android.os.Parcelable {
 
     public void setParent_id(Integer parent_id) {
         this.parent_id = parent_id;
-    }
-
-    /** Not-null value. */
-    public java.util.Date getCreated_at() {
-        return created_at;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setCreated_at(java.util.Date created_at) {
-        this.created_at = created_at;
-    }
-
-    /** Not-null value. */
-    public java.util.Date getUpdated_at() {
-        return updated_at;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setUpdated_at(java.util.Date updated_at) {
-        this.updated_at = updated_at;
     }
 
     public Integer getLft() {
@@ -203,7 +175,7 @@ public class Category implements android.os.Parcelable {
         productCategories = null;
     }
 
-    /** Convenient call for . Entity must attached to an entity context. */
+    /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
     public void delete() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
@@ -211,7 +183,7 @@ public class Category implements android.os.Parcelable {
         myDao.delete(this);
     }
 
-    /** Convenient call for . Entity must attached to an entity context. */
+    /** Convenient call for {@link AbstractDao#update(Object)}. Entity must attached to an entity context. */
     public void update() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
@@ -219,7 +191,7 @@ public class Category implements android.os.Parcelable {
         myDao.update(this);
     }
 
-    /** Convenient call for . Entity must attached to an entity context. */
+    /** Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context. */
     public void refresh() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
@@ -227,15 +199,12 @@ public class Category implements android.os.Parcelable {
         myDao.refresh(this);
     }
 
-
     // KEEP METHODS - put your custom methods here
     public Category(Parcel dest) {
         id = dest.readLong();
         name = dest.readString();
         desc = dest.readString();
         parent_id = dest.readInt();
-        created_at = new Date(dest.readByte());
-        updated_at = new Date(dest.readByte());
         lft = dest.readInt();
         rgt = dest.readInt();
         depth = dest.readInt();
@@ -257,8 +226,6 @@ public class Category implements android.os.Parcelable {
         dest.writeString(name);
         dest.writeString(desc);
         dest.writeInt(parent_id);
-        dest.writeLong(created_at.getTime());
-        dest.writeLong(updated_at.getTime());
         dest.writeInt(lft);
         dest.writeInt(rgt);
         dest.writeInt(depth);

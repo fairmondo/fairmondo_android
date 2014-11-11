@@ -2,7 +2,8 @@ package de.handler.mobile.android.shopprototype.interfaces;
 
 import java.util.ArrayList;
 
-import de.handler.mobile.android.shopprototype.rest.json.model.Category;
+import de.handler.mobile.android.shopprototype.database.Category;
+
 
 /**
  * Informs the implementing ui element that the categories response has arrived from server

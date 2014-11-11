@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.database.Category;
 import de.handler.mobile.android.shopprototype.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
-import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 
 /**
  * Encapsulates all communication with the server

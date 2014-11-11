@@ -25,15 +25,13 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Desc = new Property(2, String.class, "desc", false, "DESC");
         public final static Property Parent_id = new Property(3, Integer.class, "parent_id", false, "PARENT_ID");
-        public final static Property Created_at = new Property(4, java.util.Date.class, "created_at", false, "CREATED_AT");
-        public final static Property Updated_at = new Property(5, java.util.Date.class, "updated_at", false, "UPDATED_AT");
-        public final static Property Lft = new Property(6, Integer.class, "lft", false, "LFT");
-        public final static Property Rgt = new Property(7, Integer.class, "rgt", false, "RGT");
-        public final static Property Depth = new Property(8, Integer.class, "depth", false, "DEPTH");
-        public final static Property Children_count = new Property(9, Integer.class, "children_count", false, "CHILDREN_COUNT");
-        public final static Property Weight = new Property(10, Integer.class, "weight", false, "WEIGHT");
-        public final static Property View_columns = new Property(11, Integer.class, "view_columns", false, "VIEW_COLUMNS");
-        public final static Property Slug = new Property(12, String.class, "slug", false, "SLUG");
+        public final static Property Lft = new Property(4, Integer.class, "lft", false, "LFT");
+        public final static Property Rgt = new Property(5, Integer.class, "rgt", false, "RGT");
+        public final static Property Depth = new Property(6, Integer.class, "depth", false, "DEPTH");
+        public final static Property Children_count = new Property(7, Integer.class, "children_count", false, "CHILDREN_COUNT");
+        public final static Property Weight = new Property(8, Integer.class, "weight", false, "WEIGHT");
+        public final static Property View_columns = new Property(9, Integer.class, "view_columns", false, "VIEW_COLUMNS");
+        public final static Property Slug = new Property(10, String.class, "slug", false, "SLUG");
     };
 
     private DaoSession daoSession;
@@ -56,15 +54,13 @@ public class CategoryDao extends AbstractDao<Category, Long> {
                 "'NAME' TEXT," + // 1: name
                 "'DESC' TEXT," + // 2: desc
                 "'PARENT_ID' INTEGER," + // 3: parent_id
-                "'CREATED_AT' INTEGER NOT NULL ," + // 4: created_at
-                "'UPDATED_AT' INTEGER NOT NULL ," + // 5: updated_at
-                "'LFT' INTEGER," + // 6: lft
-                "'RGT' INTEGER," + // 7: rgt
-                "'DEPTH' INTEGER," + // 8: depth
-                "'CHILDREN_COUNT' INTEGER," + // 9: children_count
-                "'WEIGHT' INTEGER," + // 10: weight
-                "'VIEW_COLUMNS' INTEGER," + // 11: view_columns
-                "'SLUG' TEXT);"); // 12: slug
+                "'LFT' INTEGER," + // 4: lft
+                "'RGT' INTEGER," + // 5: rgt
+                "'DEPTH' INTEGER," + // 6: depth
+                "'CHILDREN_COUNT' INTEGER," + // 7: children_count
+                "'WEIGHT' INTEGER," + // 8: weight
+                "'VIEW_COLUMNS' INTEGER," + // 9: view_columns
+                "'SLUG' TEXT);"); // 10: slug
     }
 
     /** Drops the underlying database table. */
@@ -97,42 +93,40 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         if (parent_id != null) {
             stmt.bindLong(4, parent_id);
         }
-        stmt.bindLong(5, entity.getCreated_at().getTime());
-        stmt.bindLong(6, entity.getUpdated_at().getTime());
  
         Integer lft = entity.getLft();
         if (lft != null) {
-            stmt.bindLong(7, lft);
+            stmt.bindLong(5, lft);
         }
  
         Integer rgt = entity.getRgt();
         if (rgt != null) {
-            stmt.bindLong(8, rgt);
+            stmt.bindLong(6, rgt);
         }
  
         Integer depth = entity.getDepth();
         if (depth != null) {
-            stmt.bindLong(9, depth);
+            stmt.bindLong(7, depth);
         }
  
         Integer children_count = entity.getChildren_count();
         if (children_count != null) {
-            stmt.bindLong(10, children_count);
+            stmt.bindLong(8, children_count);
         }
  
         Integer weight = entity.getWeight();
         if (weight != null) {
-            stmt.bindLong(11, weight);
+            stmt.bindLong(9, weight);
         }
  
         Integer view_columns = entity.getView_columns();
         if (view_columns != null) {
-            stmt.bindLong(12, view_columns);
+            stmt.bindLong(10, view_columns);
         }
  
         String slug = entity.getSlug();
         if (slug != null) {
-            stmt.bindString(13, slug);
+            stmt.bindString(11, slug);
         }
     }
 
@@ -156,15 +150,13 @@ public class CategoryDao extends AbstractDao<Category, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // desc
             cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // parent_id
-            new java.util.Date(cursor.getLong(offset + 4)), // created_at
-            new java.util.Date(cursor.getLong(offset + 5)), // updated_at
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // lft
-            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // rgt
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // depth
-            cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // children_count
-            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10), // weight
-            cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11), // view_columns
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // slug
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // lft
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // rgt
+            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // depth
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // children_count
+            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // weight
+            cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // view_columns
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // slug
         );
         return entity;
     }
@@ -176,15 +168,13 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setDesc(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setParent_id(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setCreated_at(new java.util.Date(cursor.getLong(offset + 4)));
-        entity.setUpdated_at(new java.util.Date(cursor.getLong(offset + 5)));
-        entity.setLft(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setRgt(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setDepth(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-        entity.setChildren_count(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
-        entity.setWeight(cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10));
-        entity.setView_columns(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
-        entity.setSlug(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setLft(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setRgt(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setDepth(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setChildren_count(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setWeight(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setView_columns(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
+        entity.setSlug(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     /** @inheritdoc */

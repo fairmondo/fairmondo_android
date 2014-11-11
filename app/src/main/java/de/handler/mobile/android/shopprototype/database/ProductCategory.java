@@ -16,10 +16,10 @@ import de.greenrobot.dao.DaoException;
  */
 public class ProductCategory implements android.os.Parcelable {
 
-    private Long id;
+    private Long id = -1L;
     private java.util.Date date;
-    private long productId;
-    private long categoryId;
+    private long productId = -1L;
+    private long categoryId = -1L;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;

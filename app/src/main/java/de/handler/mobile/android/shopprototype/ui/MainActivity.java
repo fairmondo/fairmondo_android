@@ -26,16 +26,18 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.database.Category;
+import de.handler.mobile.android.shopprototype.database.DatabaseController;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
-import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment;
 import de.handler.mobile.android.shopprototype.ui.fragments.CategoryFragment_;
 import de.handler.mobile.android.shopprototype.ui.fragments.FeatureFragment;
@@ -62,6 +64,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @Bean
     RestController restController;
+
+    @Bean
+    DatabaseController databaseController;
 
 
     @ViewById(R.id.main_category_spinner)
@@ -101,6 +106,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         this.initTitleFragment();
         this.initStartFragment();
         this.getCategories();
+
+        List<Category> categoryList = databaseController.getCategories();
+        if (categoryList != null) {
+            this.initSpinner(new ArrayList<Category>(categoryList));
+        }
     }
 
 
@@ -129,6 +139,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_products_container, webFragment)
                 .commit();
+
+        this.hideProgressbar();
     }
 
 
@@ -147,8 +159,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onCategoriesResponse(ArrayList<Category> categories) {
         mCategories = categories;
-        this.hideProgressbar();
-        this.initSpinner(categories);
+        databaseController.setCategories(mCategories);
+
+        //this.hideProgressbar();
+        //this.initSpinner(categories);
     }
 
 
@@ -184,7 +198,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // Get the selected category and the products matching the category
         if (position > 0) {
             //String category = (String) parent.getItemAtPosition(position);
-            this.getSubCategories(mCategories.get(position-1).getId());
+            this.getSubCategories(mCategories.get(position-1).getId().intValue());
             mSpinnerSelection = true;
         }
     }

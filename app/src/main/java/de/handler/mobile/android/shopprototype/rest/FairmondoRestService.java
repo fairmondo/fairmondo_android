@@ -10,9 +10,9 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
 import java.util.ArrayList;
 
+import de.handler.mobile.android.shopprototype.database.Category;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
 import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
-import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 
 
 /**

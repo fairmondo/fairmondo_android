@@ -9,7 +9,7 @@ import de.greenrobot.daogenerator.ToMany;
 public class MyDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1001, "de.handler.mobile.android.shopprototype.database");
+        Schema schema = new Schema(1002, "de.handler.mobile.android.shopprototype.database");
         addProductCategoryRelation(schema);
         new DaoGenerator().generateAll(schema, args[0]);
     }
@@ -21,8 +21,6 @@ public class MyDaoGenerator {
         category.addStringProperty("name");
         category.addStringProperty("desc");
         category.addIntProperty("parent_id");
-        category.addDateProperty("created_at").notNull();
-        category.addDateProperty("updated_at").notNull();
         category.addIntProperty("lft");
         category.addIntProperty("rgt");
         category.addIntProperty("depth");
@@ -98,6 +96,7 @@ public class MyDaoGenerator {
 
         product.setHasKeepSections(true);
         product.implementsInterface("android.os.Parcelable");
+        product.setSkipGeneration(true);
 
         /**
          * Define n:m relationship
@@ -110,6 +109,7 @@ public class MyDaoGenerator {
 
         productCategory.setHasKeepSections(true);
         productCategory.implementsInterface("android.os.Parcelable");
+        productCategory.setSkipGeneration(true);
 
         // n:m relationship
         Property productCategoryDate = productCategory.addDateProperty("date").getProperty();

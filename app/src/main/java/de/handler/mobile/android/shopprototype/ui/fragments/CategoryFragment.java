@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.database.Category;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
-import de.handler.mobile.android.shopprototype.rest.json.model.Category;
 
 /**
  * Fragment showing a list of categories
@@ -62,7 +62,7 @@ public class CategoryFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        app.setLastCategory(mCategories.get(position).getId());
-        restController.getSubCategories(mCategories.get(position).getId());
+        app.setLastCategory(mCategories.get(position).getId().intValue());
+        restController.getSubCategories(mCategories.get(position).getId().intValue());
     }
 }
