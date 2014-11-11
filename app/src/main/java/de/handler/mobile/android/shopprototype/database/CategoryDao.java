@@ -21,7 +21,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Desc = new Property(2, String.class, "desc", false, "DESC");
         public final static Property Parent_id = new Property(3, Integer.class, "parent_id", false, "PARENT_ID");
@@ -50,7 +50,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'CATEGORY' (" + //
-                "'_id' INTEGER PRIMARY KEY ," + // 0: id
+                "'ID' INTEGER PRIMARY KEY ," + // 0: id
                 "'NAME' TEXT," + // 1: name
                 "'DESC' TEXT," + // 2: desc
                 "'PARENT_ID' INTEGER," + // 3: parent_id

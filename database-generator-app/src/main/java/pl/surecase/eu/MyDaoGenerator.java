@@ -9,7 +9,7 @@ import de.greenrobot.daogenerator.ToMany;
 public class MyDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1002, "de.handler.mobile.android.shopprototype.database");
+        Schema schema = new Schema(1003, "de.handler.mobile.android.shopprototype.database");
         addProductCategoryRelation(schema);
         new DaoGenerator().generateAll(schema, args[0]);
     }
@@ -17,7 +17,7 @@ public class MyDaoGenerator {
     private static void addProductCategoryRelation(Schema schema) {
 
         Entity category = schema.addEntity("Category");
-        category.addIdProperty();
+        category.addLongProperty("id").primaryKey();
         category.addStringProperty("name");
         category.addStringProperty("desc");
         category.addIntProperty("parent_id");

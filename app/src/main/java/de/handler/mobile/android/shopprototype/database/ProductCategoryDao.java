@@ -179,7 +179,7 @@ public class ProductCategoryDao extends AbstractDao<ProductCategory, Long> {
             SqlUtils.appendColumns(builder, "T1", daoSession.getCategoryDao().getAllColumns());
             builder.append(" FROM ProductCategory T");
             builder.append(" LEFT JOIN PRODUCT T0 ON T.'PRODUCT_ID'=T0.'_id'");
-            builder.append(" LEFT JOIN CATEGORY T1 ON T.'CATEGORY_ID'=T1.'_id'");
+            builder.append(" LEFT JOIN CATEGORY T1 ON T.'CATEGORY_ID'=T1.'ID'");
             builder.append(' ');
             selectDeep = builder.toString();
         }

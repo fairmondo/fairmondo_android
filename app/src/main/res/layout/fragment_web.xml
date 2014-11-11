@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_web_progress_bar"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

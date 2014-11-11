@@ -162,7 +162,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         databaseController.setCategories(mCategories);
 
         //this.hideProgressbar();
-        //this.initSpinner(categories);
+        this.initSpinner(categories);
     }
 
 
