@@ -1,4 +1,4 @@
-package de.handler.mobile.android.shopprototype.database;
+package de.handler.mobile.android.shopprototype.datasource.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

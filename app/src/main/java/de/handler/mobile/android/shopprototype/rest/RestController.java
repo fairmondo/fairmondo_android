@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.database.Category;
+import de.handler.mobile.android.shopprototype.datasource.database.Category;
 import de.handler.mobile.android.shopprototype.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;

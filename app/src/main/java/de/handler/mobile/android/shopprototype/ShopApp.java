@@ -7,8 +7,10 @@ import com.android.volley.toolbox.ImageLoader;
 
 import org.androidannotations.annotations.EApplication;
 
-import de.handler.mobile.android.shopprototype.database.DaoMaster;
-import de.handler.mobile.android.shopprototype.database.DaoSession;
+import de.handler.mobile.android.shopprototype.datasource.CategoryContentProvider;
+import de.handler.mobile.android.shopprototype.datasource.SearchSuggestionContentProvider;
+import de.handler.mobile.android.shopprototype.datasource.database.DaoMaster;
+import de.handler.mobile.android.shopprototype.datasource.database.DaoSession;
 import de.handler.mobile.android.shopprototype.rest.json.model.Cart;
 import de.handler.mobile.android.shopprototype.util.CustomImageCache;
 
@@ -53,6 +55,10 @@ public class ShopApp extends Application {
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
+
+        // Init the dao session in the content provider
+        CategoryContentProvider.daoSession = daoSession;
+        SearchSuggestionContentProvider.daoSession = daoSession;
     }
 
     public DaoSession getDaoSession() {

@@ -30,8 +30,8 @@ import java.util.List;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
-import de.handler.mobile.android.shopprototype.database.Category;
-import de.handler.mobile.android.shopprototype.database.DatabaseController;
+import de.handler.mobile.android.shopprototype.datasource.DatabaseController;
+import de.handler.mobile.android.shopprototype.datasource.database.Category;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
@@ -160,6 +160,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onCategoriesResponse(ArrayList<Category> categories) {
         mCategories = categories;
         databaseController.setCategories(mCategories);
+        databaseController.setSearchSuggestions(mCategories);
 
         //this.hideProgressbar();
         this.initSpinner(categories);

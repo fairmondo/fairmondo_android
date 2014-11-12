@@ -29,6 +29,8 @@ public class WebFragment extends Fragment {
     public static final String HTTP_CONTENT = "http_content";
     public static final String COOKIE = "cart_cookie";
 
+    String mCookie = "";
+
     @ViewById(R.id.fragment_web_webview)
     WebView webView;
 
@@ -42,7 +44,7 @@ public class WebFragment extends Fragment {
 
         String http = getArguments().getString(HTTP_CONTENT);
         String uri = getArguments().getString(URI);
-        String cookie = getArguments().getString(COOKIE);
+        mCookie = getArguments().getString(COOKIE);
 
 
         if (http != null) {
@@ -50,20 +52,9 @@ public class WebFragment extends Fragment {
 
         } else if (uri != null && !uri.equals("")) {
             progressContainer.setVisibility(View.VISIBLE);
-            if (cookie != null) {
 
-                webView.setWebViewClient(new RedirectWebViewClient(false));
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    CookieSyncManager.createInstance(getActivity());
-                }
-
-                CookieManager cookieManager = CookieManager.getInstance();
-                cookieManager.setCookie(uri, "cart=" + cookie);
-
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    CookieSyncManager.getInstance().sync();
-                }
-
+            if (mCookie != null) {
+                this.setCookie(webView, mCookie, uri);
             } else {
                 webView.setWebViewClient(new RedirectWebViewClient());
             }
@@ -73,6 +64,22 @@ public class WebFragment extends Fragment {
             webView.loadUrl(uri);
         }
     }
+
+    void setCookie(WebView webView, String cookie, String uri) {
+        webView.setWebViewClient(new RedirectWebViewClient(false));
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(getActivity());
+        }
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setCookie(uri, "cart=" + cookie);
+
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.getInstance().sync();
+        }
+    }
+
+
 
     private class RedirectWebViewClient extends WebViewClient {
 
@@ -92,6 +99,10 @@ public class WebFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
+            } else {
+                if (mCookie != null) {
+                    setCookie(webView, mCookie, url);
+                }
             }
 
             return handleKeyEvent;

@@ -1,4 +1,4 @@
-package de.handler.mobile.android.shopprototype.database;
+package de.handler.mobile.android.shopprototype.datasource.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,19 +14,19 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table CATEGORY.
  */
-public class Category implements Parcelable {
+public class Category implements android.os.Parcelable {
 
     private Long id;
-    private String name = "";
-    private String desc = "";
-    private Integer parent_id = -1;
-    private Integer lft = -1;
-    private Integer rgt = -1;
-    private Integer depth = 0;
-    private Integer children_count = 0;
-    private Integer weight = 0;
-    private Integer view_columns = 0;
-    private String slug = "";
+    private String name;
+    private String desc;
+    private Integer parent_id;
+    private Integer lft;
+    private Integer rgt;
+    private Integer depth;
+    private Integer children_count;
+    private Integer weight;
+    private Integer view_columns;
+    private String slug;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;

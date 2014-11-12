@@ -9,9 +9,18 @@ import de.greenrobot.daogenerator.ToMany;
 public class MyDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1003, "de.handler.mobile.android.shopprototype.database");
+        Schema schema = new Schema(1006, "de.handler.mobile.android.shopprototype.datasource.database");
         addProductCategoryRelation(schema);
+        addSearchSuggestions(schema);
         new DaoGenerator().generateAll(schema, args[0]);
+    }
+
+    private static void addSearchSuggestions(Schema schema) {
+        Entity searchSuggestion = schema.addEntity("SearchSuggestion");
+        searchSuggestion.addIdProperty();
+        searchSuggestion.addStringProperty("suggest_text_1");
+        searchSuggestion.addStringProperty("suggest_text_2");
+
     }
 
     private static void addProductCategoryRelation(Schema schema) {
@@ -31,6 +40,7 @@ public class MyDaoGenerator {
 
         category.setHasKeepSections(true);
         category.implementsInterface("android.os.Parcelable");
+        category.setSkipGeneration(true);
 
         Entity product = schema.addEntity("Product");
         product.addIdProperty();

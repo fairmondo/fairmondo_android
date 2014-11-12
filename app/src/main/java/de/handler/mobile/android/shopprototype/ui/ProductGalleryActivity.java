@@ -13,7 +13,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
-import de.handler.mobile.android.shopprototype.database.Product;
+import de.handler.mobile.android.shopprototype.datasource.database.Product;
 import de.handler.mobile.android.shopprototype.ui.adapter.ProductPagerAdapter;
 
 /**

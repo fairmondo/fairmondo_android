@@ -2,7 +2,7 @@ package de.handler.mobile.android.shopprototype.interfaces;
 
 import java.util.ArrayList;
 
-import de.handler.mobile.android.shopprototype.database.Category;
+import de.handler.mobile.android.shopprototype.datasource.database.Category;
 
 
 /**
