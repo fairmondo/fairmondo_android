@@ -1,7 +1,6 @@
 package de.handler.mobile.android.shopprototype.ui.fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -33,8 +32,8 @@ public class WebFragment extends Fragment {
     @ViewById(R.id.fragment_web_webview)
     WebView webView;
 
-    @ViewById(R.id.fragment_web_progress_bar)
-    ProgressBar progressBar;
+    @ViewById(R.id.fragment_web_progress_container)
+    RelativeLayout progressContainer;
 
 
     //TODO after redirect 500 from fairmondo page --> cookie not set correctly?
@@ -50,7 +49,7 @@ public class WebFragment extends Fragment {
             webView.loadData(http, "text/html; charset=UTF-8", null);
 
         } else if (uri != null && !uri.equals("")) {
-            progressBar.setVisibility(View.VISIBLE);
+            progressContainer.setVisibility(View.VISIBLE);
             if (cookie != null) {
 
                 webView.setWebViewClient(new RedirectWebViewClient(false));
@@ -101,13 +100,10 @@ public class WebFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            progressContainer.setVisibility(View.GONE);
         }
 
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            progressBar.setVisibility(View.GONE);
-        }
+
     }
 
 

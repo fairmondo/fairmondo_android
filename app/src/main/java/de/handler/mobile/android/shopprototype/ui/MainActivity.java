@@ -211,6 +211,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private void getSubCategories(int id) {
+        this.showProgressbar();
         restController.getSubCategories(id);
     }
 
@@ -251,6 +252,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.showProgressbar();
             restController.getProduct(searchRequest, categoryId);
         } else {
+            this.hideProgressbar();
             Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
     }
