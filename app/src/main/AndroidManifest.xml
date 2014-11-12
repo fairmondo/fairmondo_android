@@ -67,10 +67,6 @@
 
 
         <provider
-            android:name=".datasource.CategoryContentProvider"
-            android:authorities="de.handler.mobile.android.shopprototype.datasource.database.provider"/>
-
-        <provider
             android:name=".datasource.SearchSuggestionContentProvider"
             android:authorities="de.handler.mobile.android.shopprototype.datasource.database.searchprovider"/>
 

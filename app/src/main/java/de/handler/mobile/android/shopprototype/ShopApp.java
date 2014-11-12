@@ -7,7 +7,6 @@ import com.android.volley.toolbox.ImageLoader;
 
 import org.androidannotations.annotations.EApplication;
 
-import de.handler.mobile.android.shopprototype.datasource.CategoryContentProvider;
 import de.handler.mobile.android.shopprototype.datasource.SearchSuggestionContentProvider;
 import de.handler.mobile.android.shopprototype.datasource.database.DaoMaster;
 import de.handler.mobile.android.shopprototype.datasource.database.DaoSession;
@@ -57,7 +56,6 @@ public class ShopApp extends Application {
         daoSession = daoMaster.newSession();
 
         // Init the dao session in the content provider
-        CategoryContentProvider.daoSession = daoSession;
         SearchSuggestionContentProvider.daoSession = daoSession;
     }
 

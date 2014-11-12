@@ -11,6 +11,7 @@ import java.util.List;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.datasource.database.Category;
 import de.handler.mobile.android.shopprototype.datasource.database.SearchSuggestion;
+import de.handler.mobile.android.shopprototype.rest.json.Article;
 
 /**
  * Provides the methods to work with database
@@ -40,10 +41,12 @@ public class DatabaseController {
         }
     }
 
-    public void setSearchSuggestions(ArrayList<Category> categories) {
-        for (Category category: categories) {
-            SearchSuggestion searchSuggestion = new SearchSuggestion(category.getId(), null, category.getName());
-            app.getDaoSession().getSearchSuggestionDao().insertOrReplace(searchSuggestion);
+    public void setSearchSuggestions(ArrayList<Article> products, ArrayList<Category> categories) {
+        for (Article article : products) {
+            for (Category category : categories) {
+                SearchSuggestion searchSuggestion = new SearchSuggestion(category.getId(), article.getTitle(), "in " + category.getName());
+                app.getDaoSession().getSearchSuggestionDao().insertOrReplace(searchSuggestion);
+            }
         }
     }
 }

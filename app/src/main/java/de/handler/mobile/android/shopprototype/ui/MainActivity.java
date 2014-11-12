@@ -160,7 +160,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onCategoriesResponse(ArrayList<Category> categories) {
         mCategories = categories;
         databaseController.setCategories(mCategories);
-        databaseController.setSearchSuggestions(mCategories);
 
         //this.hideProgressbar();
         this.initSpinner(categories);
@@ -296,6 +295,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         if (mProducts.size() == mProductsCount) {
             this.hideProgressbar();
             this.initSelectionFragment(mProducts);
+
+            databaseController.setSearchSuggestions(mProducts, mCategories);
         }
     }
 
