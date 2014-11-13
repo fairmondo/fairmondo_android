@@ -26,10 +26,11 @@ public class HttpResponseInterceptor implements ClientHttpRequestInterceptor {
     @Override
     public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes, ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
         HttpHeaders headers = httpRequest.getHeaders();
-        Log.i("\n HTTP_INTERCEPTOR: URI ", httpRequest.getURI().toString());
+        Log.d("\n HTTP_INTERCEPTOR: URI ", httpRequest.getURI().toString());
+        Log.d("\n HTTP_INTERCEPTOR: URI ", headers.toString());
 
         ClientHttpResponse response = clientHttpRequestExecution.execute(httpRequest, bytes);
-        Log.i("\n HTTP_INTERCEPTOR: RESPONSE ", response.getStatusText());
+        Log.d("\n HTTP_INTERCEPTOR: RESPONSE ", response.getStatusText());
 
         return response;
     }

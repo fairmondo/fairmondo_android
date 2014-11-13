@@ -2,6 +2,8 @@ package de.handler.mobile.android.shopprototype.ui;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -18,6 +20,10 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
+import de.handler.mobile.android.shopprototype.datasource.DatabaseController;
+import de.handler.mobile.android.shopprototype.datasource.SearchSuggestionProvider;
+import de.handler.mobile.android.shopprototype.datasource.database.Category;
+import de.handler.mobile.android.shopprototype.datasource.database.SearchSuggestion;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 import de.handler.mobile.android.shopprototype.rest.json.Article;
@@ -39,6 +45,9 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     @Bean
     RestController restController;
 
+    @Bean
+    DatabaseController databaseController;
+
 
     @AfterInject
     public void initRestController() {
@@ -55,19 +64,40 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
         String query;
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            // Should load when clicked on a search suggestion
+            Uri data = intent.getData();
+            this.showResult(data);
+        } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
+            this.searchProducts(query);
         } else {
-            query = getIntent().getStringExtra(QUERY_STRING_EXTRA);
+            query = intent.getStringExtra(QUERY_STRING_EXTRA);
+            this.searchProducts(query);
         }
 
-        this.searchProducts(query);
+    }
+
+    private void showResult(Uri data) {
+        if (app.isConnected()) {
+            SearchSuggestionProvider searchSuggestionProvider = new SearchSuggestionProvider();
+            Cursor cursor = searchSuggestionProvider.query(data, null, null, null, null);
+            SearchSuggestion searchSuggestion = databaseController.getSearchSuggestions(cursor);
+            Category category = databaseController.getCategory(searchSuggestion.getSuggest_text_2());
+            restController.getProduct(searchSuggestion.getSuggest_text_1(), category.getId().intValue());
+        } else {
+            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+        }
     }
 
 
     private void searchProducts(String query) {
         if (app.isConnected()) {
-            restController.getProduct(query);
+            if (query != null) {
+                restController.getProduct(query);
+            } else {
+                this.finish();
+            }
         } else {
             Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }

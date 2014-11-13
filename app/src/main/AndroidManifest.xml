@@ -67,7 +67,7 @@
 
 
         <provider
-            android:name=".datasource.SearchSuggestionContentProvider"
+            android:name=".datasource.SearchSuggestionProvider"
             android:authorities="de.handler.mobile.android.shopprototype.datasource.database.searchprovider"/>
 
     </application>

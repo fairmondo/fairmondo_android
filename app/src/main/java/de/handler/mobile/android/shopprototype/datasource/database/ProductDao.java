@@ -22,65 +22,21 @@ public class ProductDao extends AbstractDao<Product, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
-        public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
-        public final static Property Created_at = new Property(3, java.util.Date.class, "created_at", false, "CREATED_AT");
-        public final static Property Updated_at = new Property(4, java.util.Date.class, "updated_at", false, "UPDATED_AT");
-        public final static Property User_id = new Property(5, Integer.class, "user_id", false, "USER_ID");
-        public final static Property Condition = new Property(6, String.class, "condition", false, "CONDITION");
-        public final static Property Price_cents = new Property(7, Integer.class, "price_cents", false, "PRICE_CENTS");
-        public final static Property Currency = new Property(8, String.class, "currency", false, "CURRENCY");
-        public final static Property Fair = new Property(9, Boolean.class, "fair", false, "FAIR");
-        public final static Property Fair_kind = new Property(10, String.class, "fair_kind", false, "FAIR_KIND");
-        public final static Property Fair_seal = new Property(11, String.class, "fair_seal", false, "FAIR_SEAL");
-        public final static Property Ecologic = new Property(12, Boolean.class, "ecologic", false, "ECOLOGIC");
-        public final static Property Ecologic_seal = new Property(13, String.class, "ecologic_seal", false, "ECOLOGIC_SEAL");
-        public final static Property Small_and_precious = new Property(14, Boolean.class, "small_and_precious", false, "SMALL_AND_PRECIOUS");
-        public final static Property Small_and_precious_reason = new Property(15, String.class, "small_and_precious_reason", false, "SMALL_AND_PRECIOUS_REASON");
-        public final static Property Small_and_precious_handmade = new Property(16, Boolean.class, "small_and_precious_handmade", false, "SMALL_AND_PRECIOUS_HANDMADE");
-        public final static Property Quantity = new Property(17, Integer.class, "quantity", false, "QUANTITY");
-        public final static Property Transport_details = new Property(18, String.class, "transport_details", false, "TRANSPORT_DETAILS");
-        public final static Property Payment_details = new Property(19, String.class, "payment_details", false, "PAYMENT_DETAILS");
-        public final static Property Friendly_percent = new Property(20, Integer.class, "friendly_percent", false, "FRIENDLY_PERCENT");
-        public final static Property Calculated_fair_cents = new Property(21, int.class, "calculated_fair_cents", false, "CALCULATED_FAIR_CENTS");
-        public final static Property Calculated_friendly_cents = new Property(22, int.class, "calculated_friendly_cents", false, "CALCULATED_FRIENDLY_CENTS");
-        public final static Property Calculated_fee_cents = new Property(23, int.class, "calculated_fee_cents", false, "CALCULATED_FEE_CENTS");
-        public final static Property Condition_extra = new Property(24, String.class, "condition_extra", false, "CONDITION_EXTRA");
-        public final static Property Small_and_precious_eu_small_enterprise = new Property(25, Boolean.class, "small_and_precious_eu_small_enterprise", false, "SMALL_AND_PRECIOUS_EU_SMALL_ENTERPRISE");
-        public final static Property Ecologic_kind = new Property(26, String.class, "ecologic_kind", false, "ECOLOGIC_KIND");
-        public final static Property Upcycling_reason = new Property(27, String.class, "upcycling_reason", false, "UPCYCLING_REASON");
-        public final static Property Slug = new Property(28, String.class, "slug", false, "SLUG");
-        public final static Property Transport_pickup = new Property(29, Boolean.class, "transport_pickup", false, "TRANSPORT_PICKUP");
-        public final static Property Transport_type1 = new Property(30, Boolean.class, "transport_type1", false, "TRANSPORT_TYPE1");
-        public final static Property Transport_type2 = new Property(31, Boolean.class, "transport_type2", false, "TRANSPORT_TYPE2");
-        public final static Property Transport_type1_provider = new Property(32, String.class, "transport_type1_provider", false, "TRANSPORT_TYPE1_PROVIDER");
-        public final static Property Transport_type2_provider = new Property(33, String.class, "transport_type2_provider", false, "TRANSPORT_TYPE2_PROVIDER");
-        public final static Property Transport_type1_price_cents = new Property(34, int.class, "transport_type1_price_cents", false, "TRANSPORT_TYPE1_PRICE_CENTS");
-        public final static Property Transport_type2_price_cents = new Property(35, int.class, "transport_type2_price_cents", false, "TRANSPORT_TYPE2_PRICE_CENTS");
-        public final static Property Payment_bank_transfer = new Property(36, Boolean.class, "payment_bank_transfer", false, "PAYMENT_BANK_TRANSFER");
-        public final static Property Payment_cash = new Property(37, Boolean.class, "payment_cash", false, "PAYMENT_CASH");
-        public final static Property Payment_paypal = new Property(38, Boolean.class, "payment_paypal", false, "PAYMENT_PAYPAL");
-        public final static Property Payment_cash_on_delivery = new Property(39, Boolean.class, "payment_cash_on_delivery", false, "PAYMENT_CASH_ON_DELIVERY");
-        public final static Property Payment_invoice = new Property(40, Boolean.class, "payment_invoice", false, "PAYMENT_INVOICE");
-        public final static Property Payment_cash_on_delivery_price_cents = new Property(41, int.class, "payment_cash_on_delivery_price_cents", false, "PAYMENT_CASH_ON_DELIVERY_PRICE_CENTS");
-        public final static Property Basic_price_cents = new Property(42, Integer.class, "basic_price_cents", false, "BASIC_PRICE_CENTS");
-        public final static Property Basic_price_amount = new Property(43, String.class, "basic_price_amount", false, "BASIC_PRICE_AMOUNT");
-        public final static Property State = new Property(44, String.class, "state", false, "STATE");
-        public final static Property Vat = new Property(45, Integer.class, "vat", false, "VAT");
-        public final static Property Custom_seller_identifier = new Property(46, String.class, "custom_seller_identifier", false, "CUSTOM_SELLER_IDENTIFIER");
-        public final static Property Gtin = new Property(47, String.class, "gtin", false, "GTIN");
-        public final static Property Transport_type1_number = new Property(48, Integer.class, "transport_type1_number", false, "TRANSPORT_TYPE1_NUMBER");
-        public final static Property Transport_type2_number = new Property(49, Integer.class, "transport_type2_number", false, "TRANSPORT_TYPE2_NUMBER");
-        public final static Property Discount_id = new Property(50, Integer.class, "discount_id", false, "DISCOUNT_ID");
-        public final static Property Friendly_percent_organisation_id = new Property(51, Integer.class, "friendly_percent_organisation_id", false, "FRIENDLY_PERCENT_ORGANISATION_ID");
-        public final static Property Article_template_name = new Property(52, String.class, "article_template_name", false, "ARTICLE_TEMPLATE_NAME");
-        public final static Property Transport_time = new Property(53, String.class, "transport_time", false, "TRANSPORT_TIME");
-        public final static Property Quantity_available = new Property(54, Integer.class, "quantity_available", false, "QUANTITY_AVAILABLE");
-        public final static Property Unified_transport = new Property(55, Boolean.class, "unified_transport", false, "UNIFIED_TRANSPORT");
-        public final static Property Swappable = new Property(56, Boolean.class, "swappable", false, "SWAPPABLE");
-        public final static Property Borrowable = new Property(57, Boolean.class, "borrowable", false, "BORROWABLE");
-        public final static Property Comments_count = new Property(58, Integer.class, "comments_count", false, "COMMENTS_COUNT");
-        public final static Property Original_id = new Property(59, Integer.class, "original_id", false, "ORIGINAL_ID");
+        public final static Property Slug = new Property(1, String.class, "slug", false, "SLUG");
+        public final static Property TitleImageUrl = new Property(2, String.class, "titleImageUrl", false, "TITLE_IMAGE_URL");
+        public final static Property HtmlUrl = new Property(3, String.class, "htmlUrl", false, "HTML_URL");
+        public final static Property Title = new Property(4, String.class, "title", false, "TITLE");
+        public final static Property PriceCents = new Property(5, Integer.class, "priceCents", false, "PRICE_CENTS");
+        public final static Property TagCondition = new Property(6, String.class, "tagCondition", false, "TAG_CONDITION");
+        public final static Property TagFair = new Property(7, Boolean.class, "tagFair", false, "TAG_FAIR");
+        public final static Property TagEcologic = new Property(8, Boolean.class, "tagEcologic", false, "TAG_ECOLOGIC");
+        public final static Property TagSmallAndPrecious = new Property(9, Boolean.class, "tagSmallAndPrecious", false, "TAG_SMALL_AND_PRECIOUS");
+        public final static Property TagBorrowable = new Property(10, Boolean.class, "tagBorrowable", false, "TAG_BORROWABLE");
+        public final static Property TagSwappable = new Property(11, Boolean.class, "tagSwappable", false, "TAG_SWAPPABLE");
+        public final static Property SellerNickname = new Property(12, String.class, "sellerNickname", false, "SELLER_NICKNAME");
+        public final static Property SellerLegalEntity = new Property(13, Boolean.class, "sellerLegalEntity", false, "SELLER_LEGAL_ENTITY");
+        public final static Property SellerHtmlUrl = new Property(14, String.class, "sellerHtmlUrl", false, "SELLER_HTML_URL");
+        public final static Property Donation = new Property(15, String.class, "donation", false, "DONATION");
     };
 
     private DaoSession daoSession;
@@ -100,65 +56,21 @@ public class ProductDao extends AbstractDao<Product, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'PRODUCT' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'TITLE' TEXT," + // 1: title
-                "'CONTENT' TEXT," + // 2: content
-                "'CREATED_AT' INTEGER NOT NULL ," + // 3: created_at
-                "'UPDATED_AT' INTEGER NOT NULL ," + // 4: updated_at
-                "'USER_ID' INTEGER," + // 5: user_id
-                "'CONDITION' TEXT," + // 6: condition
-                "'PRICE_CENTS' INTEGER," + // 7: price_cents
-                "'CURRENCY' TEXT," + // 8: currency
-                "'FAIR' INTEGER," + // 9: fair
-                "'FAIR_KIND' TEXT," + // 10: fair_kind
-                "'FAIR_SEAL' TEXT," + // 11: fair_seal
-                "'ECOLOGIC' INTEGER," + // 12: ecologic
-                "'ECOLOGIC_SEAL' TEXT," + // 13: ecologic_seal
-                "'SMALL_AND_PRECIOUS' INTEGER," + // 14: small_and_precious
-                "'SMALL_AND_PRECIOUS_REASON' TEXT," + // 15: small_and_precious_reason
-                "'SMALL_AND_PRECIOUS_HANDMADE' INTEGER," + // 16: small_and_precious_handmade
-                "'QUANTITY' INTEGER," + // 17: quantity
-                "'TRANSPORT_DETAILS' TEXT," + // 18: transport_details
-                "'PAYMENT_DETAILS' TEXT," + // 19: payment_details
-                "'FRIENDLY_PERCENT' INTEGER," + // 20: friendly_percent
-                "'CALCULATED_FAIR_CENTS' INTEGER NOT NULL ," + // 21: calculated_fair_cents
-                "'CALCULATED_FRIENDLY_CENTS' INTEGER NOT NULL ," + // 22: calculated_friendly_cents
-                "'CALCULATED_FEE_CENTS' INTEGER NOT NULL ," + // 23: calculated_fee_cents
-                "'CONDITION_EXTRA' TEXT," + // 24: condition_extra
-                "'SMALL_AND_PRECIOUS_EU_SMALL_ENTERPRISE' INTEGER," + // 25: small_and_precious_eu_small_enterprise
-                "'ECOLOGIC_KIND' TEXT," + // 26: ecologic_kind
-                "'UPCYCLING_REASON' TEXT," + // 27: upcycling_reason
-                "'SLUG' TEXT," + // 28: slug
-                "'TRANSPORT_PICKUP' INTEGER," + // 29: transport_pickup
-                "'TRANSPORT_TYPE1' INTEGER," + // 30: transport_type1
-                "'TRANSPORT_TYPE2' INTEGER," + // 31: transport_type2
-                "'TRANSPORT_TYPE1_PROVIDER' TEXT," + // 32: transport_type1_provider
-                "'TRANSPORT_TYPE2_PROVIDER' TEXT," + // 33: transport_type2_provider
-                "'TRANSPORT_TYPE1_PRICE_CENTS' INTEGER NOT NULL ," + // 34: transport_type1_price_cents
-                "'TRANSPORT_TYPE2_PRICE_CENTS' INTEGER NOT NULL ," + // 35: transport_type2_price_cents
-                "'PAYMENT_BANK_TRANSFER' INTEGER," + // 36: payment_bank_transfer
-                "'PAYMENT_CASH' INTEGER," + // 37: payment_cash
-                "'PAYMENT_PAYPAL' INTEGER," + // 38: payment_paypal
-                "'PAYMENT_CASH_ON_DELIVERY' INTEGER," + // 39: payment_cash_on_delivery
-                "'PAYMENT_INVOICE' INTEGER," + // 40: payment_invoice
-                "'PAYMENT_CASH_ON_DELIVERY_PRICE_CENTS' INTEGER NOT NULL ," + // 41: payment_cash_on_delivery_price_cents
-                "'BASIC_PRICE_CENTS' INTEGER," + // 42: basic_price_cents
-                "'BASIC_PRICE_AMOUNT' TEXT," + // 43: basic_price_amount
-                "'STATE' TEXT," + // 44: state
-                "'VAT' INTEGER," + // 45: vat
-                "'CUSTOM_SELLER_IDENTIFIER' TEXT," + // 46: custom_seller_identifier
-                "'GTIN' TEXT," + // 47: gtin
-                "'TRANSPORT_TYPE1_NUMBER' INTEGER," + // 48: transport_type1_number
-                "'TRANSPORT_TYPE2_NUMBER' INTEGER," + // 49: transport_type2_number
-                "'DISCOUNT_ID' INTEGER," + // 50: discount_id
-                "'FRIENDLY_PERCENT_ORGANISATION_ID' INTEGER," + // 51: friendly_percent_organisation_id
-                "'ARTICLE_TEMPLATE_NAME' TEXT," + // 52: article_template_name
-                "'TRANSPORT_TIME' TEXT," + // 53: transport_time
-                "'QUANTITY_AVAILABLE' INTEGER," + // 54: quantity_available
-                "'UNIFIED_TRANSPORT' INTEGER," + // 55: unified_transport
-                "'SWAPPABLE' INTEGER," + // 56: swappable
-                "'BORROWABLE' INTEGER," + // 57: borrowable
-                "'COMMENTS_COUNT' INTEGER," + // 58: comments_count
-                "'ORIGINAL_ID' INTEGER);"); // 59: original_id
+                "'SLUG' TEXT," + // 1: slug
+                "'TITLE_IMAGE_URL' TEXT," + // 2: titleImageUrl
+                "'HTML_URL' TEXT," + // 3: htmlUrl
+                "'TITLE' TEXT," + // 4: title
+                "'PRICE_CENTS' INTEGER," + // 5: priceCents
+                "'TAG_CONDITION' TEXT," + // 6: tagCondition
+                "'TAG_FAIR' INTEGER," + // 7: tagFair
+                "'TAG_ECOLOGIC' INTEGER," + // 8: tagEcologic
+                "'TAG_SMALL_AND_PRECIOUS' INTEGER," + // 9: tagSmallAndPrecious
+                "'TAG_BORROWABLE' INTEGER," + // 10: tagBorrowable
+                "'TAG_SWAPPABLE' INTEGER," + // 11: tagSwappable
+                "'SELLER_NICKNAME' TEXT," + // 12: sellerNickname
+                "'SELLER_LEGAL_ENTITY' INTEGER," + // 13: sellerLegalEntity
+                "'SELLER_HTML_URL' TEXT," + // 14: sellerHtmlUrl
+                "'DONATION' TEXT);"); // 15: donation
     }
 
     /** Drops the underlying database table. */
@@ -177,267 +89,79 @@ public class ProductDao extends AbstractDao<Product, Long> {
             stmt.bindLong(1, id);
         }
  
-        String title = entity.getTitle();
-        if (title != null) {
-            stmt.bindString(2, title);
-        }
- 
-        String content = entity.getContent();
-        if (content != null) {
-            stmt.bindString(3, content);
-        }
-        stmt.bindLong(4, entity.getCreated_at().getTime());
-        stmt.bindLong(5, entity.getUpdated_at().getTime());
- 
-        Integer user_id = entity.getUser_id();
-        if (user_id != null) {
-            stmt.bindLong(6, user_id);
-        }
- 
-        String condition = entity.getCondition();
-        if (condition != null) {
-            stmt.bindString(7, condition);
-        }
- 
-        Integer price_cents = entity.getPrice_cents();
-        if (price_cents != null) {
-            stmt.bindLong(8, price_cents);
-        }
- 
-        String currency = entity.getCurrency();
-        if (currency != null) {
-            stmt.bindString(9, currency);
-        }
- 
-        Boolean fair = entity.getFair();
-        if (fair != null) {
-            stmt.bindLong(10, fair ? 1l: 0l);
-        }
- 
-        String fair_kind = entity.getFair_kind();
-        if (fair_kind != null) {
-            stmt.bindString(11, fair_kind);
-        }
- 
-        String fair_seal = entity.getFair_seal();
-        if (fair_seal != null) {
-            stmt.bindString(12, fair_seal);
-        }
- 
-        Boolean ecologic = entity.getEcologic();
-        if (ecologic != null) {
-            stmt.bindLong(13, ecologic ? 1l: 0l);
-        }
- 
-        String ecologic_seal = entity.getEcologic_seal();
-        if (ecologic_seal != null) {
-            stmt.bindString(14, ecologic_seal);
-        }
- 
-        Boolean small_and_precious = entity.getSmall_and_precious();
-        if (small_and_precious != null) {
-            stmt.bindLong(15, small_and_precious ? 1l: 0l);
-        }
- 
-        String small_and_precious_reason = entity.getSmall_and_precious_reason();
-        if (small_and_precious_reason != null) {
-            stmt.bindString(16, small_and_precious_reason);
-        }
- 
-        Boolean small_and_precious_handmade = entity.getSmall_and_precious_handmade();
-        if (small_and_precious_handmade != null) {
-            stmt.bindLong(17, small_and_precious_handmade ? 1l: 0l);
-        }
- 
-        Integer quantity = entity.getQuantity();
-        if (quantity != null) {
-            stmt.bindLong(18, quantity);
-        }
- 
-        String transport_details = entity.getTransport_details();
-        if (transport_details != null) {
-            stmt.bindString(19, transport_details);
-        }
- 
-        String payment_details = entity.getPayment_details();
-        if (payment_details != null) {
-            stmt.bindString(20, payment_details);
-        }
- 
-        Integer friendly_percent = entity.getFriendly_percent();
-        if (friendly_percent != null) {
-            stmt.bindLong(21, friendly_percent);
-        }
-        stmt.bindLong(22, entity.getCalculated_fair_cents());
-        stmt.bindLong(23, entity.getCalculated_friendly_cents());
-        stmt.bindLong(24, entity.getCalculated_fee_cents());
- 
-        String condition_extra = entity.getCondition_extra();
-        if (condition_extra != null) {
-            stmt.bindString(25, condition_extra);
-        }
- 
-        Boolean small_and_precious_eu_small_enterprise = entity.getSmall_and_precious_eu_small_enterprise();
-        if (small_and_precious_eu_small_enterprise != null) {
-            stmt.bindLong(26, small_and_precious_eu_small_enterprise ? 1l: 0l);
-        }
- 
-        String ecologic_kind = entity.getEcologic_kind();
-        if (ecologic_kind != null) {
-            stmt.bindString(27, ecologic_kind);
-        }
- 
-        String upcycling_reason = entity.getUpcycling_reason();
-        if (upcycling_reason != null) {
-            stmt.bindString(28, upcycling_reason);
-        }
- 
         String slug = entity.getSlug();
         if (slug != null) {
-            stmt.bindString(29, slug);
+            stmt.bindString(2, slug);
         }
  
-        Boolean transport_pickup = entity.getTransport_pickup();
-        if (transport_pickup != null) {
-            stmt.bindLong(30, transport_pickup ? 1l: 0l);
+        String titleImageUrl = entity.getTitleImageUrl();
+        if (titleImageUrl != null) {
+            stmt.bindString(3, titleImageUrl);
         }
  
-        Boolean transport_type1 = entity.getTransport_type1();
-        if (transport_type1 != null) {
-            stmt.bindLong(31, transport_type1 ? 1l: 0l);
+        String htmlUrl = entity.getHtmlUrl();
+        if (htmlUrl != null) {
+            stmt.bindString(4, htmlUrl);
         }
  
-        Boolean transport_type2 = entity.getTransport_type2();
-        if (transport_type2 != null) {
-            stmt.bindLong(32, transport_type2 ? 1l: 0l);
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(5, title);
         }
  
-        String transport_type1_provider = entity.getTransport_type1_provider();
-        if (transport_type1_provider != null) {
-            stmt.bindString(33, transport_type1_provider);
+        Integer priceCents = entity.getPriceCents();
+        if (priceCents != null) {
+            stmt.bindLong(6, priceCents);
         }
  
-        String transport_type2_provider = entity.getTransport_type2_provider();
-        if (transport_type2_provider != null) {
-            stmt.bindString(34, transport_type2_provider);
-        }
-        stmt.bindLong(35, entity.getTransport_type1_price_cents());
-        stmt.bindLong(36, entity.getTransport_type2_price_cents());
- 
-        Boolean payment_bank_transfer = entity.getPayment_bank_transfer();
-        if (payment_bank_transfer != null) {
-            stmt.bindLong(37, payment_bank_transfer ? 1l: 0l);
+        String tagCondition = entity.getTagCondition();
+        if (tagCondition != null) {
+            stmt.bindString(7, tagCondition);
         }
  
-        Boolean payment_cash = entity.getPayment_cash();
-        if (payment_cash != null) {
-            stmt.bindLong(38, payment_cash ? 1l: 0l);
+        Boolean tagFair = entity.getTagFair();
+        if (tagFair != null) {
+            stmt.bindLong(8, tagFair ? 1l: 0l);
         }
  
-        Boolean payment_paypal = entity.getPayment_paypal();
-        if (payment_paypal != null) {
-            stmt.bindLong(39, payment_paypal ? 1l: 0l);
+        Boolean tagEcologic = entity.getTagEcologic();
+        if (tagEcologic != null) {
+            stmt.bindLong(9, tagEcologic ? 1l: 0l);
         }
  
-        Boolean payment_cash_on_delivery = entity.getPayment_cash_on_delivery();
-        if (payment_cash_on_delivery != null) {
-            stmt.bindLong(40, payment_cash_on_delivery ? 1l: 0l);
+        Boolean tagSmallAndPrecious = entity.getTagSmallAndPrecious();
+        if (tagSmallAndPrecious != null) {
+            stmt.bindLong(10, tagSmallAndPrecious ? 1l: 0l);
         }
  
-        Boolean payment_invoice = entity.getPayment_invoice();
-        if (payment_invoice != null) {
-            stmt.bindLong(41, payment_invoice ? 1l: 0l);
-        }
-        stmt.bindLong(42, entity.getPayment_cash_on_delivery_price_cents());
- 
-        Integer basic_price_cents = entity.getBasic_price_cents();
-        if (basic_price_cents != null) {
-            stmt.bindLong(43, basic_price_cents);
+        Boolean tagBorrowable = entity.getTagBorrowable();
+        if (tagBorrowable != null) {
+            stmt.bindLong(11, tagBorrowable ? 1l: 0l);
         }
  
-        String basic_price_amount = entity.getBasic_price_amount();
-        if (basic_price_amount != null) {
-            stmt.bindString(44, basic_price_amount);
+        Boolean tagSwappable = entity.getTagSwappable();
+        if (tagSwappable != null) {
+            stmt.bindLong(12, tagSwappable ? 1l: 0l);
         }
  
-        String state = entity.getState();
-        if (state != null) {
-            stmt.bindString(45, state);
+        String sellerNickname = entity.getSellerNickname();
+        if (sellerNickname != null) {
+            stmt.bindString(13, sellerNickname);
         }
  
-        Integer vat = entity.getVat();
-        if (vat != null) {
-            stmt.bindLong(46, vat);
+        Boolean sellerLegalEntity = entity.getSellerLegalEntity();
+        if (sellerLegalEntity != null) {
+            stmt.bindLong(14, sellerLegalEntity ? 1l: 0l);
         }
  
-        String custom_seller_identifier = entity.getCustom_seller_identifier();
-        if (custom_seller_identifier != null) {
-            stmt.bindString(47, custom_seller_identifier);
+        String sellerHtmlUrl = entity.getSellerHtmlUrl();
+        if (sellerHtmlUrl != null) {
+            stmt.bindString(15, sellerHtmlUrl);
         }
  
-        String gtin = entity.getGtin();
-        if (gtin != null) {
-            stmt.bindString(48, gtin);
-        }
- 
-        Integer transport_type1_number = entity.getTransport_type1_number();
-        if (transport_type1_number != null) {
-            stmt.bindLong(49, transport_type1_number);
-        }
- 
-        Integer transport_type2_number = entity.getTransport_type2_number();
-        if (transport_type2_number != null) {
-            stmt.bindLong(50, transport_type2_number);
-        }
- 
-        Integer discount_id = entity.getDiscount_id();
-        if (discount_id != null) {
-            stmt.bindLong(51, discount_id);
-        }
- 
-        Integer friendly_percent_organisation_id = entity.getFriendly_percent_organisation_id();
-        if (friendly_percent_organisation_id != null) {
-            stmt.bindLong(52, friendly_percent_organisation_id);
-        }
- 
-        String article_template_name = entity.getArticle_template_name();
-        if (article_template_name != null) {
-            stmt.bindString(53, article_template_name);
-        }
- 
-        String transport_time = entity.getTransport_time();
-        if (transport_time != null) {
-            stmt.bindString(54, transport_time);
-        }
- 
-        Integer quantity_available = entity.getQuantity_available();
-        if (quantity_available != null) {
-            stmt.bindLong(55, quantity_available);
-        }
- 
-        Boolean unified_transport = entity.getUnified_transport();
-        if (unified_transport != null) {
-            stmt.bindLong(56, unified_transport ? 1l: 0l);
-        }
- 
-        Boolean swappable = entity.getSwappable();
-        if (swappable != null) {
-            stmt.bindLong(57, swappable ? 1l: 0l);
-        }
- 
-        Boolean borrowable = entity.getBorrowable();
-        if (borrowable != null) {
-            stmt.bindLong(58, borrowable ? 1l: 0l);
-        }
- 
-        Integer comments_count = entity.getComments_count();
-        if (comments_count != null) {
-            stmt.bindLong(59, comments_count);
-        }
- 
-        Integer original_id = entity.getOriginal_id();
-        if (original_id != null) {
-            stmt.bindLong(60, original_id);
+        String donation = entity.getDonation();
+        if (donation != null) {
+            stmt.bindString(16, donation);
         }
     }
 
@@ -458,65 +182,21 @@ public class ProductDao extends AbstractDao<Product, Long> {
     public Product readEntity(Cursor cursor, int offset) {
         Product entity = new Product( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // title
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // content
-            new java.util.Date(cursor.getLong(offset + 3)), // created_at
-            new java.util.Date(cursor.getLong(offset + 4)), // updated_at
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // user_id
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // condition
-            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // price_cents
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // currency
-            cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0, // fair
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // fair_kind
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // fair_seal
-            cursor.isNull(offset + 12) ? null : cursor.getShort(offset + 12) != 0, // ecologic
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // ecologic_seal
-            cursor.isNull(offset + 14) ? null : cursor.getShort(offset + 14) != 0, // small_and_precious
-            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // small_and_precious_reason
-            cursor.isNull(offset + 16) ? null : cursor.getShort(offset + 16) != 0, // small_and_precious_handmade
-            cursor.isNull(offset + 17) ? null : cursor.getInt(offset + 17), // quantity
-            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // transport_details
-            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // payment_details
-            cursor.isNull(offset + 20) ? null : cursor.getInt(offset + 20), // friendly_percent
-            cursor.getInt(offset + 21), // calculated_fair_cents
-            cursor.getInt(offset + 22), // calculated_friendly_cents
-            cursor.getInt(offset + 23), // calculated_fee_cents
-            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // condition_extra
-            cursor.isNull(offset + 25) ? null : cursor.getShort(offset + 25) != 0, // small_and_precious_eu_small_enterprise
-            cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26), // ecologic_kind
-            cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27), // upcycling_reason
-            cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // slug
-            cursor.isNull(offset + 29) ? null : cursor.getShort(offset + 29) != 0, // transport_pickup
-            cursor.isNull(offset + 30) ? null : cursor.getShort(offset + 30) != 0, // transport_type1
-            cursor.isNull(offset + 31) ? null : cursor.getShort(offset + 31) != 0, // transport_type2
-            cursor.isNull(offset + 32) ? null : cursor.getString(offset + 32), // transport_type1_provider
-            cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33), // transport_type2_provider
-            cursor.getInt(offset + 34), // transport_type1_price_cents
-            cursor.getInt(offset + 35), // transport_type2_price_cents
-            cursor.isNull(offset + 36) ? null : cursor.getShort(offset + 36) != 0, // payment_bank_transfer
-            cursor.isNull(offset + 37) ? null : cursor.getShort(offset + 37) != 0, // payment_cash
-            cursor.isNull(offset + 38) ? null : cursor.getShort(offset + 38) != 0, // payment_paypal
-            cursor.isNull(offset + 39) ? null : cursor.getShort(offset + 39) != 0, // payment_cash_on_delivery
-            cursor.isNull(offset + 40) ? null : cursor.getShort(offset + 40) != 0, // payment_invoice
-            cursor.getInt(offset + 41), // payment_cash_on_delivery_price_cents
-            cursor.isNull(offset + 42) ? null : cursor.getInt(offset + 42), // basic_price_cents
-            cursor.isNull(offset + 43) ? null : cursor.getString(offset + 43), // basic_price_amount
-            cursor.isNull(offset + 44) ? null : cursor.getString(offset + 44), // state
-            cursor.isNull(offset + 45) ? null : cursor.getInt(offset + 45), // vat
-            cursor.isNull(offset + 46) ? null : cursor.getString(offset + 46), // custom_seller_identifier
-            cursor.isNull(offset + 47) ? null : cursor.getString(offset + 47), // gtin
-            cursor.isNull(offset + 48) ? null : cursor.getInt(offset + 48), // transport_type1_number
-            cursor.isNull(offset + 49) ? null : cursor.getInt(offset + 49), // transport_type2_number
-            cursor.isNull(offset + 50) ? null : cursor.getInt(offset + 50), // discount_id
-            cursor.isNull(offset + 51) ? null : cursor.getInt(offset + 51), // friendly_percent_organisation_id
-            cursor.isNull(offset + 52) ? null : cursor.getString(offset + 52), // article_template_name
-            cursor.isNull(offset + 53) ? null : cursor.getString(offset + 53), // transport_time
-            cursor.isNull(offset + 54) ? null : cursor.getInt(offset + 54), // quantity_available
-            cursor.isNull(offset + 55) ? null : cursor.getShort(offset + 55) != 0, // unified_transport
-            cursor.isNull(offset + 56) ? null : cursor.getShort(offset + 56) != 0, // swappable
-            cursor.isNull(offset + 57) ? null : cursor.getShort(offset + 57) != 0, // borrowable
-            cursor.isNull(offset + 58) ? null : cursor.getInt(offset + 58), // comments_count
-            cursor.isNull(offset + 59) ? null : cursor.getInt(offset + 59) // original_id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // slug
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // titleImageUrl
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // htmlUrl
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // title
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // priceCents
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // tagCondition
+            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0, // tagFair
+            cursor.isNull(offset + 8) ? null : cursor.getShort(offset + 8) != 0, // tagEcologic
+            cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0, // tagSmallAndPrecious
+            cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0, // tagBorrowable
+            cursor.isNull(offset + 11) ? null : cursor.getShort(offset + 11) != 0, // tagSwappable
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // sellerNickname
+            cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0, // sellerLegalEntity
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // sellerHtmlUrl
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15) // donation
         );
         return entity;
     }
@@ -525,65 +205,21 @@ public class ProductDao extends AbstractDao<Product, Long> {
     @Override
     public void readEntity(Cursor cursor, Product entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTitle(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setCreated_at(new java.util.Date(cursor.getLong(offset + 3)));
-        entity.setUpdated_at(new java.util.Date(cursor.getLong(offset + 4)));
-        entity.setUser_id(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
-        entity.setCondition(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setPrice_cents(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setCurrency(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setFair(cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0);
-        entity.setFair_kind(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setFair_seal(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setEcologic(cursor.isNull(offset + 12) ? null : cursor.getShort(offset + 12) != 0);
-        entity.setEcologic_seal(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setSmall_and_precious(cursor.isNull(offset + 14) ? null : cursor.getShort(offset + 14) != 0);
-        entity.setSmall_and_precious_reason(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
-        entity.setSmall_and_precious_handmade(cursor.isNull(offset + 16) ? null : cursor.getShort(offset + 16) != 0);
-        entity.setQuantity(cursor.isNull(offset + 17) ? null : cursor.getInt(offset + 17));
-        entity.setTransport_details(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
-        entity.setPayment_details(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
-        entity.setFriendly_percent(cursor.isNull(offset + 20) ? null : cursor.getInt(offset + 20));
-        entity.setCalculated_fair_cents(cursor.getInt(offset + 21));
-        entity.setCalculated_friendly_cents(cursor.getInt(offset + 22));
-        entity.setCalculated_fee_cents(cursor.getInt(offset + 23));
-        entity.setCondition_extra(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
-        entity.setSmall_and_precious_eu_small_enterprise(cursor.isNull(offset + 25) ? null : cursor.getShort(offset + 25) != 0);
-        entity.setEcologic_kind(cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26));
-        entity.setUpcycling_reason(cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27));
-        entity.setSlug(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
-        entity.setTransport_pickup(cursor.isNull(offset + 29) ? null : cursor.getShort(offset + 29) != 0);
-        entity.setTransport_type1(cursor.isNull(offset + 30) ? null : cursor.getShort(offset + 30) != 0);
-        entity.setTransport_type2(cursor.isNull(offset + 31) ? null : cursor.getShort(offset + 31) != 0);
-        entity.setTransport_type1_provider(cursor.isNull(offset + 32) ? null : cursor.getString(offset + 32));
-        entity.setTransport_type2_provider(cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33));
-        entity.setTransport_type1_price_cents(cursor.getInt(offset + 34));
-        entity.setTransport_type2_price_cents(cursor.getInt(offset + 35));
-        entity.setPayment_bank_transfer(cursor.isNull(offset + 36) ? null : cursor.getShort(offset + 36) != 0);
-        entity.setPayment_cash(cursor.isNull(offset + 37) ? null : cursor.getShort(offset + 37) != 0);
-        entity.setPayment_paypal(cursor.isNull(offset + 38) ? null : cursor.getShort(offset + 38) != 0);
-        entity.setPayment_cash_on_delivery(cursor.isNull(offset + 39) ? null : cursor.getShort(offset + 39) != 0);
-        entity.setPayment_invoice(cursor.isNull(offset + 40) ? null : cursor.getShort(offset + 40) != 0);
-        entity.setPayment_cash_on_delivery_price_cents(cursor.getInt(offset + 41));
-        entity.setBasic_price_cents(cursor.isNull(offset + 42) ? null : cursor.getInt(offset + 42));
-        entity.setBasic_price_amount(cursor.isNull(offset + 43) ? null : cursor.getString(offset + 43));
-        entity.setState(cursor.isNull(offset + 44) ? null : cursor.getString(offset + 44));
-        entity.setVat(cursor.isNull(offset + 45) ? null : cursor.getInt(offset + 45));
-        entity.setCustom_seller_identifier(cursor.isNull(offset + 46) ? null : cursor.getString(offset + 46));
-        entity.setGtin(cursor.isNull(offset + 47) ? null : cursor.getString(offset + 47));
-        entity.setTransport_type1_number(cursor.isNull(offset + 48) ? null : cursor.getInt(offset + 48));
-        entity.setTransport_type2_number(cursor.isNull(offset + 49) ? null : cursor.getInt(offset + 49));
-        entity.setDiscount_id(cursor.isNull(offset + 50) ? null : cursor.getInt(offset + 50));
-        entity.setFriendly_percent_organisation_id(cursor.isNull(offset + 51) ? null : cursor.getInt(offset + 51));
-        entity.setArticle_template_name(cursor.isNull(offset + 52) ? null : cursor.getString(offset + 52));
-        entity.setTransport_time(cursor.isNull(offset + 53) ? null : cursor.getString(offset + 53));
-        entity.setQuantity_available(cursor.isNull(offset + 54) ? null : cursor.getInt(offset + 54));
-        entity.setUnified_transport(cursor.isNull(offset + 55) ? null : cursor.getShort(offset + 55) != 0);
-        entity.setSwappable(cursor.isNull(offset + 56) ? null : cursor.getShort(offset + 56) != 0);
-        entity.setBorrowable(cursor.isNull(offset + 57) ? null : cursor.getShort(offset + 57) != 0);
-        entity.setComments_count(cursor.isNull(offset + 58) ? null : cursor.getInt(offset + 58));
-        entity.setOriginal_id(cursor.isNull(offset + 59) ? null : cursor.getInt(offset + 59));
+        entity.setSlug(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setTitleImageUrl(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setHtmlUrl(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTitle(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setPriceCents(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setTagCondition(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setTagFair(cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0);
+        entity.setTagEcologic(cursor.isNull(offset + 8) ? null : cursor.getShort(offset + 8) != 0);
+        entity.setTagSmallAndPrecious(cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0);
+        entity.setTagBorrowable(cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0);
+        entity.setTagSwappable(cursor.isNull(offset + 11) ? null : cursor.getShort(offset + 11) != 0);
+        entity.setSellerNickname(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setSellerLegalEntity(cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0);
+        entity.setSellerHtmlUrl(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setDonation(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
      }
     
     /** @inheritdoc */

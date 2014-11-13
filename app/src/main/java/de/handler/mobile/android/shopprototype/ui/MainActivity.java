@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.datasource.DatabaseController;
 import de.handler.mobile.android.shopprototype.datasource.database.Category;
+import de.handler.mobile.android.shopprototype.datasource.database.SearchSuggestion;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
@@ -87,6 +89,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     private long mLastBackPressTime = System.currentTimeMillis();
     private int mProductsCount = 0;
     private ArrayList<Article> mProducts;
+    private String mCurrentCategoryString;
 
 
     @AfterInject
@@ -197,7 +200,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Get the selected category and the products matching the category
         if (position > 0) {
-            //String category = (String) parent.getItemAtPosition(position);
+            mCurrentCategoryString = (String) parent.getItemAtPosition(position);
             this.getSubCategories(mCategories.get(position-1).getId().intValue());
             mSpinnerSelection = true;
         }
@@ -296,7 +299,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.hideProgressbar();
             this.initSelectionFragment(mProducts);
 
-            databaseController.setSearchSuggestions(mProducts, mCategories);
+            databaseController.setSearchSuggestions(mProducts, mCurrentCategoryString);
+            List<SearchSuggestion> searchSuggestions = databaseController.getSearchSuggestions();
+            Log.d("MAIN_ACTIVITY", "products with category " + mCurrentCategoryString + " added to searchSuggestionTable" + " \n with old size " + searchSuggestions.size());
         }
     }
 
