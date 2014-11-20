@@ -12,4 +12,5 @@ import de.handler.mobile.android.shopprototype.R;
 @EFragment(R.layout.fragment_filter)
 public class FilterFragment extends Fragment {
 
+
 }

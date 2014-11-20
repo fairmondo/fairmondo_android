@@ -18,6 +18,7 @@ import de.handler.mobile.android.shopprototype.R;
 import de.handler.mobile.android.shopprototype.ShopApp;
 import de.handler.mobile.android.shopprototype.datasource.database.Category;
 import de.handler.mobile.android.shopprototype.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.shopprototype.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.shopprototype.rest.RestController;
 
 /**
@@ -46,6 +47,7 @@ public class CategoryFragment extends ListFragment {
     @AfterInject
     public void initRestController() {
         restController.setCategoriesListener((OnCategoriesListener) mActivity);
+        restController.setProductListener((OnSearchResultListener) mActivity);
     }
 
     @AfterViews
@@ -62,7 +64,14 @@ public class CategoryFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        app.setLastCategory(mCategories.get(position).getId().intValue());
-        restController.getSubCategories(mCategories.get(position).getId().intValue());
+
+        // It has to be position + 1 as all categories is on first position
+        if (position > 0) {
+            app.setLastCategory(mCategories.get(position+1).getId().intValue());
+            restController.getSubCategories(app.getLastCategory());
+        } else {
+            // if user selects "all categories" - position 0
+            restController.getProduct("", app.getLastCategory());
+        }
     }
 }

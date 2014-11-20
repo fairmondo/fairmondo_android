@@ -11,4 +11,5 @@ import de.handler.mobile.android.shopprototype.rest.json.Article;
  */
 public interface OnSearchResultListener {
     public void onProductsSearchResponse(ArrayList<Article> products);
+    public void showProgressBar();
 }

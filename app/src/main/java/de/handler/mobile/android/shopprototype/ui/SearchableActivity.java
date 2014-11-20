@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -64,15 +65,20 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
         String query;
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+        String action = intent.getAction();
+
+        // TODO why does this not match? The strings are equal
+        if (Intent.ACTION_VIEW.equals(action)) {
             // Should load when clicked on a search suggestion
             Uri data = intent.getData();
             this.showResult(data);
-        } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        } else if (Intent.ACTION_SEARCH.equals(action)) {
             query = intent.getStringExtra(SearchManager.QUERY);
             this.searchProducts(query);
         } else {
             query = intent.getStringExtra(QUERY_STRING_EXTRA);
+            Log.d(this.getLocalClassName(), action);
+            Log.d(this.getLocalClassName(), intent.getDataString());
             this.searchProducts(query);
         }
 
@@ -114,6 +120,11 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.activity_search_result_container, searchResultFragment)
                 .commit();
+    }
+
+    @Override
+    public void showProgressBar() {
+
     }
 
     /**

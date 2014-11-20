@@ -185,6 +185,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Add basic item and categories list to the adapter
         adapter.add(getString(R.string.spinner_basic_item));
+
         adapter.addAll(categoryStrings);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
@@ -199,10 +200,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Get the selected category and the products matching the category
+        mSpinnerSelection = true;
         if (position > 0) {
             mCurrentCategoryString = (String) parent.getItemAtPosition(position);
+            app.setLastCategory(mCategories.get(position - 1).getId().intValue());
             this.getSubCategories(mCategories.get(position-1).getId().intValue());
-            mSpinnerSelection = true;
         }
     }
 
@@ -224,6 +226,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
         if (categories.size() >= 1) {
             this.hideProgressbar();
+            Category category = new Category(-1L);
+            category.setName(getString(R.string.all_products));
+            categories.add(0, category);
             this.initCategoryFragment(categories);
         } else {
             this.getProductSelection("", app.getLastCategory());
@@ -277,7 +282,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.initFeatureFragment(products);
         }
     }
-
 
 
     private void getDetailedProducts(ArrayList<Article> products) {
@@ -392,6 +396,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     }
 
+
+    @Override
+    public void showProgressBar() {
+        this.showProgressbar();
+    }
 
     @UiThread
     public void showProgressbar() {

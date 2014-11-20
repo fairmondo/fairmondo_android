@@ -73,7 +73,7 @@ public class RestController {
         this.cartChangeListener = cartChangeListener;
     }
 
-    @Background
+    @Background(id = "cancellable_task")
     public void getProduct(String searchString) {
         Articles articles = restService.getProduct(searchString);
         if (articles != null && articles.getArticles() != null) {
@@ -84,8 +84,9 @@ public class RestController {
     }
 
 
-    @Background
+    @Background(id = "cancellable_task")
     public void getProduct(String searchString, int categoryId) {
+        productListener.showProgressBar();
         Articles articles = restService.getProduct(searchString, categoryId);
         if (articles != null && articles.getArticles() != null) {
             productListener.onProductsSearchResponse(articles.getArticles());
@@ -95,7 +96,7 @@ public class RestController {
     }
 
 
-    @Background
+    @Background(id = "cancellable_task")
     public void getDetailedProduct(String slug) {
         Article article = restService.getDetailedProduct(slug);
         detailedProductListener.onDetailedProductResponse(article);

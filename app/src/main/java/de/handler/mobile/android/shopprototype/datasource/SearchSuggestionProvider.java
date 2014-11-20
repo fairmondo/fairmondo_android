@@ -79,6 +79,7 @@ public class SearchSuggestionProvider extends ContentProvider {
                       String[] selectionArgs) {
         throw new UnsupportedOperationException();
     }
+
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
@@ -97,7 +98,7 @@ public class SearchSuggestionProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
-        SQLiteDatabase db = getDatabase();
+        SQLiteDatabase db = daoSession.getDatabase();
         Cursor cursor = queryBuilder.query(db, projection, selection,
                 selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
