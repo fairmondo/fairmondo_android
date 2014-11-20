@@ -8,7 +8,7 @@
     android:id="@+id/image_adapter_grid_item_container">
 
 
-    <de.handler.mobile.android.shopprototype.util.RoundNetworkImageView
+    <de.handler.mobile.android.fairmondo.util.RoundNetworkImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/image_adapter_image"

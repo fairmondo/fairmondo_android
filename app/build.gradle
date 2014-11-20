@@ -9,7 +9,7 @@ configurations {
 apt {
     arguments {
         androidManifestFile variant.processResources.manifestFile
-        resourcePackageName "de.handler.mobile.android.shopprototype"
+        resourcePackageName "de.handler.mobile.android.fairmondo"
     }
 }
 
@@ -19,7 +19,7 @@ android {
     buildToolsVersion "21.0.1"
 
     defaultConfig {
-        applicationId "de.handler.mobile.android.shopprototype"
+        applicationId "de.handler.mobile.android.fairmondo"
         minSdkVersion 11
         targetSdkVersion 21
         versionCode 1

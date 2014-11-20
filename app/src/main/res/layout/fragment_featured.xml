@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+        <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
             android:id="@+id/fragment_feature_image_first"
             android:text="@string/product_hint"
             style="@style/style_features_image" />
@@ -18,7 +18,7 @@
             style="@style/style_featured_text"
             android:layout_alignTop="@id/fragment_feature_image_first"/>
 
-        <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+        <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
             android:id="@+id/fragment_feature_image_second"
             android:layout_below="@id/fragment_feature_image_first"
             android:text="@string/product_hint"
@@ -29,7 +29,7 @@
             android:id="@+id/fragment_feature_text_second"
             android:layout_alignTop="@id/fragment_feature_image_second"/>
 
-        <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+        <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
             android:layout_below="@id/fragment_feature_image_second"
             android:id="@+id/fragment_feature_image_third"
             android:text="@string/product_hint"

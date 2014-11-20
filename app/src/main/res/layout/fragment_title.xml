@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="android.mobile.handler.de.shopprototype.ui.fragments.TitleFragment">
+    tools:context="android.mobile.handler.de.fairmondo.ui.fragments.TitleFragment">
 
     <ImageView
         android:layout_width="match_parent"

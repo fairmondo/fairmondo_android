@@ -12,15 +12,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="android.mobile.handler.de.shopprototype.ui.fragments.ProductFragment"
+            tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
             android:orientation="vertical">
 
 
-            <de.handler.mobile.android.shopprototype.util.CustomNetworkImageView
+            <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:paddingTop="?attr/actionBarSize"
                 android:scaleType="centerInside"
+                android:adjustViewBounds="true"
                 android:id="@+id/fragment_product_image_view" />
 
 
