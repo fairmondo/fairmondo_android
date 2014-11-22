@@ -161,11 +161,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onCategoriesResponse(ArrayList<Category> categories) {
-        mCategories = categories;
-        databaseController.setCategories(mCategories);
+        if (categories != null) {
+            mCategories = categories;
+            databaseController.setCategories(categories);
 
-        //this.hideProgressbar();
-        this.initSpinner(categories);
+            //this.hideProgressbar();
+            this.initSpinner(categories);
+        }
     }
 
 

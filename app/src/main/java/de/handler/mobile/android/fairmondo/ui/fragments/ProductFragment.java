@@ -2,11 +2,16 @@ package de.handler.mobile.android.fairmondo.ui.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -53,7 +58,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_price)
     TextView priceTextView;
-    
+
     @ViewById(R.id.fragment_product_button_description)
     Button buttonDescription;
 
@@ -78,21 +83,36 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             titleTextView.setText(mProduct.getTitle());
 
             // Image
-            productImageView.setImageUrl(mProduct.getTitle_image_url(), app.getImageLoader());
-            if (mProduct.getTitle_image() != null) {
-                productImageView.setImageUrl(mProduct.getTitle_image().getOriginal_url(), app.getImageLoader());
+            String url = mProduct.getTitle_image_url();
+            if (mProduct.getTitle_image() != null && !mProduct.getTitle_image().getOriginal_url().equals("")) {
+                url = mProduct.getTitle_image().getOriginal_url();
             }
 
-            //TODO not yet working
-            productImageView.buildDrawingCache(true);
-            if (productImageView.getDrawingCache() != null) {
-                Palette.generateAsync(productImageView.getDrawingCache(), new Palette.PaletteAsyncListener() {
-                    public void onGenerated(Palette palette) {
-                        int color = palette.getLightMutedColor(android.R.color.transparent);
-                        productImageView.setBackgroundColor(color);
+            productImageView.setErrorImageResId(R.drawable.watermark);
+            app.getImageLoader().get(url, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer response, boolean isImmediate) {
+                    final Bitmap bitmap = response.getBitmap();
+                    if (bitmap != null) {
+                        final BitmapDrawable drawable = new BitmapDrawable(getActivity().getResources(), bitmap);
+                        drawable.setAlpha(200);
+
+                        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                            public void onGenerated(Palette palette) {
+                                int color = palette.getLightMutedColor(android.R.color.transparent);
+                                productImageView.setBackgroundColor(color);
+                                productImageView.setLocalImageDrawable(drawable);
+                            }
+                        });
                     }
-                });
-            }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
 
             // Description
             if (mProduct.getContent_html() == null) {

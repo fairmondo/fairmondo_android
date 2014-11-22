@@ -56,10 +56,12 @@ public class DatabaseController {
     @Background
     public void setSearchSuggestions(ArrayList<Article> products, String categoryString) {
         for (Article article : products) {
-            SearchSuggestion searchSuggestion = new SearchSuggestion();
-            searchSuggestion.setSuggest_text_1(article.getTitle());
-            searchSuggestion.setSuggest_text_2(categoryString);
-            app.getDaoSession().getSearchSuggestionDao().insertOrReplace(searchSuggestion);
+            if (article != null) {
+                SearchSuggestion searchSuggestion = new SearchSuggestion();
+                searchSuggestion.setSuggest_text_1(article.getTitle());
+                searchSuggestion.setSuggest_text_2(categoryString);
+                app.getDaoSession().getSearchSuggestionDao().insertOrReplace(searchSuggestion);
+            }
         }
     }
 

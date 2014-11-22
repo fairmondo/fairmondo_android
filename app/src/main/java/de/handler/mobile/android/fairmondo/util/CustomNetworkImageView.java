@@ -17,6 +17,35 @@ import com.android.volley.toolbox.NetworkImageView;
 public class CustomNetworkImageView extends NetworkImageView {
     private static final int FADE_IN_TIME_MS = 250;
 
+    private Bitmap  mLocalBitmap;
+    private BitmapDrawable mLocalDrawable;
+
+    private boolean mShowLocalBitmap;
+    private boolean mShowLocalDrawable;
+
+    public void setLocalImageBitmap(Bitmap bitmap) {
+        if (bitmap != null) {
+            mShowLocalBitmap = true;
+        }
+        this.mLocalBitmap = bitmap;
+        requestLayout();
+    }
+
+    public void setLocalImageDrawable(BitmapDrawable drawable) {
+        if (drawable != null) {
+            mShowLocalDrawable = true;
+        }
+        this.mLocalDrawable = drawable;
+        requestLayout();
+    }
+
+    @Override
+    public void setImageUrl(String url, ImageLoader imageLoader) {
+        mShowLocalBitmap = false;
+        mShowLocalDrawable = false;
+        super.setImageUrl(url, imageLoader);
+    }
+
     public CustomNetworkImageView(Context context) {
         this(context, null);
     }
@@ -41,9 +70,13 @@ public class CustomNetworkImageView extends NetworkImageView {
     }
 
     @Override
-    public void setImageUrl(String url, ImageLoader imageLoader) {
-        super.setImageUrl(url, imageLoader);
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+
+        super.onLayout(changed, left, top, right, bottom);
+        if (mShowLocalBitmap) {
+            setImageBitmap(mLocalBitmap);
+        } else if (mShowLocalDrawable) {
+            setImageDrawable(mLocalDrawable);
+        }
     }
-
-
 }
