@@ -1,22 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
     android:id="@+id/image_adapter_grid_item_container">
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/image_adapter_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
 
-    <de.handler.mobile.android.fairmondo.util.RoundNetworkImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/image_adapter_image"
-        android:contentDescription="@string/product_hint" />
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
 
-    <TextView
-        style="@style/textview_banner_style_grid_view"
-        android:id="@+id/image_adapter_text" />
+        android:background="@color/transparent_green_50"
+        android:layout_alignParentTop="true"
+        card_view:cardElevation="20dp"
+        card_view:cardCornerRadius="4dp">
+
+        <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:minHeight="150dp"
+            android:id="@+id/image_adapter_image"
+            android:contentDescription="@string/product_hint" />
+
+        <TextView
+            style="@style/textview_banner_style_grid_view"
+            android:layout_gravity="bottom"
+            android:id="@+id/image_adapter_text" />
+
+    </android.support.v7.widget.CardView>
+
 
 
 

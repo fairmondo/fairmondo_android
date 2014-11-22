@@ -46,7 +46,6 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
         if (mProducts != null) {
             textViewEmpty.setVisibility(View.GONE);
-
             this.setupRecyclerView();
         } else {
             textViewEmpty.setVisibility(View.VISIBLE);
@@ -64,7 +63,7 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)

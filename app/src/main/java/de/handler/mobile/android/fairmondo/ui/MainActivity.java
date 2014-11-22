@@ -131,19 +131,23 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private void initStartFragment() {
-        this.showProgressbar();
+        if (app.isConnected()) {
+            this.showProgressbar();
 
-        Bundle bundle = new Bundle();
-        bundle.putString(WebFragment.URI, "http://mitmachen.fairmondo.de/anteile-zeichnen/");
+            Bundle bundle = new Bundle();
+            bundle.putString(WebFragment.URI, "http://mitmachen.fairmondo.de/anteile-zeichnen/");
 
-        WebFragment webFragment = new WebFragment_();
-        webFragment.setArguments(bundle);
+            WebFragment webFragment = new WebFragment_();
+            webFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_products_container, webFragment)
-                .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_products_container, webFragment)
+                    .commit();
 
-        this.hideProgressbar();
+            this.hideProgressbar();
+        } else {
+            Toast.makeText(this, R.string.app_not_connected, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -225,15 +229,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @Override
     public void onSubCategoriesResponse(ArrayList<Category> categories) {
-
-        if (categories.size() >= 1) {
-            this.hideProgressbar();
-            Category category = new Category(-1L);
-            category.setName(getString(R.string.all_products));
-            categories.add(0, category);
-            this.initCategoryFragment(categories);
-        } else {
-            this.getProductSelection("", app.getLastCategory());
+        if (categories != null) {
+            if (categories.size() >= 1) {
+                this.hideProgressbar();
+                Category category = new Category(-1L);
+                category.setName(getString(R.string.all_products));
+                categories.add(0, category);
+                this.initCategoryFragment(categories);
+            } else {
+                this.getProductSelection("", app.getLastCategory());
+            }
         }
     }
 
@@ -402,6 +407,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void showProgressBar() {
         this.showProgressbar();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        this.hideProgressbar();
     }
 
     @UiThread

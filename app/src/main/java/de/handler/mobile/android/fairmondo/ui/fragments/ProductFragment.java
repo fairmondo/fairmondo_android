@@ -58,7 +58,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_price)
     TextView priceTextView;
-
+    
     @ViewById(R.id.fragment_product_button_description)
     Button buttonDescription;
 
@@ -133,7 +133,8 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             double priceValue = (mProduct.getPrice_cents() / 100.0);
             // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
-            priceTextView.setText(format.format(priceValue) + " " + format.getCurrency().getSymbol());
+            String price = format.format(priceValue);
+            priceTextView.setText(price + " " + format.getCurrency().getSymbol());
 
 
 
@@ -157,7 +158,10 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     public void onCartChanged(Cart cart) {
         if (cart != null && cart.getLine_item() != null) {
             int itemCount = cart.getLine_item().getRequested_quantity();
+            itemCountTextView.setVisibility(View.VISIBLE);
             itemCountTextView.setText(String.valueOf(itemCount));
+        } else {
+            itemCountTextView.setVisibility(View.INVISIBLE);
         }
     }
 

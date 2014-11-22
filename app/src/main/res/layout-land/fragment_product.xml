@@ -41,6 +41,12 @@
                 android:layout_below="@id/fragment_product_title"
                 android:id="@+id/fragment_product_button_description"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_product_container_description"
+                android:orientation="horizontal" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,12 +54,24 @@
                 android:layout_below="@id/fragment_product_button_description"
                 android:id="@+id/fragment_product_button_terms"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_product_container_terms"
+                android:orientation="horizontal" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_product_donation"
                 android:layout_below="@id/fragment_product_button_terms"
                 android:id="@+id/fragment_product_button_fair_percent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_product_container_fairPercent"
+                android:orientation="horizontal" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,24 +81,35 @@
                 android:gravity="end"
                 android:padding="15dp"
                 android:id="@+id/fragment_product_price"/>
+
         </RelativeLayout>
     </ScrollView>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/fragment_product_button_buy"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/button_selector"
-        android:text="@string/fragment_product_buy"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/transparent_white_50"
-        android:layout_alignBaseline="@id/fragment_product_button_buy"
-        android:textSize="30sp"
-        android:id="@+id/fragment_product_item_count_text_view"/>
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/fragment_product_button_buy"
+            android:background="@drawable/button_selector"
+            android:text="@string/fragment_product_buy"/>
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:visibility="invisible"
+            android:background="@drawable/round_shape"
+            android:layout_alignEnd="@id/fragment_product_button_buy"
+            android:layout_alignRight="@id/fragment_product_button_buy"
+            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:id="@+id/fragment_product_item_count_text_view"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

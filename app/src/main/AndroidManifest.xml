@@ -28,6 +28,7 @@
         <activity
             android:name="de.handler.mobile.android.fairmondo.ui.SearchableActivity_"
             android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="de.handler.mobile.android.fairmondo.ui.MainActivity_" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -44,6 +45,7 @@
         <activity
             android:name="de.handler.mobile.android.fairmondo.ui.ProductGalleryActivity_"
             android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="de.handler.mobile.android.fairmondo.ui.MainActivity_" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

@@ -11,6 +11,7 @@ import org.androidannotations.api.rest.RestErrorHandler;
 import org.springframework.core.NestedRuntimeException;
 
 import de.handler.mobile.android.fairmondo.R;
+import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
 
 
 /**
@@ -22,21 +23,26 @@ import de.handler.mobile.android.fairmondo.R;
 public class RestServiceErrorHandler implements RestErrorHandler {
 
     private Context mContext;
+    private OnSearchResultListener mListener;
 
     @Override
     public void onRestClientExceptionThrown(NestedRuntimeException e) {
         Log.e("REST_ERROR_HANDLER", e.getMessage());
         BackgroundExecutor.cancelAll("cancellable_task", true);
         this.showToast(e.getLocalizedMessage());
+        this.hideProgressBar();
     }
 
     public void setContext(Context context) {
         this.mContext = context;
     }
 
+    public void setListener(OnSearchResultListener listener) {
+        this.mListener = listener;
+    }
+
     @UiThread
     public void showToast(String message) {
-
 
             if (mContext != null) {
                 if (message.contains("500") || message.contains("expected")) {
@@ -51,5 +57,10 @@ public class RestServiceErrorHandler implements RestErrorHandler {
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             }
 
+    }
+
+    @UiThread
+    public void hideProgressBar() {
+        mListener.hideProgressBar();
     }
 }

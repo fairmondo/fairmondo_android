@@ -44,21 +44,22 @@ public class RestController {
     private OnCategoriesListener categoriesListener;
     private OnDetailedProductListener detailedProductListener;
     private OnCartChangeListener cartChangeListener;
-    private Context mContext;
+    private Context context;
 
 
     public RestController(Context context) {
-        mContext = context;
+        this.context = context;
     }
 
     @AfterInject
     public void initRestService() {
-        errorHandler.setContext(mContext);
+        errorHandler.setContext(context);
         restService.setRestErrorHandler(errorHandler);
     }
 
     public void setProductListener(OnSearchResultListener productListener) {
         this.productListener = productListener;
+        errorHandler.setListener(productListener);
     }
 
     public void setCategoriesListener(OnCategoriesListener categoriesListener) {
@@ -103,19 +104,19 @@ public class RestController {
     }
 
 
-    @Background
+    @Background(id = "cancellable_task")
     public void getCategories() {
         ArrayList<Category> categories = restService.getCategories();
         categoriesListener.onCategoriesResponse(categories);
     }
 
-    @Background
+    @Background(id = "cancellable_task")
     public void getSubCategories(int id) {
         ArrayList<Category> categories = restService.getSubCategories(id);
         categoriesListener.onSubCategoriesResponse(categories);
     }
 
-    @Background
+    @Background(id = "cancellable_task")
     public void addToCard(int productId) {
         restService.setCookie("cart", app.getCookie());
 
@@ -133,6 +134,6 @@ public class RestController {
 
     @UiThread
     public void makeToast() {
-        Toast.makeText(mContext, mContext.getString(R.string.item_amount_too_big), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.item_amount_too_big), Toast.LENGTH_SHORT).show();
     }
 }

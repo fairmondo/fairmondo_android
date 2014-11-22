@@ -12,4 +12,5 @@ import de.handler.mobile.android.fairmondo.rest.json.Article;
 public interface OnSearchResultListener {
     public void onProductsSearchResponse(ArrayList<Article> products);
     public void showProgressBar();
+    public void hideProgressBar();
 }

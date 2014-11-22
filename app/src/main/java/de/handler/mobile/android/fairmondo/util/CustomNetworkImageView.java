@@ -15,7 +15,7 @@ import com.android.volley.toolbox.NetworkImageView;
  * Workaround as setting Bitmap with NetworkImageView did not work out of the box
  */
 public class CustomNetworkImageView extends NetworkImageView {
-    private static final int FADE_IN_TIME_MS = 250;
+    private static final int FADE_IN_TIME_MS = 350;
 
     private Bitmap  mLocalBitmap;
     private BitmapDrawable mLocalDrawable;

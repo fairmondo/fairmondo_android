@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.ui;
 
 
+import android.content.res.Configuration;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -77,5 +78,10 @@ public class ProductGalleryActivity extends AbstractActivity {
 
     private void openSettings() {
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

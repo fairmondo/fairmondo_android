@@ -1,13 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="BaseTheme">
-        <item name="windowActionBarOverlay">true</item>
-    </style>
-
     <style name="BaseTheme" parent="Base.Theme.AppCompat.Light">
     </style>
 
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="windowActionBarOverlay">true</item>
+    </style>
 
     <style name="dialog_register_edittext">
         <item name="android:inputType">text</item>
@@ -28,7 +27,7 @@
         <item name="android:layout_marginTop">?attr/actionBarSize</item>
         <item name="android:textSize">55sp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/transparent_grey_80</item>
+        <item name="android:background">@color/transparent_grey_20</item>
     </style>
 
     <style name="textview_banner_style_splash" parent="textview_banner_style">
@@ -36,27 +35,16 @@
     </style>
 
     <style name="textview_banner_style_grid_view" parent="textview_banner_style">
-        <item name="android:textSize">16sp</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="style_grid_item">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">20dp</item>
-        <item name="android:numColumns">auto_fit</item>
-        <item name="android:columnWidth">90dp</item>
-        <item name="android:horizontalSpacing">10dp</item>
-        <item name="android:verticalSpacing">10dp</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:stretchMode">columnWidth</item>
     </style>
 
     <style name="style_features_image">

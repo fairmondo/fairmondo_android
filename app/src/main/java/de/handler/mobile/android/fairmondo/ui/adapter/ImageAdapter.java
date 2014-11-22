@@ -1,7 +1,10 @@
 package de.handler.mobile.android.fairmondo.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 import de.handler.mobile.android.fairmondo.FairmondoApp_;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.util.RoundNetworkImageView;
+import de.handler.mobile.android.fairmondo.util.CustomNetworkImageView;
 
 
 /**
@@ -27,13 +30,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected RoundNetworkImageView imageView;
+        protected CustomNetworkImageView imageView;
         protected TextView textView;
+        protected CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
-            this.imageView = (RoundNetworkImageView) v.findViewById(R.id.image_adapter_image);
+
+            this.imageView = (CustomNetworkImageView) v.findViewById(R.id.image_adapter_image);
             this.textView = (TextView) v.findViewById(R.id.image_adapter_text);
+            this.cardView = (CardView) v.findViewById(R.id.image_adapter_card_view);
         }
     }
 
@@ -61,26 +67,29 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         if (mProducts.size() < 1) {
             viewHolder.imageView.setVisibility(View.GONE);
             viewHolder.textView.setVisibility(View.GONE);
+            viewHolder.cardView.setVisibility(View.GONE);
         }
 
+        Log.i(this.getClass().getCanonicalName(), "position no. " + position);
+
         // Create custom typeface
-        //Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Thin.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
 
-        String description = mProducts.get(position).getTitle();
-
+        // Set image
         String url = mProducts.get(position).getTitle_image_url();
         if (mProducts.get(position).getTitle_image() != null) {
             url = mProducts.get(position).getTitle_image().getThumb_url();
         }
 
         FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
-
         ImageLoader imageLoader = app.getImageLoader();
         viewHolder.imageView.setImageUrl(url, imageLoader);
-        viewHolder.imageView.setErrorImageResId(R.drawable.watermark);
+        viewHolder.imageView.setErrorImageResId(R.drawable.watermark_small);
 
         // Set text
+        String description = mProducts.get(position).getTitle();
         viewHolder.textView.setText(description);
+        viewHolder.textView.setTypeface(myTypeface);
     }
 
     public long getItemId(int position) {

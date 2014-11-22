@@ -2,6 +2,7 @@ package de.handler.mobile.android.fairmondo.ui;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -127,6 +128,11 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
     }
 
+    @Override
+    public void hideProgressBar() {
+
+    }
+
     /**
      * ActionBar settings
      */
@@ -151,5 +157,10 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
     private void openSettings() {
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }
