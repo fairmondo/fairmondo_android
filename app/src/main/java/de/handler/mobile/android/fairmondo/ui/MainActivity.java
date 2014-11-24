@@ -146,7 +146,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
             this.hideProgressbar();
         } else {
-            Toast.makeText(this, R.string.app_not_connected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.app_not_connected, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -205,6 +205,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // Clear Fragment stack as a new search begins and back navigation should only
+        // navigate back during one search
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+
         // Get the selected category and the products matching the category
         mSpinnerSelection = true;
         if (position > 0) {
@@ -268,7 +274,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             restController.getProduct(searchRequest, categoryId);
         } else {
             this.hideProgressbar();
-            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -435,7 +441,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         } else {
             if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
                 this.mLastBackPressTime = System.currentTimeMillis();
-                Toast.makeText(this, getString(R.string.close_app), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.close_app), Toast.LENGTH_SHORT).show();
             } else {
                 super.onBackPressed();
             }

@@ -65,9 +65,8 @@ public class CategoryFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
 
-        // It has to be position + 1 as all categories is on first position
         if (position > 0) {
-            app.setLastCategory(mCategories.get(position+1).getId().intValue());
+            app.setLastCategory(mCategories.get(position).getId().intValue());
             restController.getSubCategories(app.getLastCategory());
         } else {
             // if user selects "all categories" - position 0

@@ -12,7 +12,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 /**
- * Workaround as setting Bitmap with NetworkImageView did not work out of the box
+ * Workaround as setting Bitmap or ImageDrawable with NetworkImageView did not work out of the box
  */
 public class CustomNetworkImageView extends NetworkImageView {
     private static final int FADE_IN_TIME_MS = 350;
@@ -58,6 +58,7 @@ public class CustomNetworkImageView extends NetworkImageView {
         super(context, attrs, defStyle);
     }
 
+
     @Override
     public void setImageBitmap(Bitmap bm) {
         TransitionDrawable td = new TransitionDrawable(new Drawable[]{
@@ -68,6 +69,7 @@ public class CustomNetworkImageView extends NetworkImageView {
         setImageDrawable(td);
         td.startTransition(FADE_IN_TIME_MS);
     }
+
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {

@@ -12,16 +12,15 @@
         android:id="@+id/image_adapter_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_margin="15dp"
 
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:foreground="?android:selectableItemBackground"
 
-        android:background="@color/transparent_green_50"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
         android:layout_alignParentTop="true"
-        card_view:cardElevation="20dp"
+        card_view:cardElevation="20.0sp"
         card_view:cardCornerRadius="4dp">
 
         <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
@@ -31,6 +30,13 @@
             android:minHeight="150dp"
             android:id="@+id/image_adapter_image"
             android:contentDescription="@string/product_hint" />
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_adapter_progress_bar"
+            android:layout_gravity="center"/>
+
 
         <TextView
             style="@style/textview_banner_style_grid_view"

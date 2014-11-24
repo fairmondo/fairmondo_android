@@ -93,7 +93,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
             Category category = databaseController.getCategory(searchSuggestion.getSuggest_text_2());
             restController.getProduct(searchSuggestion.getSuggest_text_1(), category.getId().intValue());
         } else {
-            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -106,7 +106,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
                 this.finish();
             }
         } else {
-            Toast.makeText(this, getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
     }
 

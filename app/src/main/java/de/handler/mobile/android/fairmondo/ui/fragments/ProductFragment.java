@@ -3,11 +3,11 @@ package de.handler.mobile.android.fairmondo.ui.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -50,6 +50,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView productImageView;
 
+    @ViewById(R.id.fragment_product_progressBar)
+    ProgressBar progressBar;
+
     @ViewById(R.id.fragment_product_item_count_text_view)
     TextView itemCountTextView;
 
@@ -89,43 +92,37 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             }
 
             productImageView.setErrorImageResId(R.drawable.watermark);
-            app.getImageLoader().get(url, new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(final ImageLoader.ImageContainer response, boolean isImmediate) {
-                    final Bitmap bitmap = response.getBitmap();
-                    if (bitmap != null) {
-                        final BitmapDrawable drawable = new BitmapDrawable(getActivity().getResources(), bitmap);
-                        drawable.setAlpha(200);
 
-                        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-                            public void onGenerated(Palette palette) {
-                                int color = palette.getLightMutedColor(android.R.color.transparent);
-                                productImageView.setBackgroundColor(color);
-                                productImageView.setLocalImageDrawable(drawable);
-                            }
-                        });
+            if (url != null) {
+                app.getImageLoader().get(url, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(final ImageLoader.ImageContainer response, boolean isImmediate) {
+                        final Bitmap bitmap = response.getBitmap();
+                        if (bitmap != null) {
+                            setImageBackground(bitmap);
+                        }
                     }
-                }
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                }
-            });
+                    }
+                });
+            }
 
 
             // Description
-            if (mProduct.getContent_html() == null) {
+            if (mProduct.getContent_html() == null || mProduct.getContent_html().equals("")) {
                 buttonDescription.setVisibility(View.GONE);
             }
 
             // Terms
-            if (mProduct.getTerms_html() == null) {
+            if (mProduct.getTerms_html() == null || mProduct.getTerms_html().equals("")) {
                 buttonTerms.setVisibility(View.GONE);
             }
 
             // Fair Percent
-            if (mProduct.getFair_percent_html() == null) {
+            if (mProduct.getFair_percent_html() == null || mProduct.getFair_percent_html().equals("")) {
                 buttonFairPercent.setVisibility(View.GONE);
             }
 
@@ -137,16 +134,30 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             priceTextView.setText(price + " " + format.getCurrency().getSymbol());
 
 
-
-
             // Click Listeners
             buttonDescription.setOnClickListener(this);
             buttonTerms.setOnClickListener(this);
             buttonFairPercent.setOnClickListener(this);
         }
-
-
     }
+
+
+    @UiThread
+    public void setImageBackground(final Bitmap bitmap) {
+        //final BitmapDrawable drawable = new BitmapDrawable(getActivity().getResources(), bitmap);
+        //drawable.setAlpha(150);
+
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            public void onGenerated(Palette palette) {
+                int color = palette.getLightMutedColor(android.R.color.transparent);
+                productImageView.setBackgroundColor(color);
+                productImageView.setLocalImageBitmap(bitmap);
+            }
+        });
+
+        progressBar.setVisibility(View.GONE);
+    }
+
 
     @Click(R.id.fragment_product_button_buy)
     public void addToCart() {

@@ -23,6 +23,12 @@
                 android:adjustViewBounds="true"
                 android:id="@+id/fragment_product_image_view" />
 
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="150dp"
+                android:id="@+id/fragment_product_progressBar" />
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -94,14 +100,14 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/fragment_product_button_buy"
-            android:background="@drawable/button_selector"
+            android:background="@drawable/selector_button_coloured"
             android:text="@string/fragment_product_buy"/>
 
         <TextView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:visibility="invisible"
-            android:background="@drawable/round_shape"
+            android:background="@drawable/shape_round"
             android:layout_alignEnd="@id/fragment_product_button_buy"
             android:layout_alignRight="@id/fragment_product_button_buy"
             android:layout_marginRight="30dp"

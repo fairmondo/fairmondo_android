@@ -58,7 +58,7 @@ public class SearchResultFragment extends Fragment implements RecyclerView.OnIte
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
