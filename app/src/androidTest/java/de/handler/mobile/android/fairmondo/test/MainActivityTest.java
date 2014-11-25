@@ -1,5 +1,4 @@
-/*
-package de.handler.mobile.android.shopprototype.androidTest;
+package de.handler.mobile.android.fairmondo.test;
 
 import android.support.v7.app.ActionBarActivity;
 
@@ -8,6 +7,8 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+
+import de.handler.mobile.android.fairmondo.ui.activities.MainActivity_;
 
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -53,4 +54,4 @@ public class MainActivityTest {
     public void testOnBackPressed() throws Exception {
 
     }
-}*/
+}

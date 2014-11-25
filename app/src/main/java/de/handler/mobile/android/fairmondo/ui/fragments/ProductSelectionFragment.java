@@ -43,11 +43,15 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
     @AfterViews
     public void init() {
-        mProducts = getArguments().getParcelableArrayList(SELECTION_ARRAY_LIST_EXTRA);
+        if (getArguments() != null) {
+            mProducts = getArguments().getParcelableArrayList(SELECTION_ARRAY_LIST_EXTRA);
+        }
+
+        // Always set up RecyclerView as otherwise there will be an error
+        this.setupRecyclerView();
 
         if (mProducts != null) {
             textViewEmpty.setVisibility(View.GONE);
-            this.setupRecyclerView();
         } else {
             textViewEmpty.setVisibility(View.VISIBLE);
         }

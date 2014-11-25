@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-//apply plugin: 'robolectric'
+apply plugin: 'robolectric'
 
 configurations {
     apt
@@ -24,19 +24,19 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "0.1"
-//        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
-//    sourceSets {
-//        androidTest {
-//            setRoot('src/main')
-//        }
-//    }
+    /*sourceSets {
+        androidTest {
+            setRoot('src/main')
+        }
+    }*/
 
-//    robolectric {
-//        include '**/*Test.class'
-//        exclude '**/espresso/**/*.class'
-//    }
+    robolectric {
+        include '**/*Test.class'
+        exclude '**/espresso/**/*.class'
+    }
 
     buildTypes {
         release {
@@ -82,7 +82,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.7'
 
 
-/*    //Test Dependencies
+    //Test Dependencies
     // not compiled with compileAndroidTest as the package of test is the same as app.
     // This again is to special use case of android annotations:
     // test have to be in the same package as the generated sources only have package visibility
@@ -116,7 +116,7 @@ dependencies {
         exclude module: 'wagon-http-lightweight'
         exclude module: 'wagon-provider-api'
     }
-    testCompile 'com.squareup:fest-android:1.0.8'
+    testCompile 'com.squareup:fest-android:1.+'
 
     apply plugin: 'idea'
     idea {
@@ -124,5 +124,4 @@ dependencies {
             testOutputDir = file('build/test-classes/debug')
         }
     }
-*/
 }

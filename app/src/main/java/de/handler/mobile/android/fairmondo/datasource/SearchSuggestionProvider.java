@@ -14,7 +14,7 @@ import de.greenrobot.dao.DaoLog;
 import de.handler.mobile.android.fairmondo.datasource.database.DaoSession;
 import de.handler.mobile.android.fairmondo.datasource.database.SearchSuggestionDao;
 
-
+//TODO not working yet
 public class SearchSuggestionProvider extends ContentProvider {
 
     public static final String AUTHORITY = "de.handler.mobile.android.fairmondo.datasource.database.searchprovider";
@@ -89,7 +89,8 @@ public class SearchSuggestionProvider extends ContentProvider {
         switch (uriType) {
             case SEARCHSUGGESTION_QUERY:
                 queryBuilder.setTables(TABLENAME);
-                if (!uri.getLastPathSegment().equals(SearchManager.SUGGEST_URI_PATH_QUERY)) {
+                if (!uri.getLastPathSegment().equals(SearchManager.SUGGEST_URI_PATH_QUERY)
+                        && !uri.getLastPathSegment().equals("")) {
                     queryBuilder.appendWhere(SEARCHTEXT + " LIKE "
                             + "\'" + uri.getLastPathSegment() + "\'");
                 }

@@ -42,9 +42,7 @@ public class SearchResultFragment extends Fragment implements RecyclerView.OnIte
         mProducts = getArguments().getParcelableArrayList(SEARCH_RESULT_EXTRA);
 
         this.setupRecyclerView();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_search_filters, new FilterFragment_())
-                .commit();
+        // TODO add filters to search results
     }
 
     private void setupRecyclerView() {

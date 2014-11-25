@@ -148,7 +148,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     private void initStartFragment() {
         if (app.isConnected()) {
-            this.showProgressbar();
 
             Bundle bundle = new Bundle();
             bundle.putString(WebFragment.URI, "http://mitmachen.fairmondo.de/anteile-zeichnen/");
@@ -160,7 +159,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                     .replace(R.id.main_products_container, webFragment)
                     .commit();
 
-            this.hideProgressbar();
         } else {
             Toast.makeText(getApplicationContext(), R.string.app_not_connected, Toast.LENGTH_SHORT).show();
         }
@@ -171,6 +169,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private void getCategories() {
+        this.showProgressbar();
+        progressBar.setMax(2);
         restController.getCategories();
     }
 
@@ -181,11 +181,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onCategoriesResponse(ArrayList<Category> categories) {
+        progressBar.setProgress(progressBar.getProgress()+1);
+        this.hideProgressbar();
+
         if (categories != null) {
             mCategories = categories;
             databaseController.setCategories(categories);
 
-            //this.hideProgressbar();
             this.initSpinner(categories);
         }
     }
@@ -246,7 +248,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private void getSubCategories(int id) {
-        this.showProgressbar();
         restController.getSubCategories(id);
     }
 
@@ -255,7 +256,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onSubCategoriesResponse(ArrayList<Category> categories) {
         if (categories != null) {
             if (categories.size() >= 1) {
-                this.hideProgressbar();
                 Category category = new Category(-1L);
                 category.setName(getString(R.string.all_products));
                 categories.add(0, category);
@@ -293,7 +293,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.showProgressbar();
             restController.getProduct(searchRequest, categoryId);
         } else {
-            this.hideProgressbar();
             Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
     }
@@ -303,8 +302,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onProductsSearchResponse(ArrayList<Article> products) {
+        progressBar.setProgress(progressBar.getProgress()+1);
+
         if (mSpinnerSelection) {
             if (products != null && products.size() > 0) {
+                progressBar.setMax(progressBar.getProgress()+products.size());
+
                 this.getDetailedProducts(products);
             } else {
                 this.hideProgressbar();
@@ -323,6 +326,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         mProductsCount = products.size();
 
         mProducts = new ArrayList<Article>(products.size());
+
+        // Set maximal progress
+        progressBar.setProgress(1);
+        progressBar.setMax(products.size()+1);
+
         for (Article product : products) {
             restController.getDetailedProduct(product.getSlug());
         }
@@ -331,6 +339,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onDetailedProductResponse(Article article) {
         mProducts.add(article);
+
+        // Increment progress
+        progressBar.setProgress(progressBar.getProgress()+1);
 
         if (mProducts.size() == mProductsCount) {
             this.hideProgressbar();
@@ -347,9 +358,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     private void initSelectionFragment(ArrayList<Article> products) {
         ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, products);
-        selectionFragment.setArguments(bundle);
+
+        if (products != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, products);
+            selectionFragment.setArguments(bundle);
+        }
 
         try {
             getSupportFragmentManager().beginTransaction()
@@ -443,13 +457,14 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @UiThread
     public void showProgressbar() {
         progressBar.setVisibility(View.VISIBLE);
-        titleContainer.setVisibility(View.INVISIBLE);
+        progressBar.setProgress(1);
+        //titleContainer.setVisibility(View.INVISIBLE);
     }
 
     @UiThread
     public void hideProgressbar() {
         progressBar.setVisibility(View.INVISIBLE);
-        titleContainer.setVisibility(View.VISIBLE);
+        //titleContainer.setVisibility(View.VISIBLE);
     }
 
     // Override onBackPressed for being able to work with fragments.

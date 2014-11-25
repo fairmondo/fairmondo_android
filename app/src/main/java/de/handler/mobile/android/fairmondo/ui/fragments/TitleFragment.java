@@ -1,9 +1,11 @@
 package de.handler.mobile.android.fairmondo.ui.fragments;
 
 
+import android.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -42,6 +44,14 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
 
         if (drawable != 0) {
             imageViewTitle.setImageDrawable(getActivity().getResources().getDrawable(drawable));
+        } else {
+            textviewDescription.setBackgroundColor(getResources().getColor(R.color.fairmondo_blue_dark));
+            textviewDescription.setTextSize(20);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.WRAP_CONTENT);
+            textviewDescription.setLayoutParams(params);
         }
         textviewDescription.setText(imageDescription);
     }

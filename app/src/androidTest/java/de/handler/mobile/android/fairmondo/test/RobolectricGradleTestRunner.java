@@ -1,5 +1,4 @@
-/*
-package de.handler.mobile.android.shopprototype.androidTest;
+package de.handler.mobile.android.fairmondo.test;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.AndroidManifest;
@@ -7,11 +6,11 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.res.Fs;
 
-*/
+
 /**
  * Nino Handler
  * ShopPrototype
- *//*
+ */
 
 public class RobolectricGradleTestRunner extends RobolectricTestRunner {
 
@@ -31,4 +30,4 @@ public class RobolectricGradleTestRunner extends RobolectricTestRunner {
         return createAppManifest(Fs.fileFromPath(manifestPath), Fs.fileFromPath(resPath), Fs.fileFromPath(assetPath));
     }
 }
-*/
+

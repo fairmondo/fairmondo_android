@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.rest;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
@@ -89,7 +90,11 @@ public class RestController {
     public void getProduct(String searchString, int categoryId) {
         productListener.showProgressBar();
         Articles articles = restService.getProduct(searchString, categoryId);
-        if (articles != null && articles.getArticles() != null) {
+        if (articles != null
+                && articles.getArticles() != null
+                && articles.getArticles().size() > 0) {
+
+            Log.d(this.getClass().getCanonicalName(), String.valueOf(articles.getArticles().size()));
             productListener.onProductsSearchResponse(articles.getArticles());
         } else {
             productListener.onProductsSearchResponse(null);
