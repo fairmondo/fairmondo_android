@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
+        android:animateLayoutChanges="true"
         android:background="@color/transparent_white_80">
 
         <RelativeLayout
@@ -16,7 +17,7 @@
             android:orientation="vertical">
 
 
-            <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
+            <de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:scaleType="fitCenter"
@@ -39,19 +40,12 @@
                 android:gravity="center"
                 android:id="@+id/fragment_product_title"/>
 
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_product_description"
                 android:layout_below="@id/fragment_product_title"
                 android:id="@+id/fragment_product_button_description"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragment_product_container_description"
-                android:orientation="horizontal" />
 
             <Button
                 android:layout_width="match_parent"
@@ -60,24 +54,12 @@
                 android:layout_below="@id/fragment_product_button_description"
                 android:id="@+id/fragment_product_button_terms"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragment_product_container_terms"
-                android:orientation="horizontal" />
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_product_donation"
                 android:layout_below="@id/fragment_product_button_terms"
                 android:id="@+id/fragment_product_button_fair_percent"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragment_product_container_fairPercent"
-                android:orientation="horizontal" />
 
             <TextView
                 android:layout_width="match_parent"

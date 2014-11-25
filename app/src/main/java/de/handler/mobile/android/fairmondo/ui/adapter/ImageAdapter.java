@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import de.handler.mobile.android.fairmondo.FairmondoApp_;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.util.CustomNetworkImageView;
+import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
 
 /**
@@ -60,7 +60,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, null);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, viewGroup, false);
         return new ViewHolder(v);
     }
 

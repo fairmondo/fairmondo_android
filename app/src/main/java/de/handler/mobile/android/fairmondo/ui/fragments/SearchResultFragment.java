@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.ui.ProductGalleryActivity;
-import de.handler.mobile.android.fairmondo.ui.ProductGalleryActivity_;
+import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity;
+import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
 
 /**

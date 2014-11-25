@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.ui.fragments;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.ui.ProductGalleryActivity;
-import de.handler.mobile.android.fairmondo.ui.ProductGalleryActivity_;
+import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity;
+import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
 
 /**
@@ -82,10 +83,28 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        View childView = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+    public boolean onInterceptTouchEvent(final RecyclerView recyclerView, MotionEvent motionEvent) {
+        final View childView = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
         if (childView != null && mGestureDetector.onTouchEvent(motionEvent)) {
-            startProductGallery(recyclerView.getChildPosition(childView));
+            if (Build.VERSION.SDK_INT > 16) {
+                childView.animate().alpha(0).setDuration(200).withLayer().withEndAction(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                childView.animate().alpha(1).setDuration(200).withLayer().withEndAction(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                startProductGallery(recyclerView.getChildPosition(childView));
+                                            }
+                                        }
+                                );
+                            }
+                        }
+                );
+            } else {
+                startProductGallery(recyclerView.getChildPosition(childView));
+            }
         }
         return false;
     }
@@ -94,6 +113,4 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
     public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
 
     }
-
-
 }

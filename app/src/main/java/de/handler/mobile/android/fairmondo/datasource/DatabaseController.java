@@ -47,6 +47,7 @@ public class DatabaseController {
         }
     }
 
+
     public void setCategories(ArrayList<Category> categories) {
         for (Category category: categories) {
             app.getDaoSession().getCategoryDao().insertOrReplace(category);
@@ -109,6 +110,7 @@ public class DatabaseController {
     public List<Product> getProducts() {
         return app.getDaoSession().getProductDao().loadAll();
     }
+
 
 
 }

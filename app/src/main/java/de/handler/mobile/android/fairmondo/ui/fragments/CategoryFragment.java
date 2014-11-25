@@ -66,11 +66,11 @@ public class CategoryFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
 
         if (position > 0) {
-            app.setLastCategory(mCategories.get(position).getId().intValue());
-            restController.getSubCategories(app.getLastCategory());
+            app.setLastCategory(mCategories.get(position));
+            restController.getSubCategories(app.getLastCategory().getId().intValue());
         } else {
             // if user selects "all categories" - position 0
-            restController.getProduct("", app.getLastCategory());
+            restController.getProduct("", app.getLastCategory().getId().intValue());
         }
     }
 }

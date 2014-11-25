@@ -1,9 +1,10 @@
 package de.handler.mobile.android.fairmondo.ui.fragments;
 
 
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +31,7 @@ import de.handler.mobile.android.fairmondo.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.fairmondo.rest.RestController;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
 import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
-import de.handler.mobile.android.fairmondo.ui.WebActivity_;
-import de.handler.mobile.android.fairmondo.util.CustomNetworkImageView;
+import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
 /**
  * Displays one product
@@ -178,20 +178,41 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), WebActivity_.class);
+        //Intent intent = new Intent(getActivity(), WebActivity_.class);
+        //Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
+        Bundle bundle = new Bundle();
+
+        ProductDetailDialog dialog = new ProductDetailDialog_();
+        FragmentTransaction transaction =
+                getActivity().getSupportFragmentManager().beginTransaction();
 
         switch (v.getId()) {
             case R.id.fragment_product_button_description:
-                intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
+                //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
+                dialog.setArguments(bundle);
+
                 break;
             case R.id.fragment_product_button_terms:
-                intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
+                //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
+                dialog.setArguments(bundle);
+
                 break;
             case R.id.fragment_product_button_fair_percent:
-                intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
+                //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
+                dialog.setArguments(bundle);
+
                 break;
         }
 
-        startActivity(intent);
+        transaction.add(dialog, "Dialog");
+        transaction.setTransition(android.R.anim.decelerate_interpolator).commit();
+        /*if (Build.VERSION.SDK_INT > 15) {
+            getActivity().startActivity(intent, bundle);
+        } else {
+            startActivity(intent);
+        }*/
     }
 }

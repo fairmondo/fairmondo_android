@@ -40,7 +40,9 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
         int drawable = getArguments().getInt(IMAGE_DRAWABLE_EXTRA);
         String imageDescription = getArguments().getString(IMAGE_DESCRIPTION_STRING_EXTRA);
 
-        imageViewTitle.setImageDrawable(getActivity().getResources().getDrawable(drawable));
+        if (drawable != 0) {
+            imageViewTitle.setImageDrawable(getActivity().getResources().getDrawable(drawable));
+        }
         textviewDescription.setText(imageDescription);
     }
 

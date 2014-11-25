@@ -1,9 +1,11 @@
-package de.handler.mobile.android.fairmondo.ui;
+package de.handler.mobile.android.fairmondo.ui.activities;
 
+import android.animation.LayoutTransition;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -80,6 +82,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @ViewById(R.id.main_title_container)
     LinearLayout titleContainer;
 
+    @ViewById(R.id.main_products_container)
+    LinearLayout productsContainer;
+
 
     private boolean mSpinnerSelection = false;
     private ArrayList<Category> mCategories;
@@ -106,22 +111,33 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         this.setupActionBar();
         this.checkNetworkState();
 
-        this.initTitleFragment();
+        // Activate standard animations for fragment containers
+        if (Build.VERSION.SDK_INT > 15) {
+            LayoutTransition transition1 = productsContainer.getLayoutTransition();
+            transition1.enableTransitionType(LayoutTransition.CHANGING);
+
+            LayoutTransition transition2 = titleContainer.getLayoutTransition();
+            transition2.enableTransitionType(LayoutTransition.CHANGING);
+        }
+
+        this.initTitleFragment(R.drawable.fairmondo_small, getString(R.string.fairmondo_slogan));
         this.initStartFragment();
         this.getCategories();
 
-        List<Category> categoryList = databaseController.getCategories();
+        /*List<Category> categoryList = databaseController.getCategories();
         if (categoryList != null) {
             this.initSpinner(new ArrayList<Category>(categoryList));
-        }
+        }*/
     }
 
 
-    private void initTitleFragment() {
+    private void initTitleFragment(Integer drawable, String text) {
         TitleFragment titleFragment = new TitleFragment_();
         Bundle bundle = new Bundle();
-        bundle.putInt(TitleFragment.IMAGE_DRAWABLE_EXTRA, R.drawable.fairmondo);
-        bundle.putString(TitleFragment.IMAGE_DESCRIPTION_STRING_EXTRA, getString(R.string.fairmondo_slogan));
+        if (drawable != null) {
+            bundle.putInt(TitleFragment.IMAGE_DRAWABLE_EXTRA, drawable);
+        }
+        bundle.putString(TitleFragment.IMAGE_DESCRIPTION_STRING_EXTRA, text);
         titleFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
@@ -193,6 +209,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         adapter.add(getString(R.string.spinner_basic_item));
 
         adapter.addAll(categoryStrings);
+
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setSelected(false);
@@ -215,8 +232,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         mSpinnerSelection = true;
         if (position > 0) {
             mCurrentCategoryString = (String) parent.getItemAtPosition(position);
-            app.setLastCategory(mCategories.get(position - 1).getId().intValue());
+            app.setLastCategory(mCategories.get(position - 1));
             this.getSubCategories(mCategories.get(position-1).getId().intValue());
+            this.initTitleFragment(null, mCurrentCategoryString);
         }
     }
 
@@ -242,8 +260,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 category.setName(getString(R.string.all_products));
                 categories.add(0, category);
                 this.initCategoryFragment(categories);
+                this.initTitleFragment(null, app.getLastCategory().getName());
             } else {
-                this.getProductSelection("", app.getLastCategory());
+                this.initTitleFragment(null, app.getLastCategory().getName());
+                this.getProductSelection("", app.getLastCategory().getId().intValue());
             }
         }
     }
@@ -437,11 +457,20 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
+            this.initTitleFragment(null, getString(R.string.fairmondo_slogan));
+
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                // Reset standard title
+                this.initTitleFragment(R.drawable.fairmondo_small, getString(R.string.fairmondo_slogan));
+                spinner.setSelection(0);
+            }
         } else {
+            // Handle Back Navigation - if shortly after another back is pushed exit app
             if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
                 this.mLastBackPressTime = System.currentTimeMillis();
                 Toast.makeText(getApplicationContext(), getString(R.string.close_app), Toast.LENGTH_SHORT).show();
+
             } else {
                 super.onBackPressed();
             }

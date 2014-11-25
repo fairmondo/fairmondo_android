@@ -1,4 +1,4 @@
-package de.handler.mobile.android.fairmondo.ui;
+package de.handler.mobile.android.fairmondo.ui.activities;
 
 
 import android.content.res.Configuration;

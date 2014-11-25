@@ -1,4 +1,4 @@
-package de.handler.mobile.android.fairmondo.ui;
+package de.handler.mobile.android.fairmondo.ui.activities;
 
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;

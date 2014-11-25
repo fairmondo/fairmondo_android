@@ -1,4 +1,4 @@
-package de.handler.mobile.android.fairmondo.util;
+package de.handler.mobile.android.fairmondo.ui.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;

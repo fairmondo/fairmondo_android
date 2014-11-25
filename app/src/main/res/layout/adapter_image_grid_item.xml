@@ -23,7 +23,7 @@
         card_view:cardElevation="20.0sp"
         card_view:cardCornerRadius="4dp">
 
-        <de.handler.mobile.android.fairmondo.util.CustomNetworkImageView
+        <de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"

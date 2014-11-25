@@ -8,10 +8,11 @@ import com.android.volley.toolbox.ImageLoader;
 import org.androidannotations.annotations.EApplication;
 
 import de.handler.mobile.android.fairmondo.datasource.SearchSuggestionProvider;
+import de.handler.mobile.android.fairmondo.datasource.database.Category;
 import de.handler.mobile.android.fairmondo.datasource.database.DaoMaster;
 import de.handler.mobile.android.fairmondo.datasource.database.DaoSession;
 import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
-import de.handler.mobile.android.fairmondo.util.CustomImageCache;
+import de.handler.mobile.android.fairmondo.ui.views.CustomImageCache;
 
 /**
  * Application Object
@@ -30,7 +31,7 @@ public class FairmondoApp extends Application {
     private CustomImageCache imageCache;
     private ImageLoader imageLoader;
     private DaoSession daoSession;
-    private int lastCategory;
+    private Category lastCategory;
     private String cookie;
 
     private Cart cart;
@@ -75,11 +76,11 @@ public class FairmondoApp extends Application {
         this.isConnected = isAppConnected;
     }
 
-    public int getLastCategory() {
+    public Category getLastCategory() {
         return lastCategory;
     }
 
-    public void setLastCategory(int lastCategory) {
+    public void setLastCategory(Category lastCategory) {
         this.lastCategory = lastCategory;
     }
 
