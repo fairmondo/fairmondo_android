@@ -241,7 +241,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }

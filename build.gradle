@@ -15,9 +15,6 @@ buildscript {
         // makes the build code "available" to android studio
         // adds it to the source path
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.+"
-        // plugin to use robolectric
-        //classpath 'org.robolectric.gradle:gradle-android-test-plugin:0.9.+'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.13.+'
     }
 }
 
