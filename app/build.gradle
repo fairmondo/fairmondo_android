@@ -23,14 +23,14 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "0.1"
-        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+        //testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
-    /*sourceSets {
+    sourceSets {
         androidTest {
-            setRoot('src/main')
+            setRoot('src/main/test')
         }
-    }*/
+    }
 
 
     buildTypes {

@@ -1,8 +1,8 @@
-package de.handler.mobile.android.fairmondo.test.unit;
+package test.unit;
 
-import junit.framework.TestCase;
+import android.test.AndroidTestCase;
 
-public class MainActivityTest extends TestCase {
+public class MainActivityUnitTest extends AndroidTestCase {
 
     public void testOnCategoriesResponse() throws Exception {
 
