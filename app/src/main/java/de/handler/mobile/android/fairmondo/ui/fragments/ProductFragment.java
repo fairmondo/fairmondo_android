@@ -65,7 +65,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_price)
     TextView priceTextView;
-    
+
     @ViewById(R.id.fragment_product_button_description)
     Button buttonDescription;
 
@@ -74,6 +74,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_button_terms)
     Button buttonTerms;
+
+    @ViewById(R.id.fragment_product_button_buy)
+    Button buttonBuy;
 
     private Article mProduct;
 
@@ -146,25 +149,34 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @UiThread
     public void setFragmentColors(final Bitmap bitmap) {
-        //final BitmapDrawable drawable = new BitmapDrawable(getActivity().getResources(), bitmap);
-        //drawable.setAlpha(150);
 
-        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-            public void onGenerated(Palette palette) {
-                Palette.Swatch swatch = palette.getLightMutedSwatch();
-                if (swatch != null) {
-                    int backgroundColor = swatch.getRgb();
+        Palette palette = Palette.generate(bitmap);
+        Palette.Swatch swatch = palette.getLightMutedSwatch();
+        int backgroundColor;
+        int foregroundColor;
 
-                    productImageView.setBackgroundColor(backgroundColor);
-                    productImageView.setLocalImageBitmap(bitmap);
+        if (swatch != null) {
+            backgroundColor = swatch.getRgb();
+            foregroundColor = swatch.getTitleTextColor();
+        } else {
+            backgroundColor = palette.getLightMutedColor(android.R.color.transparent);
+            foregroundColor = palette.getLightMutedColor(android.R.color.transparent);
+        }
 
-                    layoutContent.setBackgroundColor(backgroundColor);
-                }
-            }
-        });
+        productImageView.setBackgroundColor(backgroundColor);
+        productImageView.setLocalImageBitmap(bitmap);
+
+        layoutContent.setBackgroundColor(backgroundColor);
+        buttonBuy.setBackgroundColor(foregroundColor);
+
+        /*if (Build.VERSION.SDK_INT > 15) {
+            buttonDescription.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
+            buttonFairPercent.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
+            buttonTerms.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
+        }*/
 
         progressBar.setVisibility(View.GONE);
-    }
+}
 
 
     @Click(R.id.fragment_product_button_buy)
