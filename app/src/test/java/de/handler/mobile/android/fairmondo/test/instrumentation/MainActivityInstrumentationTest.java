@@ -1,4 +1,4 @@
-package test.instrumentation;
+package de.handler.mobile.android.fairmondo.test.instrumentation;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;

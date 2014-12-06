@@ -13,6 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/fragment_product_content_container"
             tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
             android:orientation="vertical">
 
@@ -38,7 +39,8 @@
                 android:layout_below="@id/fragment_product_image_view"
                 android:textSize="30sp"
                 android:gravity="center"
-                android:id="@+id/fragment_product_title"/>
+                android:id="@+id/fragment_product_title"
+                android:lines="2" />
 
             <Button
                 android:layout_width="match_parent"

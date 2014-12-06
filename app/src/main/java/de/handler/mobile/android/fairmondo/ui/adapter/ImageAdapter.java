@@ -2,6 +2,7 @@ package de.handler.mobile.android.fairmondo.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +54,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         if (products != null) {
             mProducts = products;
         } else {
-            mProducts = new ArrayList<Article>();
+            mProducts = new ArrayList<>();
         }
     }
 
@@ -82,7 +83,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
                 FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
 
-                viewHolder.imageView.setErrorImageResId(R.drawable.watermark_small);
                 if (url != null) {
                     app.getImageLoader().get(url, new ImageLoader.ImageListener() {
 
@@ -95,7 +95,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            setImage(viewHolder, BitmapFactory
+                                    .decodeResource(mContext.getResources(),
+                                            R.drawable.fairmondo_small));
                         }
                     });
                 }

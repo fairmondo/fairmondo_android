@@ -1,4 +1,4 @@
-package test.unit;
+package de.handler.mobile.android.fairmondo.test.unit;
 
 import android.test.AndroidTestCase;
 

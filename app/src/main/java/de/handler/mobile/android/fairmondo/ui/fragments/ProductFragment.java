@@ -9,6 +9,7 @@ import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -56,6 +57,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_item_count_text_view)
     TextView itemCountTextView;
 
+    @ViewById(R.id.fragment_product_content_container)
+    RelativeLayout layoutContent;
+
     @ViewById(R.id.fragment_product_title)
     TextView titleTextView;
 
@@ -91,21 +95,19 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 url = mProduct.getTitle_image().getOriginal_url();
             }
 
-            productImageView.setErrorImageResId(R.drawable.watermark);
-
             if (url != null) {
                 app.getImageLoader().get(url, new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer response, boolean isImmediate) {
                         final Bitmap bitmap = response.getBitmap();
                         if (bitmap != null) {
-                            setImageBackground(bitmap);
+                            setFragmentColors(bitmap);
                         }
                     }
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        productImageView.setErrorImageResId(R.drawable.fairmondo);
                     }
                 });
             }
@@ -143,15 +145,21 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
 
     @UiThread
-    public void setImageBackground(final Bitmap bitmap) {
+    public void setFragmentColors(final Bitmap bitmap) {
         //final BitmapDrawable drawable = new BitmapDrawable(getActivity().getResources(), bitmap);
         //drawable.setAlpha(150);
 
         Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
             public void onGenerated(Palette palette) {
-                int color = palette.getLightMutedColor(android.R.color.transparent);
-                productImageView.setBackgroundColor(color);
-                productImageView.setLocalImageBitmap(bitmap);
+                Palette.Swatch swatch = palette.getLightMutedSwatch();
+                if (swatch != null) {
+                    int backgroundColor = swatch.getRgb();
+
+                    productImageView.setBackgroundColor(backgroundColor);
+                    productImageView.setLocalImageBitmap(bitmap);
+
+                    layoutContent.setBackgroundColor(backgroundColor);
+                }
             }
         });
 

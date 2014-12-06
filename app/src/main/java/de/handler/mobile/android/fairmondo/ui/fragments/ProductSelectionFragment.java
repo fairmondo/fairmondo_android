@@ -99,11 +99,11 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
             final Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(childView, 0, 0,
                     childView.getWidth(), childView.getHeight()).toBundle();
             if (Build.VERSION.SDK_INT > 16) {
-                childView.animate().alpha(0).setDuration(200).withLayer().withEndAction(
+                childView.animate().alpha(0).setDuration(100).withLayer().withEndAction(
                         new Runnable() {
                             @Override
                             public void run() {
-                                childView.animate().alpha(1).setDuration(200).withLayer().withEndAction(
+                                childView.animate().alpha(1).setDuration(100).withLayer().withEndAction(
                                         new Runnable() {
                                             @Override
                                             public void run() {
