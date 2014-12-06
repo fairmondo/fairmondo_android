@@ -1,9 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Base.Theme.AppCompat.Light">
         <!-- enable window content transitions -->
-        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowContentTransitions" tools:ignore="NewApi">true</item>
     </style>
 
     <style name="AppTheme" parent="BaseTheme">
@@ -18,7 +18,7 @@
         <item name="android:layout_marginLeft">4dp</item>
         <item name="android:layout_marginRight">4dp</item>
         <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
     </style>
 
     <style name="textview_banner_style">

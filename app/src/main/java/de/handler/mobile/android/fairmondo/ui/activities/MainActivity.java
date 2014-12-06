@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.ui.activities;
 
 import android.animation.LayoutTransition;
+import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -105,6 +106,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
+    @TargetApi(16)
     @AfterViews
     public void init() {
         // method in AbstractActivity
