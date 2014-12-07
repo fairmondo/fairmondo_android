@@ -42,6 +42,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     public static final String PRODUCT_EXTRA = "product_extra";
 
+    // TODO display fair, öko, etc tags
+    // TODO display shipping details
+    // TODO display product condition
+    // TODO display seller details / contact seller
+    // TODO show incl. vat if available
+
     @App
     FairmondoApp app;
 
