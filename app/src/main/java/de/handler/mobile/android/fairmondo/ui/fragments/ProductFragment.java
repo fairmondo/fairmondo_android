@@ -72,6 +72,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_price)
     TextView priceTextView;
 
+    @ViewById(R.id.fragment_product_price_vat)
+    TextView vatTextview;
+
+    @ViewById(R.id.fragment_product_donation)
+    TextView textViewDonation;
+
     @ViewById(R.id.fragment_product_button_description)
     Button buttonDescription;
 
@@ -80,6 +86,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_button_terms)
     Button buttonTerms;
+
+    @ViewById(R.id.fragment_product_button_transport)
+    Button buttonTransport;
+
+    @ViewById(R.id.fragment_product_button_payment)
+    Button buttonPayment;
 
     @ViewById(R.id.fragment_product_button_buy)
     Button buttonBuy;
@@ -137,6 +149,27 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 buttonFairPercent.setVisibility(View.GONE);
             }
 
+            // Transport
+            if (mProduct.getTransport_html() == null || mProduct.getTransport_html().equals("")) {
+                buttonFairPercent.setVisibility(View.GONE);
+            }
+
+            // Payment
+            if (mProduct.getPayment_html() == null || mProduct.getPayment_html().equals("")) {
+                buttonFairPercent.setVisibility(View.GONE);
+            }
+
+
+            // Donation
+            if (mProduct.getDonation() != null) {
+                textViewDonation.setText(
+                        "Diese*r Anbieter*in spendet " +
+                                mProduct.getDonation().getPercent() +
+                                " % an " +
+                                mProduct.getDonation().getOrganization().getName()
+                );
+            }
+
             // Price //TODO: if last number is a 0 it is omitted -  change if possible
             double priceValue = (mProduct.getPrice_cents() / 100.0);
             // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
@@ -144,11 +177,16 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             String price = format.format(priceValue);
             priceTextView.setText(price + " " + format.getCurrency().getSymbol());
 
+            if (mProduct.getVat() > 0) {
+                vatTextview.setVisibility(View.GONE);
+            }
 
             // Click Listeners
             buttonDescription.setOnClickListener(this);
             buttonTerms.setOnClickListener(this);
             buttonFairPercent.setOnClickListener(this);
+            buttonTransport.setOnClickListener(this);
+            buttonPayment.setOnClickListener(this);
         }
     }
 
@@ -228,6 +266,16 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             case R.id.fragment_product_button_fair_percent:
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
                 bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
+                dialog.setArguments(bundle);
+
+                break;
+            case R.id.fragment_product_button_transport:
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTransport_html());
+                dialog.setArguments(bundle);
+
+                break;
+            case R.id.fragment_product_button_payment:
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getPayment_html());
                 dialog.setArguments(bundle);
 
                 break;

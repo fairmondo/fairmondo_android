@@ -1,9 +1,12 @@
 package de.handler.mobile.android.fairmondo.ui.activities;
 
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,7 +17,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.datasource.database.Product;
+import de.handler.mobile.android.fairmondo.rest.json.Article;
 import de.handler.mobile.android.fairmondo.ui.adapter.ProductPagerAdapter;
 
 /**
@@ -25,6 +28,9 @@ public class ProductGalleryActivity extends AbstractActivity {
 
     public static final String PAGER_POSITION_EXTRA = "pager_position_extra";
     public static final String PRODUCT_ARRAY_LIST_EXTRA = "product_array_list_extra";
+
+    private ShareActionProvider mShareActionProvider;
+    private ArrayList<Article> mProducts;
 
 
     @ViewById(R.id.activity_result_pager)
@@ -37,14 +43,14 @@ public class ProductGalleryActivity extends AbstractActivity {
         ActionBar actionBar = this.setupActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ArrayList<Product> products = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
+        mProducts = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
         int position = getIntent().getIntExtra(PAGER_POSITION_EXTRA, 0);
 
-        this.setupViewPager(position, products);
+        this.setupViewPager(position, mProducts);
     }
 
 
-    private void setupViewPager(int position, ArrayList<Product> products) {
+    private void setupViewPager(int position, ArrayList<Article> products) {
         ProductPagerAdapter productPagerAdapter = new ProductPagerAdapter(getSupportFragmentManager(), products);
 
         // Set up the ViewPager with the sections adapter.
@@ -61,8 +67,39 @@ public class ProductGalleryActivity extends AbstractActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.product, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem menuItem = menu.findItem(R.id.menu_item_share);
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        String text = this.buildSharingText(mProducts.get(viewPager.getCurrentItem()));
+        this.setShareIntent(this.getDefaultIntent(text));
+
         return true;
     }
+
+    private String buildSharingText(Article product) {
+        return "Ich habe ein tolles Produkt auf Fairmondo gefunden. Schau mal hier: \n" +
+                product.getHtml_url();
+    }
+
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
+
+    }
+
+    private Intent getDefaultIntent(String text) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        return sendIntent;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

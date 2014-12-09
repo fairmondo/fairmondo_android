@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import de.handler.mobile.android.fairmondo.datasource.database.Product;
+import de.handler.mobile.android.fairmondo.rest.json.Article;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductFragment_;
 
@@ -16,9 +16,9 @@ import de.handler.mobile.android.fairmondo.ui.fragments.ProductFragment_;
  */
 public class ProductPagerAdapter extends FragmentStatePagerAdapter {
 
-    private ArrayList<Product> mProducts;
+    private ArrayList<Article> mProducts;
 
-    public ProductPagerAdapter(FragmentManager fm, ArrayList<Product> fragments) {
+    public ProductPagerAdapter(FragmentManager fm, ArrayList<Article> fragments) {
         super(fm);
 
         mProducts = fragments;

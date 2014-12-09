@@ -32,10 +32,10 @@ public class Article implements Parcelable {
     private String transport_html;
     private String commendation_html;
 
-    private int price_cents;
-    private int quantity_available;
-    private int vat;
-    private int basic_price_cents;
+    private Integer price_cents = -1;
+    private Integer quantity_available = -1;
+    private Integer vat = -1;
+    private Integer basic_price_cents = -1;
     private String basic_price_amount;
 
     private FairmondoTitleImage title_image;
@@ -115,15 +115,15 @@ public class Article implements Parcelable {
         return title;
     }
 
-    public int getPrice_cents() {
+    public Integer getPrice_cents() {
         return price_cents;
     }
 
-    public int getVat() {
+    public Integer getVat() {
         return vat;
     }
 
-    public int getBasic_price_cents() {
+    public Integer getBasic_price_cents() {
         return basic_price_cents;
     }
 
