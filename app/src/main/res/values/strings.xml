@@ -41,5 +41,6 @@
     <string name="fragment_product_transport">Versand</string>
     <string name="fragment_product_vat">Verkaufspreis</string>
     <string name="fragment_product_payment">Bezahloptionen</string>
+    <string name="share_text">Ich habe ein tolles Produkt auf Fairmondo gefunden. Schau mal hier: \n</string>
 
 </resources>

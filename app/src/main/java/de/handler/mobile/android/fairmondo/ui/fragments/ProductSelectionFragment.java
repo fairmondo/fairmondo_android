@@ -94,14 +94,14 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
         }
     }
 
-    @TargetApi(16)
+    //@TargetApi(16)
     @Override
     public boolean onInterceptTouchEvent(final RecyclerView recyclerView, MotionEvent motionEvent) {
         final View childView = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
         if (childView != null && mGestureDetector.onTouchEvent(motionEvent)) {
             final Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(childView, 0, 0,
                     childView.getWidth(), childView.getHeight()).toBundle();
-            if (Build.VERSION.SDK_INT > 15) {
+            /*if (Build.VERSION.SDK_INT > 15) {
                 childView.animate().alpha(0).setDuration(100).withLayer().withEndAction(
                         new Runnable() {
                             @Override
@@ -119,7 +119,8 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
                 );
             } else {
                 startProductGallery(recyclerView.getChildPosition(childView), null);
-            }
+            }*/
+            this.startProductGallery(recyclerView.getChildPosition(childView), bundle);
         }
         return false;
     }

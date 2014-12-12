@@ -80,7 +80,7 @@ public class ProductGalleryActivity extends AbstractActivity {
     }
 
     private String buildSharingText(Article product) {
-        return "Ich habe ein tolles Produkt auf Fairmondo gefunden. Schau mal hier: \n" +
+        return getString(R.string.share_text) +
                 product.getHtml_url();
     }
 
