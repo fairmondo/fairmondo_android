@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -299,7 +298,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
     /**
-     * Callback for featured products server response
+     * Callback for products server response
      */
     @Override
     public void onProductsSearchResponse(ArrayList<Article> products) {
@@ -321,12 +320,14 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
+    // The basic product information has been received,
+    // now query more detailed information about each product
     private void getDetailedProducts(ArrayList<Article> products) {
-        // Set products count as listener responds to every product
+        // Set product count as listener responds to each single product
         // and app needs to react when all products have finished loading
         mProductsCount = products.size();
 
-        mProducts = new ArrayList<Article>(products.size());
+        mProducts = new ArrayList<>(products.size());
 
         // Set maximal progress
         progressBar.setProgress(1);
@@ -344,6 +345,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // Increment progress
         progressBar.setProgress(progressBar.getProgress()+1);
 
+        // all the products have detailed information -> end of progress
         if (mProducts.size() == mProductsCount) {
             this.hideProgressbar();
             this.initSelectionFragment(mProducts);
@@ -491,10 +493,5 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 super.onBackPressed();
             }
         }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
     }
 }

@@ -2,7 +2,6 @@ package de.handler.mobile.android.fairmondo.ui.activities;
 
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -21,7 +20,8 @@ import de.handler.mobile.android.fairmondo.rest.json.Article;
 import de.handler.mobile.android.fairmondo.ui.adapter.ProductPagerAdapter;
 
 /**
- * Displays a ViewPager with the products from the search
+ * Displays a ViewPager with the products from the search so that
+ * users can swipe in between the products
  */
 @EActivity(R.layout.activity_gallery)
 public class ProductGalleryActivity extends AbstractActivity {
@@ -37,13 +37,18 @@ public class ProductGalleryActivity extends AbstractActivity {
     ViewPager viewPager;
 
 
-
     @AfterViews
     public void init() {
         ActionBar actionBar = this.setupActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // Get the bundle and the contained information
+        // which was attached to the intent in either
+        // ProductSelectionFragment or SearchResultFragment
         mProducts = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
+
+        // The position is used for telling the ViewPager on which item the user touched
+        // and which product therefore should be displayed in detail
         int position = getIntent().getIntExtra(PAGER_POSITION_EXTRA, 0);
 
         this.setupViewPager(position, mProducts);
@@ -79,6 +84,8 @@ public class ProductGalleryActivity extends AbstractActivity {
         return true;
     }
 
+    // Build the string which is used to share a fairmondo
+    // product recommendation with other android apps
     private String buildSharingText(Article product) {
         return getString(R.string.share_text) +
                 product.getHtml_url();
@@ -89,7 +96,6 @@ public class ProductGalleryActivity extends AbstractActivity {
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
         }
-
     }
 
     private Intent getDefaultIntent(String text) {
@@ -114,11 +120,6 @@ public class ProductGalleryActivity extends AbstractActivity {
     }
 
     private void openSettings() {
-
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+        // TODO: to implement
     }
 }

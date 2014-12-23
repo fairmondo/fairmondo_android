@@ -52,13 +52,17 @@ public class CategoryFragment extends ListFragment {
 
     @AfterViews
     public void init() {
+        // Get categories which have been added to the fragment bundle in the calling class
         mCategories = getArguments().getParcelableArrayList(CATEGORIES_ARRAY_LIST_EXTRA);
+
+        // Extract the title of each category
         ArrayList<String> categoryStrings = new ArrayList<String>(mCategories.size());
         for (Category category : mCategories) {
             categoryStrings.add(category.getName());
         }
 
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
+        // init the list adapter with those strings
+        setListAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, categoryStrings));
     }
 
@@ -66,10 +70,13 @@ public class CategoryFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
 
         if (position > 0) {
+            // set last category in application context to know
+            // which category was last pressed and get the products
+            // if the user wishes it
             app.setLastCategory(mCategories.get(position));
             restController.getSubCategories(app.getLastCategory().getId().intValue());
         } else {
-            // if user selects "all categories" - position 0
+            // if user selects "all products" - position 0 - get the products
             restController.getProduct("", app.getLastCategory().getId().intValue());
         }
     }

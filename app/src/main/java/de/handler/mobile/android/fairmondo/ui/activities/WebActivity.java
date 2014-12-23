@@ -1,6 +1,5 @@
 package de.handler.mobile.android.fairmondo.ui.activities;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 
@@ -14,7 +13,7 @@ import de.handler.mobile.android.fairmondo.ui.fragments.WebFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.WebFragment_;
 
 /**
- * Contains a webView for displaying homepages
+ * Contains a webView for displaying homepage content
  */
 @EActivity(R.layout.activity_web)
 public class WebActivity extends AbstractActivity {
@@ -48,11 +47,5 @@ public class WebActivity extends AbstractActivity {
         } else {
             this.finish();
         }
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
     }
 }

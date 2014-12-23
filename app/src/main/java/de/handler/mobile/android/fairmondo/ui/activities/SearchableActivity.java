@@ -2,7 +2,6 @@ package de.handler.mobile.android.fairmondo.ui.activities;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -69,21 +68,26 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
         String action = intent.getAction();
 
         // TODO why does this not match? The strings are equal
-        if (Intent.ACTION_VIEW.equals(action)) {
-            // Should load when clicked on a search suggestion
-            Uri data = intent.getData();
-            this.showResult(data);
-        } else if (Intent.ACTION_SEARCH.equals(action)) {
-            query = intent.getStringExtra(SearchManager.QUERY);
-            this.searchProducts(query);
-        } else {
-            query = intent.getStringExtra(QUERY_STRING_EXTRA);
-            Log.d(this.getLocalClassName(), action);
-            Log.d(this.getLocalClassName(), intent.getDataString());
-            this.searchProducts(query);
+        // Check which action is send with the intent and react appropriate
+        switch (action) {
+            case Intent.ACTION_VIEW:
+                // Should load when clicked on a search suggestion
+                Uri data = intent.getData();
+                this.showResult(data);
+                break;
+            case Intent.ACTION_SEARCH:
+                query = intent.getStringExtra(SearchManager.QUERY);
+                this.searchProducts(query);
+                break;
+            default:
+                query = intent.getStringExtra(QUERY_STRING_EXTRA);
+                Log.d(this.getLocalClassName(), action);
+                Log.d(this.getLocalClassName(), intent.getDataString());
+                this.searchProducts(query);
+                break;
         }
-
     }
+
 
     private void showResult(Uri data) {
         if (app.isConnected()) {
@@ -110,6 +114,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
         }
     }
 
+
     @Override
     public void onProductsSearchResponse(ArrayList<Article> articles) {
         ProductSelectionFragment searchResultFragment = new ProductSelectionFragment_();
@@ -123,15 +128,18 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
                 .commit();
     }
 
+
     @Override
     public void showProgressBar() {
 
     }
 
+
     @Override
     public void hideProgressBar() {
 
     }
+
 
     /**
      * ActionBar settings
@@ -156,11 +164,6 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     }
 
     private void openSettings() {
-
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+        // TODO to implement
     }
 }

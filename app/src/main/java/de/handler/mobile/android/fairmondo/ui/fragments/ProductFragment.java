@@ -43,7 +43,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     public static final String PRODUCT_EXTRA = "product_extra";
 
     // TODO display fair, öko, etc tags
-    // TODO display shipping details
     // TODO display product condition
     // TODO display seller details / contact seller
     // TODO show incl. vat if available
@@ -170,12 +169,13 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 );
             }
 
-            // Price //TODO: if last number is a 0 it is omitted -  change if possible
-            double priceValue = (mProduct.getPrice_cents() / 100.0);
+            // Price TODO: if last number is a 0 it is omitted -  change if possible
+            double priceValue = (mProduct.getPrice_cents() / 100.00);
             // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
             String price = format.format(priceValue);
             priceTextView.setText(price + " " + format.getCurrency().getSymbol());
+
 
             if (mProduct.getVat() > 0) {
                 vatTextview.setVisibility(View.GONE);
@@ -194,24 +194,30 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @UiThread
     public void setFragmentColors(final Bitmap bitmap) {
 
-        Palette palette = Palette.generate(bitmap);
-        Palette.Swatch swatch = palette.getLightMutedSwatch();
-        int backgroundColor;
-        int foregroundColor;
+        final int[] backgroundColor = new int[1];
+        final int[] foregroundColor = new int[1];
 
-        if (swatch != null) {
-            backgroundColor = swatch.getRgb();
-            foregroundColor = swatch.getTitleTextColor();
-        } else {
-            backgroundColor = palette.getLightMutedColor(android.R.color.transparent);
-            foregroundColor = palette.getLightMutedColor(android.R.color.transparent);
-        }
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                Palette.Swatch swatch = palette.getLightMutedSwatch();
 
-        productImageView.setBackgroundColor(backgroundColor);
+                if (swatch != null) {
+                    backgroundColor[0] = swatch.getRgb();
+                    foregroundColor[0] = swatch.getTitleTextColor();
+                } else {
+                    backgroundColor[0] = palette.getLightMutedColor(android.R.color.transparent);
+                    foregroundColor[0] = palette.getLightMutedColor(android.R.color.transparent);
+                }
+            }
+        });
+
+
+        productImageView.setBackgroundColor(backgroundColor[0]);
         productImageView.setLocalImageBitmap(bitmap);
 
-        layoutContent.setBackgroundColor(backgroundColor);
-        buttonBuy.setBackgroundColor(foregroundColor);
+        layoutContent.setBackgroundColor(backgroundColor[0]);
+        buttonBuy.setBackgroundColor(foregroundColor[0]);
 
         /*if (Build.VERSION.SDK_INT > 15) {
             buttonDescription.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
