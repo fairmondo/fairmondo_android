@@ -22,9 +22,9 @@ import de.handler.mobile.android.fairmondo.R;
  */
 @EFragment(R.layout.fragment_title)
 public class TitleFragment extends Fragment implements View.OnClickListener {
-
     public static final String IMAGE_DRAWABLE_EXTRA = "image_drawable_extra";
     public static final String IMAGE_DESCRIPTION_STRING_EXTRA = "image_description_string_extra";
+    private static final int SIZE = 20;
 
     @ViewById(R.id.fragment_title_image)
     ImageView imageViewTitle;
@@ -35,10 +35,8 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
     @App
     FairmondoApp app;
 
-
     @AfterViews
     public void init() {
-
         int drawable = getArguments().getInt(IMAGE_DRAWABLE_EXTRA);
         String imageDescription = getArguments().getString(IMAGE_DESCRIPTION_STRING_EXTRA);
 
@@ -46,7 +44,7 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
             imageViewTitle.setImageDrawable(getActivity().getResources().getDrawable(drawable));
         } else {
             textviewDescription.setBackgroundColor(getResources().getColor(R.color.fairmondo_blue_dark));
-            textviewDescription.setTextSize(20);
+            textviewDescription.setTextSize(SIZE);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     ActionBar.LayoutParams.MATCH_PARENT,
@@ -56,12 +54,13 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
         textviewDescription.setText(imageDescription);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fragment_title_image:
                 // React to click event
+                break;
+            default:
                 break;
         }
     }

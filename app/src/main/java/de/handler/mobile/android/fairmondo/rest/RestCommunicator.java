@@ -10,7 +10,6 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
 
@@ -28,13 +27,13 @@ import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
  * Encapsulates all communication with the server
  */
 @EBean
-public class RestController {
+public class RestCommunicator {
 
     @Bean
     RestServiceErrorHandler errorHandler;
 
 
-    @RestService
+    @org.androidannotations.annotations.rest.RestService
     FairmondoRestService restService;
 
     @App
@@ -48,7 +47,7 @@ public class RestController {
     private Context context;
 
 
-    public RestController(Context context) {
+    public RestCommunicator(Context context) {
         this.context = context;
     }
 

@@ -31,7 +31,6 @@ import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
  */
 @EFragment(R.layout.fragment_product_selection)
 public class ProductSelectionFragment extends Fragment implements RecyclerView.OnItemTouchListener {
-
     public static final String SELECTION_ARRAY_LIST_EXTRA = "selection_string_array_list_extra";
 
     private ArrayList<Article> mProducts;
@@ -43,7 +42,6 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
     @ViewById(R.id.fragment_product_selection_empty)
     TextView textViewEmpty;
 
-
     @AfterViews
     public void init() {
         if (getArguments() != null) {
@@ -52,7 +50,6 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
         // Always set up RecyclerView as otherwise there will be an error
         this.setupRecyclerView();
-
         if (mProducts != null) {
             textViewEmpty.setVisibility(View.GONE);
         } else {

@@ -29,7 +29,7 @@ import java.util.Locale;
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.interfaces.OnCartChangeListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
+import de.handler.mobile.android.fairmondo.rest.RestCommunicator;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
 import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
@@ -39,7 +39,6 @@ import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
  */
 @EFragment(R.layout.fragment_product)
 public class ProductFragment extends Fragment implements OnCartChangeListener, View.OnClickListener {
-
     public static final String PRODUCT_EXTRA = "product_extra";
 
     // TODO display fair, öko, etc tags
@@ -52,7 +51,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     FairmondoApp app;
 
     @Bean
-    RestController restController;
+    RestCommunicator restCommunicator;
 
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView productImageView;
@@ -86,18 +85,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     private Article mProduct;
 
-
     @AfterViews
     public void init() {
-        restController.setCartChangeListener(this);
-
+        restCommunicator.setCartChangeListener(this);
         mProduct = getArguments().getParcelable(PRODUCT_EXTRA);
         if (mProduct != null) {
-            // Create custom typeface
-            // Typeface myTypeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
-
             titleTextView.setText(mProduct.getTitle());
-
             // Image
             String url = mProduct.getTitle_image_url();
             if (mProduct.getTitle_image() != null && !mProduct.getTitle_image().getOriginal_url().equals("")) {
@@ -121,7 +114,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 });
             }
 
-
             // Description
             if (mProduct.getContent_html() == null || mProduct.getContent_html().equals("")) {
                 buttonDescription.setVisibility(View.GONE);
@@ -144,7 +136,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             String price = format.format(priceValue);
             priceTextView.setText(price + " " + format.getCurrency().getSymbol());
 
-
             // Click Listeners
             buttonDescription.setOnClickListener(this);
             buttonTerms.setOnClickListener(this);
@@ -152,10 +143,8 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
         }
     }
 
-
     @UiThread
     public void setFragmentColors(final Bitmap bitmap) {
-
         Palette palette = Palette.generate(bitmap);
         Palette.Swatch swatch = palette.getLightMutedSwatch();
         int backgroundColor;
@@ -174,20 +163,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
         layoutContent.setBackgroundColor(backgroundColor);
         buttonBuy.setBackgroundColor(foregroundColor);
-
-        /*if (Build.VERSION.SDK_INT > 15) {
-            buttonDescription.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-            buttonFairPercent.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-            buttonTerms.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-        }*/
-
         progressBar.setVisibility(View.GONE);
-}
-
+    }
 
     @Click(R.id.fragment_product_button_buy)
     public void addToCart() {
-        restController.addToCard(mProduct.getId());
+        restCommunicator.addToCard(mProduct.getId());
     }
 
     @UiThread
@@ -207,7 +188,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
         //Intent intent = new Intent(getActivity(), WebActivity_.class);
         //Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
         Bundle bundle = new Bundle();
-
         ProductDetailDialog dialog = new ProductDetailDialog_();
         FragmentTransaction transaction =
                 getActivity().getSupportFragmentManager().beginTransaction();
@@ -217,19 +197,16 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
                 bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
                 dialog.setArguments(bundle);
-
                 break;
             case R.id.fragment_product_button_terms:
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
                 bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
                 dialog.setArguments(bundle);
-
                 break;
             case R.id.fragment_product_button_fair_percent:
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
                 bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
                 dialog.setArguments(bundle);
-
                 break;
         }
 

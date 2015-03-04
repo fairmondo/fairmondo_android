@@ -26,7 +26,6 @@ import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
  */
 @EFragment(R.layout.fragment_search_result)
 public class SearchResultFragment extends Fragment implements RecyclerView.OnItemTouchListener {
-
     public static final String SEARCH_RESULT_EXTRA = "search_result_array_list_extra";
     private ArrayList<Article> mProducts;
     private GestureDetector mGestureDetector;
@@ -34,13 +33,10 @@ public class SearchResultFragment extends Fragment implements RecyclerView.OnIte
     @ViewById(R.id.fragment_search_gridview)
     RecyclerView recyclerView;
 
-
     @AfterViews
     public void init() {
-
         // Get Bundle
         mProducts = getArguments().getParcelableArrayList(SEARCH_RESULT_EXTRA);
-
         this.setupRecyclerView();
         // TODO add filters to search results
     }
@@ -71,7 +67,6 @@ public class SearchResultFragment extends Fragment implements RecyclerView.OnIte
         Intent intent = new Intent(getActivity(), ProductGalleryActivity_.class);
         intent.putExtra(ProductGalleryActivity.PAGER_POSITION_EXTRA, position);
         intent.putParcelableArrayListExtra(ProductGalleryActivity.PRODUCT_ARRAY_LIST_EXTRA, mProducts);
-
         startActivity(intent);
     }
 

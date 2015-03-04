@@ -33,14 +33,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected CustomNetworkImageView imageView;
-        protected TextView textView;
-        protected CardView cardView;
-        protected ProgressBar progressBar;
+        protected final CustomNetworkImageView imageView;
+        protected final TextView textView;
+        protected final CardView cardView;
+        protected final ProgressBar progressBar;
 
         public ViewHolder(View v) {
             super(v);
-
             this.imageView = (CustomNetworkImageView) v.findViewById(R.id.image_adapter_image);
             this.textView = (TextView) v.findViewById(R.id.image_adapter_text);
             this.cardView = (CardView) v.findViewById(R.id.image_adapter_card_view);
@@ -50,14 +49,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public ImageAdapter(Context context, ArrayList<Article> products) {
         mContext = context;
-
         if (products != null) {
             mProducts = products;
         } else {
             mProducts = new ArrayList<>();
         }
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -67,9 +64,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-
         if (mProducts.size() > 0) {
-
             Article product = mProducts.get(position);
             if (product != null) {
                 // Create custom typeface
@@ -82,10 +77,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 }
 
                 FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
-
                 if (url != null) {
                     app.getImageLoader().get(url, new ImageLoader.ImageListener() {
-
                         @Override
                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                             if (response.getBitmap() != null) {
@@ -129,5 +122,4 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public int getItemCount() {
         return mProducts.size();
     }
-
 }

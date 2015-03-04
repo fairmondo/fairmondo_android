@@ -2,28 +2,20 @@
 
 buildscript {
     repositories {
-        mavenCentral()
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0-rc2'
+        classpath 'com.android.tools.build:gradle:1.1.0'
         // small Gradle plugin that helps out when using an annotation processor
         // --> Android Annotations
         // makes the build code "available" to android studio
         // adds it to the source path
-        classpath "com.neenbedankt.gradle.plugins:android-apt:1.+"
+        classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
         jcenter()
     }
 }

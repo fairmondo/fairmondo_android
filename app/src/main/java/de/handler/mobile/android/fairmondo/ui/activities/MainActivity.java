@@ -40,7 +40,7 @@ import de.handler.mobile.android.fairmondo.datasource.database.SearchSuggestion;
 import de.handler.mobile.android.fairmondo.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
+import de.handler.mobile.android.fairmondo.rest.RestCommunicator;
 import de.handler.mobile.android.fairmondo.rest.json.Article;
 import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
 import de.handler.mobile.android.fairmondo.ui.fragments.CategoryFragment;
@@ -58,7 +58,6 @@ import de.handler.mobile.android.fairmondo.ui.fragments.WebFragment_;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AbstractActivity implements OnCategoriesListener,
         OnDetailedProductListener, OnSearchResultListener, AdapterView.OnItemSelectedListener {
-
     private static final long AGAIN_PRESS_TIME = 1500;
 
     @App
@@ -68,7 +67,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     SearchManager searchManager;
 
     @Bean
-    RestController restController;
+    RestCommunicator restCommunicator;
 
     @Bean
     DatabaseController databaseController;
@@ -86,10 +85,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @ViewById(R.id.main_products_container)
     LinearLayout productsContainer;
 
-
     private boolean mSpinnerSelection = false;
     private ArrayList<Category> mCategories;
-
     // Time for calculating interval between last back press action and new one
     // --> exit only when pressed twice
     private long mLastBackPressTime = System.currentTimeMillis();
@@ -100,11 +97,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @AfterInject
     public void initRestController() {
-        restController.setProductListener(this);
-        restController.setCategoriesListener(this);
-        restController.setDetailedProductListener(this);
+        restCommunicator.setProductListener(this);
+        restCommunicator.setCategoriesListener(this);
+        restCommunicator.setDetailedProductListener(this);
     }
-
 
     @TargetApi(16)
     @AfterViews
@@ -125,11 +121,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         this.initTitleFragment(R.drawable.fairmondo_small, getString(R.string.fairmondo_slogan));
         this.initStartFragment();
         this.getCategories();
-
-        /*List<Category> categoryList = databaseController.getCategories();
-        if (categoryList != null) {
-            this.initSpinner(new ArrayList<Category>(categoryList));
-        }*/
     }
 
 
@@ -146,7 +137,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 .replace(R.id.main_title_container, titleFragment)
                 .commit();
     }
-
 
     private void initStartFragment() {
         if (app.isConnected()) {
@@ -166,16 +156,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
-
-
-
     private void getCategories() {
         this.showProgressbar();
         progressBar.setMax(2);
-        restController.getCategories();
+        restCommunicator.getCategories();
     }
-
 
     /**
      * Callback for categories server response
@@ -194,17 +179,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     @UiThread
     public void initSpinner(ArrayList<Category> categories) {
         // Get category strings
-        ArrayList<String> categoryStrings = new ArrayList<String>(categories.size());
+        ArrayList<String> categoryStrings = new ArrayList<>(categories.size());
         for (Category category : categories) {
             categoryStrings.add(category.getName());
         }
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 new ArrayList<CharSequence>());
         // Specify the layout to use when the list of choices appears
@@ -219,7 +203,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         spinner.setSelected(false);
         spinner.setOnItemSelectedListener(this);
     }
-
 
     /**
      * Respond to spinner actions
@@ -242,16 +225,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-
     private void getSubCategories(int id) {
-        restController.getSubCategories(id);
+        restCommunicator.getSubCategories(id);
     }
-
 
     @Override
     public void onSubCategoriesResponse(ArrayList<Category> categories) {
@@ -287,12 +267,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
-
     private void getProductSelection(String searchRequest, int categoryId) {
         if (app.isConnected()) {
             this.showProgressbar();
-            restController.getProduct(searchRequest, categoryId);
+            restCommunicator.getProduct(searchRequest, categoryId);
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
@@ -326,14 +304,14 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // and app needs to react when all products have finished loading
         mProductsCount = products.size();
 
-        mProducts = new ArrayList<Article>(products.size());
+        mProducts = new ArrayList<>(products.size());
 
         // Set maximal progress
         progressBar.setProgress(1);
         progressBar.setMax(products.size()+1);
 
         for (Article product : products) {
-            restController.getDetailedProduct(product.getSlug());
+            restCommunicator.getDetailedProduct(product.getSlug());
         }
     }
 
@@ -353,9 +331,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             Log.d("MAIN_ACTIVITY", "products with category " + mCurrentCategoryString + " added to searchSuggestionTable" + " \n with old size " + searchSuggestions.size());
         }
     }
-
-
-
 
     private void initSelectionFragment(ArrayList<Article> products) {
         ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
@@ -387,9 +362,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 .commit();
     }
 
-
-
-
     /**
      * ActionBar settings
      */
@@ -405,7 +377,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         searchView.setSearchableInfo(searchManager.getSearchableInfo(
                 new ComponentName(this, SearchableActivity_.class)));
         searchView.setIconifiedByDefault(true);
-
         return true;
     }
 
@@ -439,11 +410,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     private void openSettings() {
 
     }
-
 
     @Override
     public void showProgressBar() {
@@ -475,18 +444,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
             this.initTitleFragment(null, getString(R.string.fairmondo_slogan));
-
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 // Reset standard title
                 this.initTitleFragment(R.drawable.fairmondo_small, getString(R.string.fairmondo_slogan));
                 spinner.setSelection(0);
             }
         } else {
-            // Handle Back Navigation - if shortly after another back is pushed exit app
+               // Handle Back Navigation - if shortly after another back is pushed exit app
             if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
                 this.mLastBackPressTime = System.currentTimeMillis();
                 Toast.makeText(getApplicationContext(), getString(R.string.close_app), Toast.LENGTH_SHORT).show();
-
             } else {
                 super.onBackPressed();
             }

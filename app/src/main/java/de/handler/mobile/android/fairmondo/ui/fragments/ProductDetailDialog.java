@@ -23,7 +23,6 @@ public class ProductDetailDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         // Get the layout inflater and inflate the layout
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_detail_product, null);
@@ -34,7 +33,6 @@ public class ProductDetailDialog extends DialogFragment {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder .setView(view)
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
@@ -43,7 +41,6 @@ public class ProductDetailDialog extends DialogFragment {
 
                             }
                         });
-
         // Create the AlertDialog object and return it
         return builder.create();
     }

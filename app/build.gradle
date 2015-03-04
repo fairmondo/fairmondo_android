@@ -15,7 +15,7 @@ apt {
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "de.handler.mobile.android.fairmondo"
@@ -27,20 +27,11 @@ android {
     }
 
     sourceSets {
-        androidTest {
-            setRoot('src/test/')
-        }
-
         instrumentTest {
             setRoot('src/test')
         }
     }
 
-
-    buildTypes {
-        release {
-        }
-    }
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
@@ -55,11 +46,11 @@ android {
 
 dependencies {
     // Project Dependencies
-    compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.android.support:support-v4:21.0.2'
-    compile 'com.android.support:palette-v7:21.0.2'
-    compile 'com.android.support:recyclerview-v7:21.0.2'
-    compile 'com.android.support:cardview-v7:21.0.2'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:palette-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:cardview-v7:21.0.3'
 
     // Android annotations for easy readable code
     apt 'org.androidannotations:androidannotations:3.2'
@@ -78,5 +69,7 @@ dependencies {
 
     //Test Dependencies
     // Espresso
-    androidTestCompile 'com.jakewharton.espresso:espresso-support-v4:1.1-r3'
+    compile 'com.android.support:support-annotations:21.0.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 }

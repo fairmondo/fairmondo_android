@@ -24,7 +24,6 @@ import de.handler.mobile.android.fairmondo.R;
  */
 @EFragment(R.layout.fragment_web)
 public class WebFragment extends Fragment {
-
     public static final String URI = "activity_web_uri";
     public static final String HTTP_CONTENT = "http_content";
     public static final String COOKIE = "cart_cookie";
@@ -37,19 +36,15 @@ public class WebFragment extends Fragment {
     @ViewById(R.id.fragment_web_progress_container)
     RelativeLayout progressContainer;
 
-
     //TODO after redirect 500 from fairmondo page --> cookie not set correctly?
     @AfterViews
     public void init() {
-
         String http = getArguments().getString(HTTP_CONTENT);
         String uri = getArguments().getString(URI);
         mCookie = getArguments().getString(COOKIE);
 
-
         if (http != null) {
             webView.loadData(http, "text/html; charset=UTF-8", null);
-
         } else if (uri != null && !uri.equals("")) {
             progressContainer.setVisibility(View.VISIBLE);
 
@@ -79,12 +74,8 @@ public class WebFragment extends Fragment {
         }
     }
 
-
-
     private class RedirectWebViewClient extends WebViewClient {
-
         boolean handleKeyEvent = true;
-
         RedirectWebViewClient (boolean handleKeyEvent) {
             this.handleKeyEvent = handleKeyEvent;
         }
@@ -104,7 +95,6 @@ public class WebFragment extends Fragment {
                     setCookie(webView, mCookie, url);
                 }
             }
-
             return handleKeyEvent;
         }
 
@@ -113,9 +103,5 @@ public class WebFragment extends Fragment {
             super.onPageFinished(view, url);
             progressContainer.setVisibility(View.GONE);
         }
-
-
     }
-
-
 }

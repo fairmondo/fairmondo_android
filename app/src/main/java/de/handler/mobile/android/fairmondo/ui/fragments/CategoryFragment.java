@@ -19,16 +19,15 @@ import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.datasource.database.Category;
 import de.handler.mobile.android.fairmondo.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
+import de.handler.mobile.android.fairmondo.rest.RestCommunicator;
 
 /**
  * Fragment showing a list of categories
  */
 @EFragment(R.layout.fragment_category)
 public class CategoryFragment extends ListFragment {
-
     @Bean
-    RestController restController;
+    RestCommunicator restCommunicator;
 
     @App
     FairmondoApp app;
@@ -36,7 +35,6 @@ public class CategoryFragment extends ListFragment {
     public static final String CATEGORIES_ARRAY_LIST_EXTRA = "categories_array_list_extra";
     private ArrayList<Category> mCategories = new ArrayList<Category>();
     private Activity mActivity;
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -46,31 +44,29 @@ public class CategoryFragment extends ListFragment {
 
     @AfterInject
     public void initRestController() {
-        restController.setCategoriesListener((OnCategoriesListener) mActivity);
-        restController.setProductListener((OnSearchResultListener) mActivity);
+        restCommunicator.setCategoriesListener((OnCategoriesListener) mActivity);
+        restCommunicator.setProductListener((OnSearchResultListener) mActivity);
     }
 
     @AfterViews
     public void init() {
         mCategories = getArguments().getParcelableArrayList(CATEGORIES_ARRAY_LIST_EXTRA);
-        ArrayList<String> categoryStrings = new ArrayList<String>(mCategories.size());
+        ArrayList<String> categoryStrings = new ArrayList<>(mCategories.size());
         for (Category category : mCategories) {
             categoryStrings.add(category.getName());
         }
-
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
+        setListAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, categoryStrings));
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-
         if (position > 0) {
             app.setLastCategory(mCategories.get(position));
-            restController.getSubCategories(app.getLastCategory().getId().intValue());
+            restCommunicator.getSubCategories(app.getLastCategory().getId().intValue());
         } else {
             // if user selects "all categories" - position 0
-            restController.getProduct("", app.getLastCategory().getId().intValue());
+            restCommunicator.getProduct("", app.getLastCategory().getId().intValue());
         }
     }
 }

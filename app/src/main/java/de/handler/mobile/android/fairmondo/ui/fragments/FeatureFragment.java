@@ -23,9 +23,7 @@ import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
  */
 @EFragment(R.layout.fragment_featured)
 public class FeatureFragment extends Fragment implements View.OnClickListener {
-
     public static final String FEATURED_PRODUCTS_EXTRA = "featured_product_parcelable_array_list_extra";
-
 
     @ViewsById({R.id.fragment_feature_image_first,
             R.id.fragment_feature_image_second,
@@ -40,9 +38,7 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
     @App
     FairmondoApp app;
 
-
-    private ArrayList<Article> mProducts = new ArrayList<Article>();
-
+    private ArrayList<Article> mProducts = new ArrayList<>();
     @AfterViews
     public void init() {
          mProducts = getArguments().getParcelableArrayList(FEATURED_PRODUCTS_EXTRA);
@@ -63,13 +59,10 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     @Override
     public void onClick(View v) {
         String url = "https://www.fairmondo.de";
-
         if (mProducts != null) {
-
             switch (v.getId()) {
                 case R.id.fragment_feature_image_first:
                     if (mProducts.size() > 0) {

@@ -35,7 +35,6 @@ public class FairmondoApp extends Application {
     private String cookie;
 
     private Cart cart;
-
     private boolean isConnected = false;
 
     /**

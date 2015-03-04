@@ -39,9 +39,7 @@ public class WebActivity extends AbstractActivity {
         WebFragment webFragment = new WebFragment_();
         webFragment.setArguments(bundle);
 
-
         if ((uri != null && app.isConnected()) || http != null) {
-
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.activity_web_container, webFragment)
                     .commit();
@@ -49,7 +47,6 @@ public class WebActivity extends AbstractActivity {
             this.finish();
         }
     }
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

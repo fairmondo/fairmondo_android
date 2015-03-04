@@ -20,7 +20,6 @@ public class ProductPagerAdapter extends FragmentStatePagerAdapter {
 
     public ProductPagerAdapter(FragmentManager fm, ArrayList<Product> fragments) {
         super(fm);
-
         mProducts = fragments;
     }
 
@@ -31,7 +30,6 @@ public class ProductPagerAdapter extends FragmentStatePagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ProductFragment.PRODUCT_EXTRA, mProducts.get(position));
         fragment.setArguments(bundle);
-
         return fragment;
     }
 

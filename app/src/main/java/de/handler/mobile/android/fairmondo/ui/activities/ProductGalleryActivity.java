@@ -22,15 +22,12 @@ import de.handler.mobile.android.fairmondo.ui.adapter.ProductPagerAdapter;
  */
 @EActivity(R.layout.activity_gallery)
 public class ProductGalleryActivity extends AbstractActivity {
-
     public static final String PAGER_POSITION_EXTRA = "pager_position_extra";
     public static final String PRODUCT_ARRAY_LIST_EXTRA = "product_array_list_extra";
 
 
     @ViewById(R.id.activity_result_pager)
     ViewPager viewPager;
-
-
 
     @AfterViews
     public void init() {
@@ -43,7 +40,6 @@ public class ProductGalleryActivity extends AbstractActivity {
         this.setupViewPager(position, products);
     }
 
-
     private void setupViewPager(int position, ArrayList<Product> products) {
         ProductPagerAdapter productPagerAdapter = new ProductPagerAdapter(getSupportFragmentManager(), products);
 
@@ -52,7 +48,6 @@ public class ProductGalleryActivity extends AbstractActivity {
         viewPager.setOffscreenPageLimit(5);
         viewPager.setCurrentItem(position, true);
     }
-
 
     /**
      * ActionBar settings
