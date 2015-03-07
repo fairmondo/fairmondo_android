@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,10 +27,10 @@ import java.util.Locale;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.interfaces.OnCartChangeListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnCartChangeListener;
+import de.handler.mobile.android.fairmondo.networklayer.rest.RestController;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.Cart;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
 /**
@@ -55,9 +54,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView productImageView;
-
-    @ViewById(R.id.fragment_product_progressBar)
-    ProgressBar progressBar;
 
     @ViewById(R.id.fragment_product_item_count_text_view)
     TextView itemCountTextView;
@@ -127,7 +123,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        productImageView.setErrorImageResId(R.drawable.fairmondo);
                     }
                 });
             }
@@ -218,14 +213,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
         layoutContent.setBackgroundColor(backgroundColor[0]);
         buttonBuy.setBackgroundColor(foregroundColor[0]);
-
-        /*if (Build.VERSION.SDK_INT > 15) {
-            buttonDescription.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-            buttonFairPercent.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-            buttonTerms.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-        }*/
-
-        progressBar.setVisibility(View.GONE);
 }
 
 

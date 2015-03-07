@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.datasource.database.Category;
-import de.handler.mobile.android.fairmondo.interfaces.OnCategoriesListener;
-import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.Category;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.fairmondo.networklayer.rest.RestController;
 
 /**
  * Fragment showing a list of categories

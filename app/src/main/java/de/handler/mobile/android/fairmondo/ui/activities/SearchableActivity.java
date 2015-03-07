@@ -21,13 +21,13 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.datasource.DatabaseController;
-import de.handler.mobile.android.fairmondo.datasource.SearchSuggestionProvider;
-import de.handler.mobile.android.fairmondo.datasource.database.Category;
-import de.handler.mobile.android.fairmondo.datasource.database.SearchSuggestion;
-import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.DatabaseController;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.SearchSuggestionProvider;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.Category;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.SearchSuggestion;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.fairmondo.networklayer.rest.RestController;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductSelectionFragment_;
 

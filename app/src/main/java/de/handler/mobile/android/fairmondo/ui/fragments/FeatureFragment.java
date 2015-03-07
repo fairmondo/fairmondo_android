@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
 import de.handler.mobile.android.fairmondo.ui.activities.WebActivity_;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 

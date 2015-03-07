@@ -16,7 +16,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
 import de.handler.mobile.android.fairmondo.ui.adapter.ProductPagerAdapter;
 
 /**

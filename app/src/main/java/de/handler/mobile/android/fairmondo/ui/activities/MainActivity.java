@@ -33,15 +33,15 @@ import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.datasource.DatabaseController;
-import de.handler.mobile.android.fairmondo.datasource.database.Category;
-import de.handler.mobile.android.fairmondo.datasource.database.SearchSuggestion;
-import de.handler.mobile.android.fairmondo.interfaces.OnCategoriesListener;
-import de.handler.mobile.android.fairmondo.interfaces.OnDetailedProductListener;
-import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.DatabaseController;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.Category;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.SearchSuggestion;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnDetailedProductListener;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.fairmondo.networklayer.rest.RestController;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.Cart;
 import de.handler.mobile.android.fairmondo.ui.fragments.CategoryFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.CategoryFragment_;
 import de.handler.mobile.android.fairmondo.ui.fragments.FeatureFragment;
@@ -166,9 +166,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
 
-
-
-
     private void getCategories() {
         this.showProgressbar();
         progressBar.setMax(2);
@@ -187,8 +184,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
         if (categories != null) {
             mCategories = categories;
-            databaseController.setCategories(categories);
-
             this.initSpinner(categories);
         }
     }
