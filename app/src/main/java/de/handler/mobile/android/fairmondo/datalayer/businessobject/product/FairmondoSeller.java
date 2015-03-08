@@ -10,39 +10,62 @@ import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.sell
  */
 public class FairmondoSeller implements Parcelable {
     private String nickname;
-    private Boolean legal_entity;
-    private Boolean ngo;
-    private Boolean vacationing;
+    private boolean legalEntity;
+    private boolean ngo;
+    private boolean vacationing;
     private String name;
     private String type;
-    private String type_name;
-    private String html_url;
-    private String image_url;
+    private String typeName;
+    private String htmlUrl;
+    private String imageUrl;
     private FairmondoRating ratings;
-
+    private String terms;
 
     public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public Boolean getLegalEntity() {
+        return legalEntity;
     }
 
-    public Boolean getLegal_entity() {
-        return legal_entity;
+    public Boolean getNgo() {
+        return ngo;
     }
 
-    public void setLegal_entity(Boolean legal_entity) {
-        this.legal_entity = legal_entity;
+    public Boolean getVacationing() {
+        return vacationing;
     }
 
-    public String getHtml_url() {
-        return html_url;
+    public String getName() {
+        return name;
     }
 
-    public void setHtml_url(String html_url) {
-        this.html_url = html_url;
+    public String getType() {
+        return type;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public FairmondoRating getRatings() {
+        return ratings;
+    }
+
+    public String getTerms() {
+        return terms;
+    }
+
+    public FairmondoSeller() {
     }
 
     @Override
@@ -53,17 +76,30 @@ public class FairmondoSeller implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.nickname);
-        dest.writeValue(this.legal_entity);
-        dest.writeString(this.html_url);
-    }
-
-    public FairmondoSeller() {
+        dest.writeByte(legalEntity ? (byte) 1 : (byte) 0);
+        dest.writeByte(ngo ? (byte) 1 : (byte) 0);
+        dest.writeByte(vacationing ? (byte) 1 : (byte) 0);
+        dest.writeString(this.name);
+        dest.writeString(this.type);
+        dest.writeString(this.typeName);
+        dest.writeString(this.htmlUrl);
+        dest.writeString(this.imageUrl);
+        dest.writeParcelable(this.ratings, 0);
+        dest.writeString(this.terms);
     }
 
     private FairmondoSeller(Parcel in) {
         this.nickname = in.readString();
-        this.legal_entity = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.html_url = in.readString();
+        this.legalEntity = in.readByte() != 0;
+        this.ngo = in.readByte() != 0;
+        this.vacationing = in.readByte() != 0;
+        this.name = in.readString();
+        this.type = in.readString();
+        this.typeName = in.readString();
+        this.htmlUrl = in.readString();
+        this.imageUrl = in.readString();
+        this.ratings = in.readParcelable(FairmondoRating.class.getClassLoader());
+        this.terms = in.readString();
     }
 
     public static final Creator<FairmondoSeller> CREATOR = new Creator<FairmondoSeller>() {
@@ -75,60 +111,4 @@ public class FairmondoSeller implements Parcelable {
             return new FairmondoSeller[size];
         }
     };
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType_name() {
-        return type_name;
-    }
-
-    public void setType_name(String type_name) {
-        this.type_name = type_name;
-    }
-
-    public Boolean getNgo() {
-        return ngo;
-    }
-
-    public void setNgo(Boolean ngo) {
-        this.ngo = ngo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getVacationing() {
-        return vacationing;
-    }
-
-    public void setVacationing(Boolean vacationing) {
-        this.vacationing = vacationing;
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
-    public FairmondoRating getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(FairmondoRating ratings) {
-        this.ratings = ratings;
-    }
 }

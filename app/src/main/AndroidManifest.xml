@@ -70,8 +70,8 @@
 
 
         <provider
-            android:name="de.handler.mobile.android.fairmondo.datasource.SearchSuggestionProvider"
-            android:authorities="de.handler.mobile.android.fairmondo.datasource.database.searchprovider"/>
+            android:name=".datalayer.datasource.SearchSuggestionProvider"
+            android:authorities="de.handler.mobile.android.fairmondo.datalayer.datasource.database.searchprovider"/>
 
     </application>
 

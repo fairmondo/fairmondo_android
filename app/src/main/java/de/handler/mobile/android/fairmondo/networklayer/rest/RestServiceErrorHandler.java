@@ -11,7 +11,7 @@ import org.androidannotations.api.rest.RestErrorHandler;
 import org.springframework.core.NestedRuntimeException;
 
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
 
 
 /**

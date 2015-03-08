@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -21,7 +20,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity;
 import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
@@ -34,7 +33,7 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
     public static final String SELECTION_ARRAY_LIST_EXTRA = "selection_string_array_list_extra";
 
-    private ArrayList<Article> mProducts;
+    private ArrayList<Product> mProducts;
     private GestureDetector mGestureDetector;
 
     @ViewById(R.id.fragment_product_category_gridview)
@@ -76,7 +75,6 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
         // specify an adapter (see also next example)
         recyclerView.setAdapter(new ImageAdapter(getActivity(), mProducts));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.addOnItemTouchListener(this);
     }

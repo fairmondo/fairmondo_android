@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp_;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
 
@@ -26,10 +26,8 @@ import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
  * Image Adapter used in GridView Fragments
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-
-    private final ArrayList<Article> mProducts;
+    private final ArrayList<Product> mProducts;
     private final Context mContext;
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         protected final CustomNetworkImageView imageView;
@@ -45,7 +43,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    public ImageAdapter(Context context, ArrayList<Article> products) {
+    public ImageAdapter(Context context, ArrayList<Product> products) {
         mContext = context;
 
         if (products != null) {
@@ -54,7 +52,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             mProducts = new ArrayList<>();
         }
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -66,22 +63,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
 
         if (mProducts.size() > 0) {
-            final Article product = mProducts.get(position);
+            final Product product = mProducts.get(position);
             if (product != null) {
                 // Create custom typeface
                 Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
 
                 // Set image
-                String url = product.getTitle_image_url();
-                if (product.getTitle_image() != null) {
-                    url = product.getTitle_image().getThumb_url();
-                }
-
                 FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
+                String url = "";
+                if (product.getTitleImage() != null && !product.getTitleImage().getOriginalUrl().equals("")) {
+                    url = product.getTitleImage().getOriginalUrl();
+                }
 
                 if (url != null) {
                     app.getImageLoader().get(url, new ImageLoader.ImageListener() {
-
                         @Override
                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                             if (response.getBitmap() != null) {
@@ -116,7 +111,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     public long getItemId(int position) {
-        return mProducts.get(position).getId();
+        return Integer.getInteger(mProducts.get(position).getId());
     }
 
     @Override

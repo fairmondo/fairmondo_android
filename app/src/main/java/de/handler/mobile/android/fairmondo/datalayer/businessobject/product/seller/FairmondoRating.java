@@ -7,51 +7,30 @@ import android.os.Parcelable;
  * Ratings for a seller
  */
 public class FairmondoRating implements Parcelable {
-
     private String url;
     private int count;
-    private double positive_percent;
-    private double negative_percent;
-    private double neutral_percent;
+    private double positivePercent;
+    private double negativePercent;
+    private double neutralPercent;
 
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public double getPositivePercent() {
+        return positivePercent;
     }
 
-    public double getPositive_percent() {
-        return positive_percent;
+    public double getNegativePercent() {
+        return negativePercent;
     }
 
-    public void setPositive_percent(double positive_percent) {
-        this.positive_percent = positive_percent;
-    }
-
-    public double getNegative_percent() {
-        return negative_percent;
-    }
-
-    public void setNegative_percent(double negative_percent) {
-        this.negative_percent = negative_percent;
-    }
-
-    public double getNeutral_percent() {
-        return neutral_percent;
-    }
-
-    public void setNeutral_percent(double neutral_percent) {
-        this.neutral_percent = neutral_percent;
+    public double getNeutralPercent() {
+        return neutralPercent;
     }
 
     @Override
@@ -63,9 +42,9 @@ public class FairmondoRating implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.url);
         dest.writeInt(this.count);
-        dest.writeDouble(this.positive_percent);
-        dest.writeDouble(this.negative_percent);
-        dest.writeDouble(this.neutral_percent);
+        dest.writeDouble(this.positivePercent);
+        dest.writeDouble(this.negativePercent);
+        dest.writeDouble(this.neutralPercent);
     }
 
     public FairmondoRating() {
@@ -74,9 +53,9 @@ public class FairmondoRating implements Parcelable {
     private FairmondoRating(Parcel in) {
         this.url = in.readString();
         this.count = in.readInt();
-        this.positive_percent = in.readDouble();
-        this.negative_percent = in.readDouble();
-        this.neutral_percent = in.readDouble();
+        this.positivePercent = in.readDouble();
+        this.negativePercent = in.readDouble();
+        this.neutralPercent = in.readDouble();
     }
 
     public static final Creator<FairmondoRating> CREATOR = new Creator<FairmondoRating>() {

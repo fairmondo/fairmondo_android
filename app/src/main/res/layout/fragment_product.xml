@@ -21,13 +21,8 @@
                 android:layout_height="300dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:src="@drawable/fairmondo"
                 android:id="@+id/fragment_product_image_view" />
-
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="150dp"
-                android:id="@+id/fragment_product_progressBar" />
 
 
             <RelativeLayout

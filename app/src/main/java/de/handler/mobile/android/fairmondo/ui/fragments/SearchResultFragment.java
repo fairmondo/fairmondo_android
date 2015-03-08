@@ -16,7 +16,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity;
 import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
@@ -28,7 +28,7 @@ import de.handler.mobile.android.fairmondo.ui.adapter.ImageAdapter;
 public class SearchResultFragment extends Fragment implements RecyclerView.OnItemTouchListener {
 
     public static final String SEARCH_RESULT_EXTRA = "search_result_array_list_extra";
-    private ArrayList<Article> mProducts;
+    private ArrayList<Product> mProducts;
     private GestureDetector mGestureDetector;
 
     @ViewById(R.id.fragment_search_gridview)

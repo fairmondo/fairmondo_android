@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.database.Category;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.database.Product;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.database.SearchSuggestion;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
 
 /**
  * Provides the methods to work with database
@@ -37,11 +37,11 @@ public class DatabaseController {
         return app.getDaoSession().getCategoryDao().loadAll();
     }
 
-    public Category getCategory(String categoryString) {
+    public FairmondoCategory getCategory(String categoryString) {
         List<Category> categoryList = app.getDaoSession().getCategoryDao().queryRaw("NAME = " + categoryString, "");
 
         if (categoryList != null && categoryList.size() > 0) {
-            return categoryList.get(0);
+            return app.getModelMapper().map(categoryList.get(0), FairmondoCategory.class);
         } else {
             return null;
         }
@@ -55,12 +55,12 @@ public class DatabaseController {
     }
 
     @Background
-    public void setSearchSuggestions(ArrayList<Article> products, String categoryString) {
+    public void setSearchSuggestions(ArrayList<de.handler.mobile.android.fairmondo.datalayer.businessobject.Product> products, String categoryString) {
         if (products != null) {
-            for (Article article : products) {
-                if (article != null) {
+            for (de.handler.mobile.android.fairmondo.datalayer.businessobject.Product product : products) {
+                if (product != null) {
                     SearchSuggestion searchSuggestion = new SearchSuggestion();
-                    searchSuggestion.setSuggest_text_1(article.getTitle());
+                    searchSuggestion.setSuggest_text_1(product.getTitle());
                     searchSuggestion.setSuggest_text_2(categoryString);
                     app.getDaoSession().getSearchSuggestionDao().insertOrReplace(searchSuggestion);
                 }
@@ -79,40 +79,15 @@ public class DatabaseController {
     }
 
     @Background
-    public void setProducts(ArrayList<Article> articles) {
+    public void setProducts(ArrayList<de.handler.mobile.android.fairmondo.datalayer.businessobject.Product> articles) {
 
-        for (Article article : articles) {
-            Product product = new Product();
-
-            product.setId(article.getId().longValue());
-            product.setSlug(article.getSlug());
-            product.setTitleImageUrl(article.getTitle_image_url());
-            product.setHtmlUrl(article.getHtml_url());
-            product.setTitle(article.getTitle());
-            product.setPriceCents(article.getPrice_cents());
-
-            product.setTagCondition(article.getTags().getCondition());
-            product.setTagFair(article.getTags().getFair());
-            product.setTagEcologic(article.getTags().getEcologic());
-            product.setTagSmallAndPrecious(article.getTags().getSmall_and_precious());
-            product.setTagBorrowable(article.getTags().getBorrowable());
-            product.setTagSwappable(article.getTags().getSwappable());
-
-            product.setSellerNickname(article.getSeller().getNickname());
-            product.setSellerLegalEntity(article.getSeller().getLegal_entity());
-            product.setSellerHtmlUrl(article.getSeller().getHtml_url());
-
-            product.setDonation(article.getDonation().getPercent()
-                    + article.getDonation().getOrganization().getName());
-
-            app.getDaoSession().getProductDao().insertOrReplace(product);
+        for (de.handler.mobile.android.fairmondo.datalayer.businessobject.Product product : articles) {
+            Product productDAO = app.getModelMapper().map(product, Product.class);
+            app.getDaoSession().getProductDao().insertOrReplace(productDAO);
         }
     }
 
     public List<Product> getProducts() {
         return app.getDaoSession().getProductDao().loadAll();
     }
-
-
-
 }

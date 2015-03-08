@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.donation.FairmondoOrganization;
 
 /**
- * Subclass of article
+ * Subclass of product
  */
 public class FairmondoDonation implements Parcelable {
     private int percent;
@@ -16,18 +16,9 @@ public class FairmondoDonation implements Parcelable {
         return organization;
     }
 
-    public void setOrganization(FairmondoOrganization organization) {
-        this.organization = organization;
-    }
-
     public int getPercent() {
         return percent;
     }
-
-    public void setPercent(int percent) {
-        this.percent = percent;
-    }
-
 
     @Override
     public int describeContents() {
@@ -40,19 +31,18 @@ public class FairmondoDonation implements Parcelable {
         dest.writeParcelable(this.organization, flags);
     }
 
-    public FairmondoDonation() {
-    }
-
     private FairmondoDonation(Parcel in) {
         this.percent = in.readInt();
         this.organization = in.readParcelable(FairmondoOrganization.class.getClassLoader());
+    }
+
+    public FairmondoDonation() {
     }
 
     public static final Creator<FairmondoDonation> CREATOR = new Creator<FairmondoDonation>() {
         public FairmondoDonation createFromParcel(Parcel source) {
             return new FairmondoDonation(source);
         }
-
         public FairmondoDonation[] newArray(int size) {
             return new FairmondoDonation[size];
         }

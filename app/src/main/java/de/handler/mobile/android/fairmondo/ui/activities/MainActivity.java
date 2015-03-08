@@ -33,15 +33,16 @@ import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
+import de.handler.mobile.android.fairmondo.datalayer.RestCommunicator;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.MutableFairmondoCategory;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.DatabaseController;
-import de.handler.mobile.android.fairmondo.datalayer.datasource.database.Category;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.database.SearchSuggestion;
 import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.networklayer.rest.RestController;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.Cart;
 import de.handler.mobile.android.fairmondo.ui.fragments.CategoryFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.CategoryFragment_;
 import de.handler.mobile.android.fairmondo.ui.fragments.FeatureFragment;
@@ -67,7 +68,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     SearchManager searchManager;
 
     @Bean
-    RestController restController;
+    RestCommunicator restController;
 
     @Bean
     DatabaseController databaseController;
@@ -87,13 +88,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
 
     private boolean mSpinnerSelection = false;
-    private ArrayList<Category> mCategories;
+    private ArrayList<FairmondoCategory> mCategories;
 
     // Time for calculating interval between last back press action and new one
     // --> exit only when pressed twice
     private long mLastBackPressTime = System.currentTimeMillis();
     private int mProductsCount = 0;
-    private ArrayList<Article> mProducts;
+    private ArrayList<Product> mProducts;
     private String mCurrentCategoryString;
 
 
@@ -178,22 +179,21 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * @param categories a list of available categories
      */
     @Override
-    public void onCategoriesResponse(ArrayList<Category> categories) {
+    public void onCategoriesResponse(List<FairmondoCategory> categories) {
         progressBar.setProgress(progressBar.getProgress()+1);
         this.hideProgressbar();
 
         if (categories != null) {
-            mCategories = categories;
-            this.initSpinner(categories);
+            mCategories = new ArrayList<>(categories);
+            this.initSpinner(mCategories);
         }
     }
 
-
     @UiThread
-    public void initSpinner(ArrayList<Category> categories) {
+    public void initSpinner(List<de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory> categories) {
         // Get category strings
-        ArrayList<String> categoryStrings = new ArrayList<String>(categories.size());
-        for (Category category : categories) {
+        ArrayList<String> categoryStrings = new ArrayList<>(categories.size());
+        for (de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory category : categories) {
             categoryStrings.add(category.getName());
         }
 
@@ -236,22 +236,19 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
-
 
     private void getSubCategories(int id) {
         restController.getSubCategories(id);
     }
 
-
     @Override
-    public void onSubCategoriesResponse(ArrayList<Category> categories) {
+    public void onSubCategoriesResponse(List<FairmondoCategory> categories) {
         if (categories != null) {
             if (categories.size() >= 1) {
-                Category category = new Category(-1L);
+                MutableFairmondoCategory category = new MutableFairmondoCategory();
                 category.setName(getString(R.string.all_products));
                 categories.add(0, category);
                 this.initCategoryFragment(categories);
@@ -263,12 +260,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     @UiThread
-    public void initCategoryFragment(ArrayList<Category> categories) {
+    public void initCategoryFragment(List<FairmondoCategory> categories) {
         CategoryFragment categoryFragment = new CategoryFragment_();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(CategoryFragment.CATEGORIES_ARRAY_LIST_EXTRA, categories);
+        bundle.putParcelableArrayList(CategoryFragment.CATEGORIES_ARRAY_LIST_EXTRA, new ArrayList<>(categories));
         categoryFragment.setArguments(bundle);
 
         try {
@@ -280,8 +276,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             e.printStackTrace();
         }
     }
-
-
 
     private void getProductSelection(String searchRequest, int categoryId) {
         if (app.isConnected()) {
@@ -296,13 +290,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * Callback for products server response
      */
     @Override
-    public void onProductsSearchResponse(ArrayList<Article> products) {
+    public void onProductsSearchResponse(List<Product> products) {
         progressBar.setProgress(progressBar.getProgress()+1);
 
         if (mSpinnerSelection) {
             if (products != null && products.size() > 0) {
-                progressBar.setMax(progressBar.getProgress()+products.size());
-
+                progressBar.setMax(progressBar.getProgress() + products.size());
                 this.getDetailedProducts(products);
             } else {
                 this.hideProgressbar();
@@ -314,31 +307,29 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     // The basic product information has been received,
     // now query more detailed information about each product
-    private void getDetailedProducts(ArrayList<Article> products) {
+    private void getDetailedProducts(List<Product> products) {
         // Set product count as listener responds to each single product
         // and app needs to react when all products have finished loading
         mProductsCount = products.size();
-
         mProducts = new ArrayList<>(products.size());
 
         // Set maximal progress
         progressBar.setProgress(1);
         progressBar.setMax(products.size()+1);
 
-        for (Article product : products) {
-            restController.getDetailedProduct(product.getSlug());
+        for (Product product : products) {
+            restController.getDetailedProduct(product.getHtmlUrl());
         }
     }
 
     @Override
-    public void onDetailedProductResponse(Article article) {
-        mProducts.add(article);
+    public void onDetailedProductResponse(Product product) {
+        mProducts.add(product);
 
         // Increment progress
-        progressBar.setProgress(progressBar.getProgress()+1);
+        progressBar.setProgress(progressBar.getProgress() + 1);
 
         // all the products have detailed information -> end of progress
         if (mProducts.size() == mProductsCount) {
@@ -351,10 +342,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
-
-
-    private void initSelectionFragment(ArrayList<Article> products) {
+    private void initSelectionFragment(ArrayList<Product> products) {
         ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
 
         if (products != null) {
@@ -373,19 +361,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-    private void initFeatureFragment(ArrayList<Article> products) {
+    private void initFeatureFragment(List<Product> products) {
         FeatureFragment featureFragment = new FeatureFragment_();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(FeatureFragment.FEATURED_PRODUCTS_EXTRA, products);
+        bundle.putParcelableArrayList(FeatureFragment.FEATURED_PRODUCTS_EXTRA, new ArrayList<>(products));
         featureFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_products_container, featureFragment)
                 .commit();
     }
-
-
-
 
     /**
      * ActionBar settings
@@ -424,11 +409,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     private void openCart() {
         Cart cart = app.getCart();
         if (cart != null &&
-                cart.getLine_item() != null &&
-                cart.getLine_item().getRequested_quantity() > 0) {
+                cart.getCartItem() != null &&
+                cart.getCartItem().getRequestedQuantity() > 0) {
 
             Intent intent = new Intent(this, WebActivity_.class);
-            intent.putExtra(WebFragment.URI, cart.getCart_url());
+            intent.putExtra(WebFragment.URI, cart.getCartUrl());
             intent.putExtra(WebFragment.COOKIE, app.getCookie());
             startActivity(intent);
         } else {
@@ -436,11 +421,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-
     private void openSettings() {
 
     }
-
 
     @Override
     public void showProgressBar() {

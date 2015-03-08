@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.activities.WebActivity_;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
@@ -41,7 +41,7 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
     FairmondoApp app;
 
 
-    private ArrayList<Article> mProducts = new ArrayList<Article>();
+    private ArrayList<Product> mProducts = new ArrayList<>();
 
     @AfterViews
     public void init() {
@@ -56,7 +56,7 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
 
         for (; i < featuredProductsImageViews.size(); i++) {
             featuredProductsImageViews.get(i).setImageUrl(
-                    mProducts.get(i).getTitle_image_url(),
+                    mProducts.get(i).getTitleImage().getOriginalUrl(),
                     app.getImageLoader());
             featuredProductsImageViews.get(i).setOnClickListener(this);
             featuredProductsTitles.get(i).setText(mProducts.get(i).getTitle());
@@ -73,17 +73,17 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
             switch (v.getId()) {
                 case R.id.fragment_feature_image_first:
                     if (mProducts.size() > 0) {
-                        url = mProducts.get(0).getHtml_url();
+                        url = mProducts.get(0).getHtmlUrl();
                     }
                     break;
                 case R.id.fragment_feature_image_second:
                     if (mProducts.size() > 1) {
-                        url = mProducts.get(1).getHtml_url();
+                        url = mProducts.get(1).getHtmlUrl();
                     }
                     break;
                 case R.id.fragment_feature_image_third:
                     if (mProducts.size() > 2) {
-                        url = mProducts.get(2).getHtml_url();
+                        url = mProducts.get(2).getHtmlUrl();
                     }
                     break;
             }

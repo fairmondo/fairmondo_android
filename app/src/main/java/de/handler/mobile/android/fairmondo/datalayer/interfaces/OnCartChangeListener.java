@@ -1,6 +1,6 @@
 package de.handler.mobile.android.fairmondo.datalayer.interfaces;
 
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Cart;
 
 /**
  * Notifies implementing class that a product has been removed or added from cart

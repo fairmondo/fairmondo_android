@@ -1,11 +1,13 @@
 package de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.article;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Categories returned with a product
  */
 public class FairmondoCategory {
-    public ArrayList<String> ancestors;
+    public Long id;
     public String name;
+    public String slug;
+    public List<String> ancestors;
 }

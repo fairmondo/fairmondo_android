@@ -9,21 +9,19 @@ import de.handler.mobile.android.fairmondo.datalayer.businessobject.cart.Fairmon
  */
 @EBean(scope = EBean.Scope.Singleton)
 public class Cart {
+    protected String cartId;
+    protected String cartUrl;
+    protected FairmondoCartItem cartItem;
 
-    private int cart_id;
-    private String cart_url;
-    private FairmondoCartItem line_item;
-
-
-    public int getCart_id() {
-        return cart_id;
+    public String getCartId() {
+        return cartId;
     }
 
-    public String getCart_url() {
-        return cart_url;
+    public String getCartUrl() {
+        return cartUrl;
     }
 
-    public FairmondoCartItem getLine_item() {
-        return line_item;
+    public FairmondoCartItem getCartItem() {
+        return cartItem;
     }
 }

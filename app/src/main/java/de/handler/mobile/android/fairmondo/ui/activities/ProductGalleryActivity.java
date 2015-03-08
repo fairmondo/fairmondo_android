@@ -16,7 +16,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.networklayer.rest.dto.Article;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.adapter.ProductPagerAdapter;
 
 /**
@@ -30,7 +30,7 @@ public class ProductGalleryActivity extends AbstractActivity {
     public static final String PRODUCT_ARRAY_LIST_EXTRA = "product_array_list_extra";
 
     private ShareActionProvider mShareActionProvider;
-    private ArrayList<Article> mProducts;
+    private ArrayList<Product> mProducts;
 
 
     @ViewById(R.id.activity_result_pager)
@@ -55,7 +55,7 @@ public class ProductGalleryActivity extends AbstractActivity {
     }
 
 
-    private void setupViewPager(int position, ArrayList<Article> products) {
+    private void setupViewPager(int position, ArrayList<Product> products) {
         ProductPagerAdapter productPagerAdapter = new ProductPagerAdapter(getSupportFragmentManager(), products);
 
         // Set up the ViewPager with the sections adapter.
@@ -86,9 +86,9 @@ public class ProductGalleryActivity extends AbstractActivity {
 
     // Build the string which is used to share a fairmondo
     // product recommendation with other android apps
-    private String buildSharingText(Article product) {
+    private String buildSharingText(Product product) {
         return getString(R.string.share_text) +
-                product.getHtml_url();
+                product.getHtmlUrl();
     }
 
     // Call to update the share intent

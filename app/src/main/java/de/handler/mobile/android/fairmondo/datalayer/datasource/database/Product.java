@@ -1,8 +1,5 @@
 package de.handler.mobile.android.fairmondo.datalayer.datasource.database;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
 
 import de.greenrobot.dao.DaoException;
@@ -14,17 +11,7 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table PRODUCT.
  */
-public class Product implements Parcelable {
-
-
-    /** Used to resolve relations */
-    private transient DaoSession daoSession;
-
-    /** Used for active entity operations. */
-    private transient ProductDao myDao;
-
-    private List<ProductCategory> productCategories;
-
+public class Product {
     // KEEP FIELDS - put your custom fields here
     private Long id;
     private String slug = "";
@@ -47,11 +34,152 @@ public class Product implements Parcelable {
     private String donation = "";
     // KEEP FIELDS END
 
-    public Product() {
+    /** Used to resolve relations */
+    private transient DaoSession daoSession;
+
+    /** Used for active entity operations. */
+    private transient ProductDao myDao;
+
+    private List<ProductCategory> productCategories;
+
+    public Long getId() {
+        return id;
     }
 
-    public Product(Long id) {
+    public String getSlug() {
+        return slug;
+    }
+
+    public String getTitleImageUrl() {
+        return titleImageUrl;
+    }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getPriceCents() {
+        return priceCents;
+    }
+
+    public String getTagCondition() {
+        return tagCondition;
+    }
+
+    public Boolean getTagFair() {
+        return tagFair;
+    }
+
+    public Boolean getTagEcologic() {
+        return tagEcologic;
+    }
+
+    public Boolean getTagSmallAndPrecious() {
+        return tagSmallAndPrecious;
+    }
+
+    public Boolean getTagBorrowable() {
+        return tagBorrowable;
+    }
+
+    public Boolean getTagSwappable() {
+        return tagSwappable;
+    }
+
+    public String getSellerNickname() {
+        return sellerNickname;
+    }
+
+    public Boolean getSellerLegalEntity() {
+        return sellerLegalEntity;
+    }
+
+    public String getSellerHtmlUrl() {
+        return sellerHtmlUrl;
+    }
+
+    public String getDonation() {
+        return donation;
+    }
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public void setTitleImageUrl(String titleImageUrl) {
+        this.titleImageUrl = titleImageUrl;
+    }
+
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPriceCents(Integer priceCents) {
+        this.priceCents = priceCents;
+    }
+
+    public void setTagCondition(String tagCondition) {
+        this.tagCondition = tagCondition;
+    }
+
+    public void setTagFair(Boolean tagFair) {
+        this.tagFair = tagFair;
+    }
+
+    public void setTagEcologic(Boolean tagEcologic) {
+        this.tagEcologic = tagEcologic;
+    }
+
+    public void setTagSmallAndPrecious(Boolean tagSmallAndPrecious) {
+        this.tagSmallAndPrecious = tagSmallAndPrecious;
+    }
+
+    public void setTagBorrowable(Boolean tagBorrowable) {
+        this.tagBorrowable = tagBorrowable;
+    }
+
+    public void setTagSwappable(Boolean tagSwappable) {
+        this.tagSwappable = tagSwappable;
+    }
+
+    public void setSellerNickname(String sellerNickname) {
+        this.sellerNickname = sellerNickname;
+    }
+
+    public void setSellerLegalEntity(Boolean sellerLegalEntity) {
+        this.sellerLegalEntity = sellerLegalEntity;
+    }
+
+    public void setSellerHtmlUrl(String sellerHtmlUrl) {
+        this.sellerHtmlUrl = sellerHtmlUrl;
+    }
+
+    public void setDonation(String donation) {
+        this.donation = donation;
+    }
+
+    public void setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+    }
+
+    public void setMyDao(ProductDao myDao) {
+        this.myDao = myDao;
+    }
+
+    public void setProductCategories(List<ProductCategory> productCategories) {
+        this.productCategories = productCategories;
     }
 
     public Product(Long id, String slug, String titleImageUrl, String htmlUrl, String title, Integer priceCents, String tagCondition, Boolean tagFair, Boolean tagEcologic, Boolean tagSmallAndPrecious, Boolean tagBorrowable, Boolean tagSwappable, String sellerNickname, Boolean sellerLegalEntity, String sellerHtmlUrl, String donation) {
@@ -73,138 +201,13 @@ public class Product implements Parcelable {
         this.donation = donation;
     }
 
+    public Product() {
+    }
+
     /** called by internal mechanisms, do not call yourself. */
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getProductDao() : null;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public String getTitleImageUrl() {
-        return titleImageUrl;
-    }
-
-    public void setTitleImageUrl(String titleImageUrl) {
-        this.titleImageUrl = titleImageUrl;
-    }
-
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
-
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getPriceCents() {
-        return priceCents;
-    }
-
-    public void setPriceCents(Integer priceCents) {
-        this.priceCents = priceCents;
-    }
-
-    public String getTagCondition() {
-        return tagCondition;
-    }
-
-    public void setTagCondition(String tagCondition) {
-        this.tagCondition = tagCondition;
-    }
-
-    public Boolean getTagFair() {
-        return tagFair;
-    }
-
-    public void setTagFair(Boolean tagFair) {
-        this.tagFair = tagFair;
-    }
-
-    public Boolean getTagEcologic() {
-        return tagEcologic;
-    }
-
-    public void setTagEcologic(Boolean tagEcologic) {
-        this.tagEcologic = tagEcologic;
-    }
-
-    public Boolean getTagSmallAndPrecious() {
-        return tagSmallAndPrecious;
-    }
-
-    public void setTagSmallAndPrecious(Boolean tagSmallAndPrecious) {
-        this.tagSmallAndPrecious = tagSmallAndPrecious;
-    }
-
-    public Boolean getTagBorrowable() {
-        return tagBorrowable;
-    }
-
-    public void setTagBorrowable(Boolean tagBorrowable) {
-        this.tagBorrowable = tagBorrowable;
-    }
-
-    public Boolean getTagSwappable() {
-        return tagSwappable;
-    }
-
-    public void setTagSwappable(Boolean tagSwappable) {
-        this.tagSwappable = tagSwappable;
-    }
-
-    public String getSellerNickname() {
-        return sellerNickname;
-    }
-
-    public void setSellerNickname(String sellerNickname) {
-        this.sellerNickname = sellerNickname;
-    }
-
-    public Boolean getSellerLegalEntity() {
-        return sellerLegalEntity;
-    }
-
-    public void setSellerLegalEntity(Boolean sellerLegalEntity) {
-        this.sellerLegalEntity = sellerLegalEntity;
-    }
-
-    public String getSellerHtmlUrl() {
-        return sellerHtmlUrl;
-    }
-
-    public void setSellerHtmlUrl(String sellerHtmlUrl) {
-        this.sellerHtmlUrl = sellerHtmlUrl;
-    }
-
-    public String getDonation() {
-        return donation;
-    }
-
-    public void setDonation(String donation) {
-        this.donation = donation;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
@@ -249,63 +252,4 @@ public class Product implements Parcelable {
         }    
         myDao.refresh(this);
     }
-
-    // KEEP METHODS - put your custom methods here
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
-        dest.writeString(this.slug);
-        dest.writeString(this.titleImageUrl);
-        dest.writeString(this.htmlUrl);
-        dest.writeString(this.title);
-        dest.writeValue(this.priceCents);
-        dest.writeString(this.tagCondition);
-        dest.writeValue(this.tagFair);
-        dest.writeValue(this.tagEcologic);
-        dest.writeValue(this.tagSmallAndPrecious);
-        dest.writeValue(this.tagBorrowable);
-        dest.writeValue(this.tagSwappable);
-        dest.writeString(this.sellerNickname);
-        dest.writeValue(this.sellerLegalEntity);
-        dest.writeString(this.sellerHtmlUrl);
-        dest.writeString(this.donation);
-        dest.writeTypedList(productCategories);
-    }
-
-    private Product(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        this.slug = in.readString();
-        this.titleImageUrl = in.readString();
-        this.htmlUrl = in.readString();
-        this.title = in.readString();
-        this.priceCents = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.tagCondition = in.readString();
-        this.tagFair = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.tagEcologic = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.tagSmallAndPrecious = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.tagBorrowable = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.tagSwappable = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.sellerNickname = in.readString();
-        this.sellerLegalEntity = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.sellerHtmlUrl = in.readString();
-        this.donation = in.readString();
-        in.readTypedList(productCategories, ProductCategory.CREATOR);
-    }
-
-    public static final Creator<Product> CREATOR = new Creator<Product>() {
-        public Product createFromParcel(Parcel source) {
-            return new Product(source);
-        }
-
-        public Product[] newArray(int size) {
-            return new Product[size];
-        }
-    };
-    // KEEP METHODS END
-
 }

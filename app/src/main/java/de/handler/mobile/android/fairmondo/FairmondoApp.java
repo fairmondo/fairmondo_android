@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import com.android.volley.toolbox.ImageLoader;
 
 import org.androidannotations.annotations.EApplication;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
+import org.modelmapper.convention.NameTokenizers;
 
-import de.handler.mobile.android.fairmondo.datasource.SearchSuggestionProvider;
-import de.handler.mobile.android.fairmondo.datasource.database.Category;
-import de.handler.mobile.android.fairmondo.datasource.database.DaoMaster;
-import de.handler.mobile.android.fairmondo.datasource.database.DaoSession;
-import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.SearchSuggestionProvider;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.DaoMaster;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.DaoSession;
 import de.handler.mobile.android.fairmondo.ui.views.CustomImageCache;
 
 /**
@@ -20,28 +23,39 @@ import de.handler.mobile.android.fairmondo.ui.views.CustomImageCache;
 @EApplication
 public class FairmondoApp extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        this.initCache();
-        this.initImageLoader();
-        this.initDatabase("fairmondo-db");
-    }
-
+    private ModelMapper modelMapper;
     private CustomImageCache imageCache;
     private ImageLoader imageLoader;
     private DaoSession daoSession;
-    private Category lastCategory;
+    private FairmondoCategory lastCategory;
     private String cookie;
 
     private Cart cart;
 
     private boolean isConnected = false;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        this.initCache();
+        this.initImageLoader();
+        this.initDatabase("fairmondo-db");
+        this.initModelMapper();
+    }
+
     /**
      * methods for initialization
      * on app start
      */
+    private void initModelMapper() {
+        this.modelMapper = new ModelMapper();
+        this.modelMapper.getConfiguration()
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+                .setSourceNameTokenizer(NameTokenizers.UNDERSCORE)
+                .setDestinationNameTokenizer(NameTokenizers.CAMEL_CASE);
+    }
+
     private void initCache() {
         imageCache = new CustomImageCache();
     }
@@ -76,11 +90,11 @@ public class FairmondoApp extends Application {
         this.isConnected = isAppConnected;
     }
 
-    public Category getLastCategory() {
+    public FairmondoCategory getLastCategory() {
         return lastCategory;
     }
 
-    public void setLastCategory(Category lastCategory) {
+    public void setLastCategory(FairmondoCategory lastCategory) {
         this.lastCategory = lastCategory;
     }
 
@@ -98,5 +112,9 @@ public class FairmondoApp extends Application {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public ModelMapper getModelMapper() {
+        return modelMapper;
     }
 }

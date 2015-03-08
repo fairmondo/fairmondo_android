@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Image URLs for one product
+ * Contains thumbnails for product
  */
-public class FairmondoTitleImage implements Parcelable {
-    private String thumbUrl;
-    private String originalUrl;
+public class FairmondoThumbnail implements Parcelable {
+    String thumbUrl;
+    String originalUrl;
 
     public String getThumbUrl() {
         return thumbUrl;
@@ -29,20 +29,20 @@ public class FairmondoTitleImage implements Parcelable {
         dest.writeString(this.originalUrl);
     }
 
-    private FairmondoTitleImage(Parcel in) {
+    private FairmondoThumbnail(Parcel in) {
         this.thumbUrl = in.readString();
         this.originalUrl = in.readString();
     }
 
-    public FairmondoTitleImage() {
+    public FairmondoThumbnail() {
     }
 
-    public static final Creator<FairmondoTitleImage> CREATOR = new Creator<FairmondoTitleImage>() {
-        public FairmondoTitleImage createFromParcel(Parcel source) {
-            return new FairmondoTitleImage(source);
+    public static final Creator<FairmondoThumbnail> CREATOR = new Creator<FairmondoThumbnail>() {
+        public FairmondoThumbnail createFromParcel(Parcel source) {
+            return new FairmondoThumbnail(source);
         }
-        public FairmondoTitleImage[] newArray(int size) {
-            return new FairmondoTitleImage[size];
+        public FairmondoThumbnail[] newArray(int size) {
+            return new FairmondoThumbnail[size];
         }
     };
 }
