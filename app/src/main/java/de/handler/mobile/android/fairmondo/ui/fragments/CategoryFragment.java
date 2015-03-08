@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.datasource.database.Category;
-import de.handler.mobile.android.fairmondo.interfaces.OnCategoriesListener;
-import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
+import de.handler.mobile.android.fairmondo.datalayer.RestCommunicator;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnCategoriesListener;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
 
 /**
  * Fragment showing a list of categories
@@ -28,13 +28,13 @@ import de.handler.mobile.android.fairmondo.rest.RestController;
 public class CategoryFragment extends ListFragment {
 
     @Bean
-    RestController restController;
+    RestCommunicator restController;
 
     @App
     FairmondoApp app;
 
     public static final String CATEGORIES_ARRAY_LIST_EXTRA = "categories_array_list_extra";
-    private ArrayList<Category> mCategories = new ArrayList<Category>();
+    private ArrayList<FairmondoCategory> mCategories = new ArrayList<>();
     private Activity mActivity;
 
 
@@ -57,7 +57,7 @@ public class CategoryFragment extends ListFragment {
 
         // Extract the title of each category
         ArrayList<String> categoryStrings = new ArrayList<String>(mCategories.size());
-        for (Category category : mCategories) {
+        for (FairmondoCategory category : mCategories) {
             categoryStrings.add(category.getName());
         }
 

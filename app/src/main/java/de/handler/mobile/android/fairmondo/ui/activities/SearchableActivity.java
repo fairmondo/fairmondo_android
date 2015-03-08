@@ -18,16 +18,17 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.datasource.DatabaseController;
-import de.handler.mobile.android.fairmondo.datasource.SearchSuggestionProvider;
-import de.handler.mobile.android.fairmondo.datasource.database.Category;
-import de.handler.mobile.android.fairmondo.datasource.database.SearchSuggestion;
-import de.handler.mobile.android.fairmondo.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
+import de.handler.mobile.android.fairmondo.datalayer.RestCommunicator;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.DatabaseController;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.SearchSuggestionProvider;
+import de.handler.mobile.android.fairmondo.datalayer.datasource.database.SearchSuggestion;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductSelectionFragment_;
 
@@ -44,7 +45,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     FairmondoApp app;
 
     @Bean
-    RestController restController;
+    RestCommunicator restController;
 
     @Bean
     DatabaseController databaseController;
@@ -94,7 +95,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
             SearchSuggestionProvider searchSuggestionProvider = new SearchSuggestionProvider();
             Cursor cursor = searchSuggestionProvider.query(data, null, null, null, null);
             SearchSuggestion searchSuggestion = databaseController.getSearchSuggestions(cursor);
-            Category category = databaseController.getCategory(searchSuggestion.getSuggest_text_2());
+            FairmondoCategory category = databaseController.getCategory(searchSuggestion.getSuggest_text_2());
             restController.getProduct(searchSuggestion.getSuggest_text_1(), category.getId().intValue());
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
@@ -116,11 +117,14 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
 
     @Override
-    public void onProductsSearchResponse(ArrayList<Article> articles) {
+    public void onProductsSearchResponse(List<Product> products) {
         ProductSelectionFragment searchResultFragment = new ProductSelectionFragment_();
-
+        ArrayList<Product> productArrayList = null;
+        if (products != null) {
+            productArrayList = new ArrayList<>(products);
+        }
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, articles);
+        bundle.putParcelableArrayList(ProductSelectionFragment.SELECTION_ARRAY_LIST_EXTRA, productArrayList);
         searchResultFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()

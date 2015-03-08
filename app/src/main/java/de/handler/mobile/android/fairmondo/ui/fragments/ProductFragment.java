@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,10 +27,10 @@ import java.util.Locale;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.interfaces.OnCartChangeListener;
-import de.handler.mobile.android.fairmondo.rest.RestController;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
-import de.handler.mobile.android.fairmondo.rest.json.model.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.RestCommunicator;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
+import de.handler.mobile.android.fairmondo.datalayer.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
 /**
@@ -51,13 +50,10 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     FairmondoApp app;
 
     @Bean
-    RestController restController;
+    RestCommunicator restController;
 
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView productImageView;
-
-    @ViewById(R.id.fragment_product_progressBar)
-    ProgressBar progressBar;
 
     @ViewById(R.id.fragment_product_item_count_text_view)
     TextView itemCountTextView;
@@ -95,8 +91,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_button_buy)
     Button buttonBuy;
 
-    private Article mProduct;
-
+    private Product mProduct;
 
     @AfterViews
     public void init() {
@@ -110,9 +105,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             titleTextView.setText(mProduct.getTitle());
 
             // Image
-            String url = mProduct.getTitle_image_url();
-            if (mProduct.getTitle_image() != null && !mProduct.getTitle_image().getOriginal_url().equals("")) {
-                url = mProduct.getTitle_image().getOriginal_url();
+            String url = "";
+            if (mProduct.getTitleImage() != null && !mProduct.getTitleImage().getOriginalUrl().equals("")) {
+                url = mProduct.getTitleImage().getOriginalUrl();
             }
 
             if (url != null) {
@@ -127,34 +122,28 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        productImageView.setErrorImageResId(R.drawable.fairmondo);
                     }
                 });
             }
 
 
             // Description
-            if (mProduct.getContent_html() == null || mProduct.getContent_html().equals("")) {
+            if (mProduct.getContent() == null || mProduct.getContent().equals("")) {
                 buttonDescription.setVisibility(View.GONE);
             }
 
             // Terms
-            if (mProduct.getTerms_html() == null || mProduct.getTerms_html().equals("")) {
+            if (mProduct.getSeller() == null || mProduct.getSeller().getTerms() == null || mProduct.getSeller().getTerms().equals("")) {
                 buttonTerms.setVisibility(View.GONE);
             }
 
-            // Fair Percent
-            if (mProduct.getFair_percent_html() == null || mProduct.getFair_percent_html().equals("")) {
-                buttonFairPercent.setVisibility(View.GONE);
-            }
-
             // Transport
-            if (mProduct.getTransport_html() == null || mProduct.getTransport_html().equals("")) {
+            if (mProduct.getTransportHtml() == null || mProduct.getTransportHtml().equals("")) {
                 buttonFairPercent.setVisibility(View.GONE);
             }
 
             // Payment
-            if (mProduct.getPayment_html() == null || mProduct.getPayment_html().equals("")) {
+            if (mProduct.getPaymentHtml() == null || mProduct.getPaymentHtml().equals("")) {
                 buttonFairPercent.setVisibility(View.GONE);
             }
 
@@ -170,7 +159,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             }
 
             // Price TODO: if last number is a 0 it is omitted -  change if possible
-            double priceValue = (mProduct.getPrice_cents() / 100.00);
+            double priceValue = (mProduct.getPriceCents() / 100.00);
             // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
             String price = format.format(priceValue);
@@ -218,27 +207,19 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
         layoutContent.setBackgroundColor(backgroundColor[0]);
         buttonBuy.setBackgroundColor(foregroundColor[0]);
-
-        /*if (Build.VERSION.SDK_INT > 15) {
-            buttonDescription.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-            buttonFairPercent.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-            buttonTerms.setBackground(getActivity().getResources().getDrawable(R.drawable.selector_button_uncolored));
-        }*/
-
-        progressBar.setVisibility(View.GONE);
 }
 
 
     @Click(R.id.fragment_product_button_buy)
     public void addToCart() {
-        restController.addToCard(mProduct.getId());
+        restController.addToCard(Integer.getInteger(mProduct.getId()));
     }
 
     @UiThread
     @Override
     public void onCartChanged(Cart cart) {
-        if (cart != null && cart.getLine_item() != null) {
-            int itemCount = cart.getLine_item().getRequested_quantity();
+        if (cart != null && cart.getCartItem() != null) {
+            int itemCount = cart.getCartItem().getRequestedQuantity();
             itemCountTextView.setVisibility(View.VISIBLE);
             itemCountTextView.setText(String.valueOf(itemCount));
         } else {
@@ -259,29 +240,23 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
         switch (v.getId()) {
             case R.id.fragment_product_button_description:
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getContent());
                 dialog.setArguments(bundle);
 
                 break;
             case R.id.fragment_product_button_terms:
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
-                dialog.setArguments(bundle);
-
-                break;
-            case R.id.fragment_product_button_fair_percent:
-                //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getFair_percent_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getSeller().getTerms());
                 dialog.setArguments(bundle);
 
                 break;
             case R.id.fragment_product_button_transport:
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTransport_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTransportHtml());
                 dialog.setArguments(bundle);
 
                 break;
             case R.id.fragment_product_button_payment:
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getPayment_html());
+                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getPaymentHtml());
                 dialog.setArguments(bundle);
 
                 break;

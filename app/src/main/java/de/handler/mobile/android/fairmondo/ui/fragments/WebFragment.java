@@ -24,7 +24,6 @@ import de.handler.mobile.android.fairmondo.R;
  */
 @EFragment(R.layout.fragment_web)
 public class WebFragment extends Fragment {
-
     public static final String URI = "activity_web_uri";
     public static final String HTTP_CONTENT = "http_content";
     public static final String COOKIE = "cart_cookie";
@@ -41,15 +40,12 @@ public class WebFragment extends Fragment {
     //TODO after redirect 500 from fairmondo page --> cookie not set correctly?
     @AfterViews
     public void init() {
-
         String http = getArguments().getString(HTTP_CONTENT);
         String uri = getArguments().getString(URI);
         mCookie = getArguments().getString(COOKIE);
 
-
         if (http != null) {
             webView.loadData(http, "text/html; charset=UTF-8", null);
-
         } else if (uri != null && !uri.equals("")) {
             progressContainer.setVisibility(View.VISIBLE);
 
@@ -58,7 +54,6 @@ public class WebFragment extends Fragment {
             } else {
                 webView.setWebViewClient(new RedirectWebViewClient());
             }
-
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             webView.loadUrl(uri);
@@ -73,16 +68,12 @@ public class WebFragment extends Fragment {
 
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setCookie(uri, "cart=" + cookie);
-
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             CookieSyncManager.getInstance().sync();
         }
     }
 
-
-
     private class RedirectWebViewClient extends WebViewClient {
-
         boolean handleKeyEvent = true;
 
         RedirectWebViewClient (boolean handleKeyEvent) {
@@ -104,7 +95,6 @@ public class WebFragment extends Fragment {
                     setCookie(webView, mCookie, url);
                 }
             }
-
             return handleKeyEvent;
         }
 
@@ -113,9 +103,5 @@ public class WebFragment extends Fragment {
             super.onPageFinished(view, url);
             progressContainer.setVisibility(View.GONE);
         }
-
-
     }
-
-
 }

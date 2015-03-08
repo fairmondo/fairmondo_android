@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp_;
 import de.handler.mobile.android.fairmondo.R;
-import de.handler.mobile.android.fairmondo.rest.json.Article;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
 
 
@@ -27,16 +26,13 @@ import de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView;
  * Image Adapter used in GridView Fragments
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-
-    private final ArrayList<Article> mProducts;
-    private Context mContext;
-
+    private final ArrayList<Product> mProducts;
+    private final Context mContext;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected CustomNetworkImageView imageView;
-        protected TextView textView;
-        protected CardView cardView;
-        protected ProgressBar progressBar;
+        protected final CustomNetworkImageView imageView;
+        protected final TextView textView;
+        protected final CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -44,11 +40,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             this.imageView = (CustomNetworkImageView) v.findViewById(R.id.image_adapter_image);
             this.textView = (TextView) v.findViewById(R.id.image_adapter_text);
             this.cardView = (CardView) v.findViewById(R.id.image_adapter_card_view);
-            this.progressBar = (ProgressBar) v.findViewById(R.id.image_adapter_progress_bar);
         }
     }
 
-    public ImageAdapter(Context context, ArrayList<Article> products) {
+    public ImageAdapter(Context context, ArrayList<Product> products) {
         mContext = context;
 
         if (products != null) {
@@ -58,10 +53,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, viewGroup, false);
+        final View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, viewGroup, false);
         return new ViewHolder(v);
     }
 
@@ -69,23 +63,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
 
         if (mProducts.size() > 0) {
-
-            Article product = mProducts.get(position);
+            final Product product = mProducts.get(position);
             if (product != null) {
                 // Create custom typeface
                 Typeface myTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
 
                 // Set image
-                String url = product.getTitle_image_url();
-                if (product.getTitle_image() != null) {
-                    url = product.getTitle_image().getThumb_url();
-                }
-
                 FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
+                String url = "";
+                if (product.getTitleImage() != null && !product.getTitleImage().getOriginalUrl().equals("")) {
+                    url = product.getTitleImage().getOriginalUrl();
+                }
 
                 if (url != null) {
                     app.getImageLoader().get(url, new ImageLoader.ImageListener() {
-
                         @Override
                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                             if (response.getBitmap() != null) {
@@ -111,18 +102,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 viewHolder.imageView.setVisibility(View.GONE);
                 viewHolder.textView.setVisibility(View.GONE);
                 viewHolder.cardView.setVisibility(View.GONE);
-                viewHolder.progressBar.setVisibility(View.GONE);
             }
         }
     }
 
     public void setImage(ViewHolder viewHolder, Bitmap bitmap) {
         viewHolder.imageView.setLocalImageBitmap(bitmap);
-        viewHolder.progressBar.setVisibility(View.GONE);
     }
 
     public long getItemId(int position) {
-        return mProducts.get(position).getId();
+        return Integer.getInteger(mProducts.get(position).getId());
     }
 
     @Override
