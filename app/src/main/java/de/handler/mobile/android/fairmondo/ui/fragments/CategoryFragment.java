@@ -77,7 +77,7 @@ public class CategoryFragment extends ListFragment {
             restController.getSubCategories(app.getLastCategory().getId().intValue());
         } else {
             // if user selects "all products" - position 0 - get the products
-            restController.getProduct("", app.getLastCategory().getId().intValue());
+            restController.getProducts("", app.getLastCategory().getId().intValue());
         }
     }
 }

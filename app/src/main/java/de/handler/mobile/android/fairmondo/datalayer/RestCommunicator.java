@@ -14,6 +14,7 @@ import org.androidannotations.annotations.rest.RestService;
 import org.modelmapper.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
@@ -77,7 +78,7 @@ public class RestCommunicator {
     }
 
     @Background
-    public void getProduct(String searchString) {
+    public void getProducts(String searchString) {
         Articles articles = restService.getProducts(searchString);
         Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.datalayer.businessobject.Product>>() {}.getType();
         if (articles == null || articles.articles == null) {
@@ -89,7 +90,7 @@ public class RestCommunicator {
     }
 
     @Background
-    public void getProduct(String searchString, int categoryId) {
+    public void getProducts(String searchString, int categoryId) {
         productListener.showProgressBar();
         Articles articles = restService.getProducts(searchString, categoryId);
         if (articles == null || articles.articles == null || articles.articles.length < 1) {
@@ -97,16 +98,20 @@ public class RestCommunicator {
             Log.e(getClass().getCanonicalName(), " getProducts: articles are null");
         } else {
             Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.datalayer.businessobject.Product>>() {}.getType();
-            List<de.handler.mobile.android.fairmondo.datalayer.businessobject.Product> products = app.getModelMapper().map(articles.articles, listType);
+            List<de.handler.mobile.android.fairmondo.datalayer.businessobject.Product> products = app.getModelMapper().map(Arrays.asList(articles.articles), listType);
             productListener.onProductsSearchResponse(products);
         }
     }
 
     @Background
-    public void getDetailedProduct(String url) {
-        Product article = restService.getDetailedProduct(url);
-        de.handler.mobile.android.fairmondo.datalayer.businessobject.Product product = app.getModelMapper().map(article, de.handler.mobile.android.fairmondo.datalayer.businessobject.Product.class);
-        detailedProductListener.onDetailedProductResponse(product);
+    public void getDetailedProduct(String slug) {
+        Product article = restService.getDetailedProduct(slug);
+        if (article == null) {
+            detailedProductListener.onDetailedProductResponse(null);
+        } else {
+            de.handler.mobile.android.fairmondo.datalayer.businessobject.Product product = app.getModelMapper().map(article, de.handler.mobile.android.fairmondo.datalayer.businessobject.Product.class);
+            detailedProductListener.onDetailedProductResponse(product);
+        }
     }
 
     @Background(id = "cancellable_task")

@@ -18,27 +18,27 @@ import de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.article.F
  * Connects the app to the Fairmondo server via restful requests
  * returns JSON
  */
-@Rest(rootUrl = "", converters = {GsonHttpMessageConverter.class}, interceptors = {HttpResponseInterceptor.class})
+@Rest(rootUrl = "https://www.fairmondo.de/", converters = {GsonHttpMessageConverter.class}, interceptors = {HttpResponseInterceptor.class})
 public interface FairmondoRestService extends RestClientErrorHandling {
 
-    @Get("https://www.fairmondo.de/articles.json?article_search_form[q]={searchString}&article_search_form[category_id]={categoryId}")
+    @Get("articles.json?article_search_form[q]={searchString}&article_search_form[category_id]={categoryId}")
     public Articles getProducts(String searchString, int categoryId);
 
-    @Get("https://www.fairmondo.de/articles.json?article_search_form[q]={searchString}")
+    @Get("articles.json?article_search_form[q]={searchString}")
     public Articles getProducts(String searchString);
 
-    @Get("{url}.json")
-    public Product getDetailedProduct(String url);
+    @Get("articles/{slug}.json")
+    public Product getDetailedProduct(String slug);
 
-    @Get("https://www.fairmondo.de/categories.json")
+    @Get("categories.json")
     public List<FairmondoCategory> getCategories();
 
-    @Get("https://www.fairmondo.de/categories/{id}.json")
+    @Get("categories/{id}.json")
     public List<FairmondoCategory> getSubCategories(int id);
 
     @SetsCookie({"cart"})
     @RequiresCookie({"cart"})
-    @Post("https://www.fairmondo.de/line_items.json?line_item[article_id]={productId}&line_item[requested_quantity]={quantity}")
+    @Post("line_items.json?line_item[article_id]={productId}&line_item[requested_quantity]={quantity}")
     public Cart addProductToCart(int productId, int quantity);
 
     void setCookie(String name, String value);

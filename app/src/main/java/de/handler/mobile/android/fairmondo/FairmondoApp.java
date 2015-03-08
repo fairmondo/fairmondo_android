@@ -10,7 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTokenizers;
 
+import java.util.List;
+
 import de.handler.mobile.android.fairmondo.datalayer.businessobject.Cart;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.SearchSuggestionProvider;
 import de.handler.mobile.android.fairmondo.datalayer.datasource.database.DaoMaster;
@@ -29,6 +32,7 @@ public class FairmondoApp extends Application {
     private DaoSession daoSession;
     private FairmondoCategory lastCategory;
     private String cookie;
+    private List<Product> products;
 
     private Cart cart;
     private boolean isConnected = false;
@@ -115,5 +119,13 @@ public class FairmondoApp extends Application {
 
     public ModelMapper getModelMapper() {
         return modelMapper;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

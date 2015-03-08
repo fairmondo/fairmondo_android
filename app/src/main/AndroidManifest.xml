@@ -13,7 +13,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
+        <provider
+            android:name=".datalayer.datasource.SearchSuggestionProvider"
+            android:authorities="de.handler.mobile.android.fairmondo.datalayer.datasource.database.searchprovider"/>
 
         <activity
             android:name="de.handler.mobile.android.fairmondo.ui.activities.MainActivity_"
@@ -67,12 +71,6 @@
                 android:value="de.handler.mobile.android.fairmondo.ui.activities.MainActivity_" />
 
         </activity>
-
-
-        <provider
-            android:name=".datalayer.datasource.SearchSuggestionProvider"
-            android:authorities="de.handler.mobile.android.fairmondo.datalayer.datasource.database.searchprovider"/>
-
     </application>
 
 </manifest>

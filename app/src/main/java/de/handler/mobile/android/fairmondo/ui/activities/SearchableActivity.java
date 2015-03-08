@@ -96,7 +96,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
             Cursor cursor = searchSuggestionProvider.query(data, null, null, null, null);
             SearchSuggestion searchSuggestion = databaseController.getSearchSuggestions(cursor);
             FairmondoCategory category = databaseController.getCategory(searchSuggestion.getSuggest_text_2());
-            restController.getProduct(searchSuggestion.getSuggest_text_1(), category.getId().intValue());
+            restController.getProducts(searchSuggestion.getSuggest_text_1(), category.getId().intValue());
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
@@ -106,7 +106,7 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     private void searchProducts(String query) {
         if (app.isConnected()) {
             if (query != null) {
-                restController.getProduct(query);
+                restController.getProducts(query);
             } else {
                 this.finish();
             }

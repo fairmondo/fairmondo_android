@@ -10,11 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
+import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.adapter.ProductPagerAdapter;
@@ -32,6 +34,8 @@ public class ProductGalleryActivity extends AbstractActivity {
     private ShareActionProvider mShareActionProvider;
     private ArrayList<Product> mProducts;
 
+    @App
+    FairmondoApp app;
 
     @ViewById(R.id.activity_result_pager)
     ViewPager viewPager;
@@ -45,7 +49,8 @@ public class ProductGalleryActivity extends AbstractActivity {
         // Get the bundle and the contained information
         // which was attached to the intent in either
         // ProductSelectionFragment or SearchResultFragment
-        mProducts = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
+        // mProducts = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
+        mProducts = new ArrayList<>(app.getProducts());
 
         // The position is used for telling the ViewPager on which item the user touched
         // and which product therefore should be displayed in detail

@@ -280,7 +280,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     private void getProductSelection(String searchRequest, int categoryId) {
         if (app.isConnected()) {
             this.showProgressbar();
-            restController.getProduct(searchRequest, categoryId);
+            restController.getProducts(searchRequest, categoryId);
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
         }
@@ -320,7 +320,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         progressBar.setMax(products.size()+1);
 
         for (Product product : products) {
-            restController.getDetailedProduct(product.getHtmlUrl());
+            restController.getDetailedProduct(product.getSlug());
         }
     }
 

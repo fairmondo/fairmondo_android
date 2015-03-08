@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -14,11 +15,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
+import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.activities.ProductGalleryActivity;
@@ -40,6 +43,9 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
     @ViewById(R.id.fragment_product_selection_empty)
     TextView textViewEmpty;
+
+    @App
+    FairmondoApp app;
 
     @AfterViews
     public void init() {
@@ -72,18 +78,20 @@ public class ProductSelectionFragment extends Fragment implements RecyclerView.O
 
         // specify an adapter (see also next example)
         recyclerView.setAdapter(new ImageAdapter(getActivity(), mProducts));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.addOnItemTouchListener(this);
     }
 
     @TargetApi(16)
-    private void startProductGallery(int position, Bundle bundle) {
+    private void startProductGallery(int position, Bundle animationBundle) {
         Intent intent = new Intent(getActivity(), ProductGalleryActivity_.class);
         intent.putExtra(ProductGalleryActivity.PAGER_POSITION_EXTRA, position);
-        intent.putParcelableArrayListExtra(ProductGalleryActivity.PRODUCT_ARRAY_LIST_EXTRA, mProducts);
+        //intent.putExtra(ProductGalleryActivity.PRODUCT_ARRAY_LIST_EXTRA, mProducts);
+        app.setProducts(mProducts);
 
-        if (Build.VERSION.SDK_INT > 15 && bundle != null) {
-            getActivity().startActivity(intent, bundle);
+        if (Build.VERSION.SDK_INT > 15 && animationBundle != null) {
+            getActivity().startActivity(intent, animationBundle);
         } else {
             startActivity(intent);
         }

@@ -3,6 +3,7 @@ package de.handler.mobile.android.fairmondo.datalayer.businessobject.product;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class FairmondoCategory implements Parcelable {
     protected Long id = -1L;
     protected String name;
     protected String slug;
-    protected List<String> ancestors;
+    protected List<String> ancestors = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -37,7 +38,9 @@ public class FairmondoCategory implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
+        if (this.id != null) {
+            dest.writeLong(this.id);
+        }
         dest.writeString(this.slug);
         dest.writeString(this.name);
         dest.writeStringList(this.ancestors);

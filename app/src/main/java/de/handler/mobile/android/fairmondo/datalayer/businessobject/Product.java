@@ -20,7 +20,7 @@ import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.Fair
  * as json by Fairmondo server
  */
 public class Product implements Parcelable {
-    public String id;
+    public Long id;
     public String slug;
     public String title;
     public int priceCents = 0;
@@ -28,8 +28,9 @@ public class Product implements Parcelable {
     public int vat = 0;
     public FairmondoTag tags;
     public FairmondoDonation donation;
-    public FairmondoCategory categories;
+    public FairmondoCategory[] categories;
     public FairmondoTitleImage titleImage;
+    public String titleImageUrl;
     public FairmondoThumbnail[] thumbnails;
     public FairmondoSeller seller;
     public String content;
@@ -38,7 +39,7 @@ public class Product implements Parcelable {
     public String commendationHtml;
     public String htmlUrl;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -70,8 +71,12 @@ public class Product implements Parcelable {
         return donation;
     }
 
-    public FairmondoCategory getCategories() {
-        return categories;
+    public List<FairmondoCategory> getCategories() {
+        return Arrays.asList(categories);
+    }
+
+    public String getTitleImageUrl() {
+        return titleImageUrl;
     }
 
     public FairmondoTitleImage getTitleImage() {
@@ -106,6 +111,9 @@ public class Product implements Parcelable {
         return htmlUrl;
     }
 
+    public Product() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -113,7 +121,7 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeLong(this.id);
         dest.writeString(this.slug);
         dest.writeString(this.title);
         dest.writeInt(this.priceCents);
@@ -121,9 +129,10 @@ public class Product implements Parcelable {
         dest.writeInt(this.vat);
         dest.writeParcelable(this.tags, 0);
         dest.writeParcelable(this.donation, 0);
-        dest.writeParcelable(this.categories, 0);
+        dest.writeTypedArray(this.categories, flags);
         dest.writeParcelable(this.titleImage, 0);
-        dest.writeParcelableArray(this.thumbnails, 0);
+        dest.writeString(this.titleImageUrl);
+        dest.writeTypedArray(this.thumbnails, flags);
         dest.writeParcelable(this.seller, 0);
         dest.writeString(this.content);
         dest.writeString(this.paymentHtml);
@@ -132,11 +141,8 @@ public class Product implements Parcelable {
         dest.writeString(this.htmlUrl);
     }
 
-    public Product() {
-    }
-
     private Product(Parcel in) {
-        this.id = in.readString();
+        this.id = in.readLong();
         this.slug = in.readString();
         this.title = in.readString();
         this.priceCents = in.readInt();
@@ -144,9 +150,10 @@ public class Product implements Parcelable {
         this.vat = in.readInt();
         this.tags = in.readParcelable(FairmondoTag.class.getClassLoader());
         this.donation = in.readParcelable(FairmondoDonation.class.getClassLoader());
-        this.categories = in.readParcelable(FairmondoCategory.class.getClassLoader());
+        in.createTypedArray(FairmondoCategory.CREATOR);
         this.titleImage = in.readParcelable(FairmondoTitleImage.class.getClassLoader());
-        this.thumbnails = (FairmondoThumbnail[]) in.readParcelableArray(FairmondoThumbnail.class.getClassLoader());
+        this.titleImageUrl = in.readString();
+        in.createTypedArray(FairmondoThumbnail.CREATOR);
         this.seller = in.readParcelable(FairmondoSeller.class.getClassLoader());
         this.content = in.readString();
         this.paymentHtml = in.readString();
@@ -155,7 +162,7 @@ public class Product implements Parcelable {
         this.htmlUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
         public Product createFromParcel(Parcel source) {
             return new Product(source);
         }

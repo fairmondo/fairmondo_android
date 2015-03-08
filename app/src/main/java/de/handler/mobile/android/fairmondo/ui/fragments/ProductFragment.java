@@ -105,7 +105,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             titleTextView.setText(mProduct.getTitle());
 
             // Image
-            String url = "";
+            String url = mProduct.getTitleImageUrl();
             if (mProduct.getTitleImage() != null && !mProduct.getTitleImage().getOriginalUrl().equals("")) {
                 url = mProduct.getTitleImage().getOriginalUrl();
             }
@@ -212,7 +212,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @Click(R.id.fragment_product_button_buy)
     public void addToCart() {
-        restController.addToCard(Integer.getInteger(mProduct.getId()));
+        restController.addToCard(mProduct.getId().intValue());
     }
 
     @UiThread

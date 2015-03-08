@@ -36,7 +36,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         public ViewHolder(View v) {
             super(v);
-
             this.imageView = (CustomNetworkImageView) v.findViewById(R.id.image_adapter_image);
             this.textView = (TextView) v.findViewById(R.id.image_adapter_text);
             this.cardView = (CardView) v.findViewById(R.id.image_adapter_card_view);
@@ -45,7 +44,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public ImageAdapter(Context context, ArrayList<Product> products) {
         mContext = context;
-
         if (products != null) {
             mProducts = products;
         } else {
@@ -61,7 +59,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-
         if (mProducts.size() > 0) {
             final Product product = mProducts.get(position);
             if (product != null) {
@@ -70,7 +67,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
                 // Set image
                 FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
-                String url = "";
+                String url = product.getTitleImageUrl();
                 if (product.getTitleImage() != null && !product.getTitleImage().getOriginalUrl().equals("")) {
                     url = product.getTitleImage().getOriginalUrl();
                 }
@@ -111,7 +108,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     public long getItemId(int position) {
-        return Integer.getInteger(mProducts.get(position).getId());
+        return mProducts.get(position).getId().intValue();
     }
 
     @Override

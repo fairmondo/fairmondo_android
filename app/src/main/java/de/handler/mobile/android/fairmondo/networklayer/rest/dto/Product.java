@@ -13,7 +13,7 @@ import de.handler.mobile.android.fairmondo.networklayer.rest.dto.model.article.F
  * as json by Fairmondo server
  */
 public class Product {
-    public String id;
+    public Long id;
     public String slug;
     public String title;
     public int price_cents;
@@ -21,7 +21,8 @@ public class Product {
     public int vat;
     public FairmondoTag tags;
     public FairmondoDonation donation;
-    public FairmondoCategory categories;
+    public FairmondoCategory[] categories;
+    public String title_image_url;
     public FairmondoTitleImage title_image;
     public FairmondoThumbnail[] thumbnails;
     public FairmondoSeller seller;
