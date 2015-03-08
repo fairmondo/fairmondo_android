@@ -53,7 +53,6 @@ public class WebFragment extends Fragment {
             } else {
                 webView.setWebViewClient(new RedirectWebViewClient());
             }
-
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             webView.loadUrl(uri);
@@ -68,7 +67,6 @@ public class WebFragment extends Fragment {
 
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setCookie(uri, "cart=" + cookie);
-
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             CookieSyncManager.getInstance().sync();
         }

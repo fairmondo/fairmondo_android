@@ -16,6 +16,7 @@ import de.handler.mobile.android.fairmondo.R;
 
 /**
  * Displays more detailed information from within the product fragment
+ * concerning the html content
  */
 @EFragment
 public class ProductDetailDialog extends DialogFragment {

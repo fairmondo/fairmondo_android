@@ -19,7 +19,6 @@ import java.io.File;
  * Stores already downloaded bitmaps in a memory cache that they do not have to be downloaded again during session
  */
 public class CustomImageCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
-
     // Default maximum disk usage in bytes
     private static final int DEFAULT_DISK_USAGE_BYTES = 25 * 1024 * 1024;
 

@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import de.handler.mobile.android.fairmondo.datasource.database.Product;
+import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductFragment;
 import de.handler.mobile.android.fairmondo.ui.fragments.ProductFragment_;
 
@@ -16,7 +16,7 @@ import de.handler.mobile.android.fairmondo.ui.fragments.ProductFragment_;
  */
 public class ProductPagerAdapter extends FragmentStatePagerAdapter {
 
-    private ArrayList<Product> mProducts;
+    private final ArrayList<Product> mProducts;
 
     public ProductPagerAdapter(FragmentManager fm, ArrayList<Product> fragments) {
         super(fm);
@@ -25,6 +25,7 @@ public class ProductPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        //TODO change back as soon as the right content is there
         ProductFragment fragment = new ProductFragment_();
 
         Bundle bundle = new Bundle();

@@ -1,5 +1,6 @@
 package de.handler.mobile.android.fairmondo.ui.activities;
 
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -64,5 +65,13 @@ public abstract class AbstractActivity extends ActionBarActivity {
         actionBar.setDisplayShowTitleEnabled(false);
 
         return actionBar;
+    }
+
+    // Override the method as a custom configuration change has been
+    // set in the manifest for all Activities but don't do anything as
+    // nothing should be altered on orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

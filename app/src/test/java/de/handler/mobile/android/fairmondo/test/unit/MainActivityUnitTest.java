@@ -1,30 +1,17 @@
 package de.handler.mobile.android.fairmondo.test.unit;
 
 import android.test.AndroidTestCase;
+<<<<<<< HEAD
+/**
+ * You have to activate UnitTesting support in Settings... --> Gradle --> experimental.
+ * And to the left choose BuildVariants and change to Unit Tests
+=======
 
+/**
+ * You have to activate the experimental Test support in your Android Studio.
+ * Go to Settings... --> Gradle --> Experimental --> Enable Unit Testing Support
+>>>>>>> architecture
+ */
 public class MainActivityUnitTest extends AndroidTestCase {
 
-    public void testOnCategoriesResponse() throws Exception {
-
-    }
-
-    public void testOnItemSelected() throws Exception {
-
-    }
-
-    public void testOnSubCategoriesResponse() throws Exception {
-
-    }
-
-    public void testOnProductsSearchResponse() throws Exception {
-
-    }
-
-    public void testOnDetailedProductResponse() throws Exception {
-
-    }
-
-    public void testOnBackPressed() throws Exception {
-
-    }
 }

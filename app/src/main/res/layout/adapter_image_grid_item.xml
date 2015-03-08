@@ -29,13 +29,8 @@
             android:scaleType="centerCrop"
             android:minHeight="150dp"
             android:id="@+id/image_adapter_image"
+            android:src="@drawable/fairmondo_small"
             android:contentDescription="@string/product_hint" />
-
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/image_adapter_progress_bar"
-            android:layout_gravity="center"/>
 
 
         <TextView

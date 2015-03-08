@@ -21,13 +21,8 @@
                 android:layout_height="300dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:src="@drawable/fairmondo"
                 android:id="@+id/fragment_product_image_view" />
-
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="150dp"
-                android:id="@+id/fragment_product_progressBar" />
 
 
             <RelativeLayout
@@ -76,15 +71,55 @@
                     android:layout_below="@id/fragment_product_button_terms"
                     android:id="@+id/fragment_product_button_fair_percent"/>
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_transport"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_below="@id/fragment_product_button_fair_percent"
+                    android:id="@+id/fragment_product_button_transport"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_payment"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_below="@id/fragment_product_button_transport"
+                    android:id="@+id/fragment_product_button_payment"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fragment_product_button_fair_percent"
-                    android:textSize="30sp"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_button_transport"
                     android:gravity="end"
                     android:padding="15dp"
+                    android:id="@+id/fragment_product_donation"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_donation"
+                    android:textSize="30sp"
+                    android:gravity="end"
+                    android:paddingTop="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingEnd="15dp"
                     android:id="@+id/fragment_product_price"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_price"
+                    android:text="@string/fragment_product_vat"
+                    android:gravity="end"
+                    android:paddingEnd="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="15dp"
+                    android:id="@+id/fragment_product_price_vat"/>
+
 
             </RelativeLayout>
         </RelativeLayout>

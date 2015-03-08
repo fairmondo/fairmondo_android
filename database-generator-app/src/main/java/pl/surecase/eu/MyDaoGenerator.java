@@ -9,7 +9,7 @@ import de.greenrobot.daogenerator.ToMany;
 public class MyDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1007, "de.handler.mobile.android.fairmondo.datasource.database");
+        Schema schema = new Schema(1008, "de.handler.mobile.android.fairmondo.datalayer.datasource.database");
         addProductCategoryRelation(schema);
         addSearchSuggestions(schema);
         new DaoGenerator().generateAll(schema, args[0]);
