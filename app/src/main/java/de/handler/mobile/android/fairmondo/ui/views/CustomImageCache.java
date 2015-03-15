@@ -16,12 +16,13 @@ import com.android.volley.toolbox.ImageLoader;
 import java.io.File;
 
 /**
- * Stores already downloaded bitmaps in a memory cache that they do not have to be downloaded again during session
+ * Stores already downloaded bitmaps in a memory cache that
+ * they do not have to be downloaded again during session.
  */
-public class CustomImageCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
+public class CustomImageCache extends LruCache<String, Bitmap>
+        implements ImageLoader.ImageCache {
     // Default maximum disk usage in bytes
     private static final int DEFAULT_DISK_USAGE_BYTES = 25 * 1024 * 1024;
-
     // Default cache folder name
     private static final String DEFAULT_CACHE_DIR = "photos";
 
@@ -34,34 +35,49 @@ public class CustomImageCache extends LruCache<String, Bitmap> implements ImageL
         super(maxSize);
     }
 
+    /**
+     * Default constructor which calculates the cache size.
+     */
     public CustomImageCache() {
         this(getDefaultLruCacheSize());
     }
 
+    /**
+     * Calculate the maximum memory a cache can have on the actual device
+     * and reserve 1/8th of it for the application.
+     */
     public static int getDefaultLruCacheSize() {
-        final int maxMemory =
-                (int) (Runtime.getRuntime().maxMemory() / 1024);
-
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         return maxMemory / 8;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected int sizeOf(String key, Bitmap value) {
         return value.getRowBytes() * value.getHeight() / 1024;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bitmap getBitmap(String url) {
         return get(url);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
         put(url, bitmap);
     }
 
-
-    // Change standard Volley RequestQueue which is memory based to a disk based solution
+    /**
+     * Change standard Volley RequestQueue which is memory based to a disk based solution.
+     */
     public static RequestQueue newRequestQueue(Context context) {
         // define cache folder
         File rootCache = context.getExternalCacheDir();
@@ -79,7 +95,6 @@ public class CustomImageCache extends LruCache<String, Bitmap> implements ImageL
         DiskBasedCache diskBasedCache = new DiskBasedCache(cacheDir, DEFAULT_DISK_USAGE_BYTES);
         RequestQueue queue = new RequestQueue(diskBasedCache, network);
         queue.start();
-
         return queue;
     }
 }
