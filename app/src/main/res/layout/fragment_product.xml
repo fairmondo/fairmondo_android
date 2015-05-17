@@ -1,14 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:layout_marginBottom="60dp"
         android:id="@+id/fragment_product_main_container"
         android:background="@color/transparent_white_80">
 
@@ -131,25 +130,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+        <com.software.shell.fab.ActionButton
             android:id="@+id/fragment_product_button_buy"
-            android:foreground="?android:selectableItemBackground"
-            android:text="@string/fragment_product_buy"/>
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:visibility="invisible"
-            android:background="@drawable/shape_round"
-            android:layout_alignEnd="@id/fragment_product_button_buy"
-            android:layout_alignRight="@id/fragment_product_button_buy"
-            android:layout_marginRight="30dp"
-            android:layout_marginEnd="30dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:id="@+id/fragment_product_item_count_text_view"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            fab:image="@drawable/fab_plus_icon"/>
 
     </RelativeLayout>
 </RelativeLayout>

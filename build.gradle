@@ -25,6 +25,7 @@ ext {
     espressoVersion = "2.0"
     androidTestRunnerVersion = "0.2"
     parcelerVersion = "0.2.16"
+    floatingActionButtonVersion = "1.1.0"
 }
 
 allprojects {

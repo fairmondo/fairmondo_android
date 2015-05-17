@@ -133,10 +133,11 @@ public class RestCommunicator {
     @Background(id = "cancellable_task")
     public void addToCard(final int productId) {
         restService.setCookie("cart", app.getCookie());
-        Cart cart = app.getModelMapper().map(restService.addProductToCart(productId, 1), Cart.class);
+        de.handler.mobile.android.fairmondo.network.dto.Cart cartDTO = restService.addProductToCart(productId, 1);
+        Cart cart = app.getModelMapper().map(cartDTO, Cart.class);
         String cookie = restService.getCookie("cart");
 
-        if (cart == null || cart.getCartId() == null) {
+        if (null == cart || null == cart.getCartId()) {
             this.makeToast();
         } else {
             app.setCookie(cookie);

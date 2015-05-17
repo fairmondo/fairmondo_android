@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.software.shell.fab.ActionButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -54,9 +56,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView productImageView;
 
-    @ViewById(R.id.fragment_product_item_count_text_view)
-    TextView itemCountTextView;
-
     @ViewById(R.id.fragment_product_content_container)
     RelativeLayout layoutContent;
 
@@ -88,7 +87,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     Button buttonPayment;
 
     @ViewById(R.id.fragment_product_button_buy)
-    Button buttonBuy;
+    ActionButton buttonBuy;
 
     private Product mProduct;
 
@@ -192,12 +191,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 }
 
                 productImageView.setBackgroundColor(backgroundColor[0]);
-                productImageView.setLocalImageBitmap(bitmap);
-
                 layoutContent.setBackgroundColor(backgroundColor[0]);
-                buttonBuy.setBackgroundColor(foregroundColor[0]);
+                buttonBuy.setButtonColor(foregroundColor[0]);
             }
         });
+
+        productImageView.setLocalImageBitmap(bitmap);
     }
 
     @UiThread
@@ -205,15 +204,13 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     public void onCartChanged(final Cart cart) {
         if (cart != null && cart.getCartItem() != null) {
             int itemCount = cart.getCartItem().getRequestedQuantity();
-            itemCountTextView.setVisibility(View.VISIBLE);
-            itemCountTextView.setText(String.valueOf(itemCount));
-        } else {
-            itemCountTextView.setVisibility(View.INVISIBLE);
+            Toast.makeText(getActivity(), itemCount + " items added to your cart", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onClick(final View v) {
+        boolean web = true;
         //Intent intent = new Intent(getActivity(), WebActivity_.class);
         //Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
         Bundle bundle = new Bundle();
@@ -223,7 +220,8 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
         switch (v.getId()) {
             case R.id.fragment_product_button_buy:
-                restController.addToCard(Integer.getInteger(mProduct.getId()));
+                restController.addToCard(Integer.parseInt(mProduct.getId()));
+                web = false;
                 break;
             case R.id.fragment_product_button_description:
                 //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
@@ -247,12 +245,14 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                 // nothing is done here
         }
 
-        transaction.add(dialog, "Dialog");
-        transaction.setTransition(android.R.anim.decelerate_interpolator).commit();
-        /*if (Build.VERSION.SDK_INT > 15) {
-            getActivity().startActivity(intent, bundle);
-        } else {
-            startActivity(intent);
-        }*/
+        if (web) {
+            transaction.add(dialog, "Dialog");
+            transaction.setTransition(android.R.anim.decelerate_interpolator).commit();
+            /*if (Build.VERSION.SDK_INT > 15) {
+                getActivity().startActivity(intent, bundle);
+            } else {
+                startActivity(intent);
+            }*/
+        }
     }
 }
