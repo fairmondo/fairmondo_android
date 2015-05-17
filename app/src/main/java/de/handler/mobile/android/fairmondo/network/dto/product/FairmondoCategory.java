@@ -3,7 +3,7 @@ package de.handler.mobile.android.fairmondo.network.dto.product;
 import java.util.List;
 
 /**
- * Categories returned with a product
+ * Categories returned with a product.
  */
 public class FairmondoCategory {
     public Long id;

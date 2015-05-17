@@ -1,7 +1,7 @@
 package de.handler.mobile.android.fairmondo.network.dto.product.seller;
 
 /**
- * Ratings for a seller
+ * Ratings for a seller.
  */
 public class FairmondoRating {
     public String url;

@@ -25,10 +25,10 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
-import de.handler.mobile.android.fairmondo.networklayer.Articles;
-import de.handler.mobile.android.fairmondo.networklayer.FairmondoRestService;
-import de.handler.mobile.android.fairmondo.networklayer.RestServiceErrorHandler;
-import de.handler.mobile.android.fairmondo.networklayer.dto.Product;
+import de.handler.mobile.android.fairmondo.network.FairmondoRestService;
+import de.handler.mobile.android.fairmondo.network.RestServiceErrorHandler;
+import de.handler.mobile.android.fairmondo.network.dto.Articles;
+import de.handler.mobile.android.fairmondo.network.dto.Product;
 
 /**
  * Encapsulates all communication with the server
@@ -50,7 +50,7 @@ public class RestCommunicator {
     private OnCartChangeListener cartChangeListener;
     private final Context context;
 
-    public RestCommunicator(Context context) {
+    public RestCommunicator(final Context context) {
         this.context = context;
     }
 
@@ -60,25 +60,25 @@ public class RestCommunicator {
         restService.setRestErrorHandler(errorHandler);
     }
 
-    public void setProductListener(OnSearchResultListener productListener) {
+    public void setProductListener(final OnSearchResultListener productListener) {
         this.productListener = productListener;
         errorHandler.setListener(productListener);
     }
 
-    public void setCategoriesListener(OnCategoriesListener categoriesListener) {
+    public void setCategoriesListener(final OnCategoriesListener categoriesListener) {
         this.categoriesListener = categoriesListener;
     }
 
-    public void setDetailedProductListener(OnDetailedProductListener detailedProductListener) {
+    public void setDetailedProductListener(final OnDetailedProductListener detailedProductListener) {
         this.detailedProductListener = detailedProductListener;
     }
 
-    public void setCartChangeListener(OnCartChangeListener cartChangeListener) {
+    public void setCartChangeListener(final OnCartChangeListener cartChangeListener) {
         this.cartChangeListener = cartChangeListener;
     }
 
     @Background
-    public void getProducts(String searchString) {
+    public void getProducts(final String searchString) {
         Articles articles = restService.getProducts(searchString);
         Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() {}.getType();
         if (articles == null || articles.articles == null) {
@@ -90,7 +90,7 @@ public class RestCommunicator {
     }
 
     @Background
-    public void getProducts(String searchString, int categoryId) {
+    public void getProducts(final String searchString, final String categoryId) {
         productListener.showProgressBar();
         Articles articles = restService.getProducts(searchString, categoryId);
         if (articles == null || articles.articles == null || articles.articles.length < 1) {
@@ -104,7 +104,7 @@ public class RestCommunicator {
     }
 
     @Background
-    public void getDetailedProduct(String slug) {
+    public void getDetailedProduct(final String slug) {
         Product article = restService.getDetailedProduct(slug);
         if (article == null) {
             detailedProductListener.onDetailedProductResponse(null);
@@ -116,22 +116,22 @@ public class RestCommunicator {
 
     @Background(id = "cancellable_task")
     public void getCategories() {
-        Type listType = new TypeToken<List<FairmondoCategory>>() {}.getType();
-        List<de.handler.mobile.android.fairmondo.networklayer.dto.model.article.FairmondoCategory> dtoCategories = restService.getCategories();
+        Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
+        List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = restService.getCategories();
         List<FairmondoCategory> categories = app.getModelMapper().map(dtoCategories, listType);
         categoriesListener.onCategoriesResponse(categories);
     }
 
     @Background(id = "cancellable_task")
-    public void getSubCategories(int id) {
-        Type listType = new TypeToken<List<FairmondoCategory>>() {}.getType();
-        List<de.handler.mobile.android.fairmondo.networklayer.dto.model.article.FairmondoCategory> dtoCategories = restService.getSubCategories(id);
+    public void getSubCategories(final String id) {
+        Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
+        List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = restService.getSubCategories(id);
         List<FairmondoCategory> categories = app.getModelMapper().map(dtoCategories, listType);
         categoriesListener.onSubCategoriesResponse(categories);
     }
 
     @Background(id = "cancellable_task")
-    public void addToCard(int productId) {
+    public void addToCard(final int productId) {
         restService.setCookie("cart", app.getCookie());
         Cart cart = app.getModelMapper().map(restService.addProductToCart(productId, 1), Cart.class);
         String cookie = restService.getCookie("cart");

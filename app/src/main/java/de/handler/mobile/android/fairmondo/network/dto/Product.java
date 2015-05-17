@@ -1,14 +1,14 @@
 package de.handler.mobile.android.fairmondo.network.dto;
 
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoCategory;
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoDonation;
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoSeller;
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoTag;
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoThumbnail;
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoTitleImage;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoDonation;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoSeller;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoTag;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoThumbnail;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoTitleImage;
 
 /**
- * DTO for Rest Communication
+ * DTO for Rest Communication.
  * Represents the structure returned
  * as json by Fairmondo server
  */

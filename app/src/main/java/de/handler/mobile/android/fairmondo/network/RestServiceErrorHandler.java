@@ -15,46 +15,45 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListene
 
 
 /**
- * Handles Rest Error Messages
+ * Handles Rest Error Messages.
  * If an error occurs while communicating with the
  * server this error handler is called
  */
 @EBean
 public class RestServiceErrorHandler implements RestErrorHandler {
-
     private Context mContext;
     private OnSearchResultListener mListener;
 
     @Override
-    public void onRestClientExceptionThrown(NestedRuntimeException e) {
+    public void onRestClientExceptionThrown(final NestedRuntimeException e) {
         Log.e("REST_ERROR_HANDLER", e.getMessage());
         BackgroundExecutor.cancelAll("cancellable_task", true);
         this.showToast(e.getLocalizedMessage());
         this.hideProgressBar();
     }
 
-    public void setContext(Context context) {
+    public void setContext(final Context context) {
         this.mContext = context;
     }
 
-    public void setListener(OnSearchResultListener listener) {
+    public void setListener(final OnSearchResultListener listener) {
         this.mListener = listener;
     }
 
     @UiThread
-    public void showToast(String message) {
-
+    public void showToast(final String message) {
+        String toast = null;
             if (mContext != null) {
                 if (message.contains("500") || message.contains("expected")) {
-                    message = mContext.getString(R.string.server_error);
+                    toast = mContext.getString(R.string.server_error);
                 } else if (message.contains("502") || message.contains("I/O error")) {
-                    message = mContext.getString(R.string.server_temporarily_not_available);
+                    toast = mContext.getString(R.string.server_temporarily_not_available);
                 } else if (message.contains("404")) {
-                    message = mContext.getString(R.string.server_method_not_available);
+                    toast = mContext.getString(R.string.server_method_not_available);
                 }
 
                 // Show a Toast in corresponding activity with error message
-                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
             }
 
     }

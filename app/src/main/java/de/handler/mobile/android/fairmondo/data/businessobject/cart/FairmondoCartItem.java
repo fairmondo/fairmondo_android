@@ -1,7 +1,7 @@
 package de.handler.mobile.android.fairmondo.data.businessobject.cart;
 
 /**
- * An item representing a product in the cart
+ * An item representing a product in the cart.
  */
 public class FairmondoCartItem {
     protected String id;

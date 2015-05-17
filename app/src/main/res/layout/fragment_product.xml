@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.handler.mobile.android.fairmondo.ui.views.CustomNetworkImageView
+            <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:scaleType="fitCenter"

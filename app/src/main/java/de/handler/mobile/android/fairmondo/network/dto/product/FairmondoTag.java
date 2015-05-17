@@ -1,7 +1,7 @@
 package de.handler.mobile.android.fairmondo.network.dto.product;
 
 /**
- * Subclass of article
+ * Subclass of article.
  */
 public class FairmondoTag {
     public String condition;

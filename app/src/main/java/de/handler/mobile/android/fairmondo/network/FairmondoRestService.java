@@ -10,37 +10,38 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
 import java.util.List;
 
+import de.handler.mobile.android.fairmondo.network.dto.Articles;
+import de.handler.mobile.android.fairmondo.network.dto.Cart;
 import de.handler.mobile.android.fairmondo.network.dto.Product;
-import de.handler.mobile.android.fairmondo.network.dto.model.Cart;
-import de.handler.mobile.android.fairmondo.network.dto.model.article.FairmondoCategory;
+import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory;
 
 /**
- * Connects the app to the Fairmondo server via restful requests
+ * Connects the app to the Fairmondo server via restful requests.
  * returns JSON
  */
 @Rest(rootUrl = "https://www.fairmondo.de/", converters = {GsonHttpMessageConverter.class}, interceptors = {HttpResponseInterceptor.class})
 public interface FairmondoRestService extends RestClientErrorHandling {
-
     @Get("articles.json?article_search_form[q]={searchString}&article_search_form[category_id]={categoryId}")
-    public Articles getProducts(String searchString, int categoryId);
+    Articles getProducts(final String searchString, final String categoryId);
 
     @Get("articles.json?article_search_form[q]={searchString}")
-    public Articles getProducts(String searchString);
+    Articles getProducts(final String searchString);
 
     @Get("articles/{slug}.json")
-    public Product getDetailedProduct(String slug);
+    Product getDetailedProduct(final String slug);
 
     @Get("categories.json")
-    public List<FairmondoCategory> getCategories();
+    List<FairmondoCategory> getCategories();
 
     @Get("categories/{id}.json")
-    public List<FairmondoCategory> getSubCategories(int id);
+    List<FairmondoCategory> getSubCategories(final String id);
 
     @SetsCookie({"cart"})
     @RequiresCookie({"cart"})
     @Post("line_items.json?line_item[article_id]={productId}&line_item[requested_quantity]={quantity}")
-    public Cart addProductToCart(int productId, int quantity);
+    Cart addProductToCart(final int productId, final int quantity);
 
-    void setCookie(String name, String value);
-    String getCookie(String name);
+    void setCookie(final String name, final String value);
+
+    String getCookie(final String name);
 }

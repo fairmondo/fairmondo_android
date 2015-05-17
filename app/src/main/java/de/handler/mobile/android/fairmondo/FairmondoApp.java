@@ -1,7 +1,6 @@
 package de.handler.mobile.android.fairmondo;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.android.volley.toolbox.ImageLoader;
 
@@ -12,13 +11,10 @@ import org.modelmapper.convention.NameTokenizers;
 
 import java.util.List;
 
-import de.handler.mobile.android.fairmondo.datalayer.businessobject.Cart;
-import de.handler.mobile.android.fairmondo.datalayer.businessobject.Product;
-import de.handler.mobile.android.fairmondo.datalayer.businessobject.product.FairmondoCategory;
-import de.handler.mobile.android.fairmondo.datalayer.datasource.SearchSuggestionProvider;
-import de.handler.mobile.android.fairmondo.datalayer.datasource.database.DaoMaster;
-import de.handler.mobile.android.fairmondo.datalayer.datasource.database.DaoSession;
-import de.handler.mobile.android.fairmondo.ui.views.CustomImageCache;
+import de.handler.mobile.android.fairmondo.data.businessobject.Cart;
+import de.handler.mobile.android.fairmondo.data.businessobject.Product;
+import de.handler.mobile.android.fairmondo.data.businessobject.product.FairmondoCategory;
+import de.handler.mobile.android.fairmondo.presentation.views.CustomImageCache;
 
 /**
  * Application Object.
@@ -29,7 +25,6 @@ public class FairmondoApp extends Application {
     private ModelMapper modelMapper;
     private CustomImageCache imageCache;
     private ImageLoader imageLoader;
-    private DaoSession daoSession;
     private FairmondoCategory lastCategory;
     private String cookie;
     private List<Product> products;
@@ -41,7 +36,6 @@ public class FairmondoApp extends Application {
         super.onCreate();
         this.initCache();
         this.initImageLoader();
-        this.initDatabase("fairmondo-db");
         this.initModelMapper();
     }
 
@@ -72,29 +66,6 @@ public class FairmondoApp extends Application {
      */
     private void initImageLoader() {
         imageLoader = new ImageLoader(CustomImageCache.newRequestQueue(this), imageCache);
-    }
-
-    /**
-     * initiate the database connection.
-     * Greendao which is used for connecting to a
-     * database needs the global dao session instance.
-     */
-    private void initDatabase(String databaseName) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, databaseName, null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-
-        // Init the dao session in the content provider
-        SearchSuggestionProvider.daoSession = daoSession;
-    }
-
-    /**
-     * Returns the dao session for greendao.
-     * @return the session used for the database connection
-     */
-    public DaoSession getDaoSession() {
-        return  daoSession;
     }
 
     /**
@@ -133,7 +104,7 @@ public class FairmondoApp extends Application {
      * Sets the last Category the user selected in the ui.
      * @param lastCategory the last Category the user selected in the ui
      */
-    public void setLastCategory(FairmondoCategory lastCategory) {
+    public void setLastCategory(final FairmondoCategory lastCategory) {
         this.lastCategory = lastCategory;
     }
 
@@ -149,7 +120,7 @@ public class FairmondoApp extends Application {
      * Sets the cookie which identifies the cart in the application.
      * @param cookie the cookie of a user's cart
      */
-    public void setCookie(String cookie) {
+    public void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 
@@ -165,7 +136,7 @@ public class FairmondoApp extends Application {
      * Sets the cart a user uses in the app.
      * @param cart the current cart instance
      */
-    public void setCart(Cart cart) {
+    public void setCart(final Cart cart) {
         this.cart = cart;
     }
 
@@ -189,7 +160,7 @@ public class FairmondoApp extends Application {
      * Sets the products a user selected.
      * @param products the products a user selected
      */
-    public void setProducts(List<Product> products) {
+    public void setProducts(final List<Product> products) {
         this.products = products;
     }
 }

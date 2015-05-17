@@ -3,7 +3,7 @@ package de.handler.mobile.android.fairmondo.network.dto.product;
 import de.handler.mobile.android.fairmondo.network.dto.product.seller.FairmondoRating;
 
 /**
- * DTO Subclass of article
+ * DTO Subclass of article.
  */
 public class FairmondoSeller {
     public String nickname;

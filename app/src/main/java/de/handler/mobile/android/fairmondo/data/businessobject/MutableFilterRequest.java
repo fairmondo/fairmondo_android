@@ -3,67 +3,65 @@ package de.handler.mobile.android.fairmondo.data.businessobject;
 import org.modelmapper.ModelMapper;
 
 /**
- * Mutable representation of the immutable FilterRequest
+ * Mutable representation of the immutable FilterRequest.
  */
 public class MutableFilterRequest extends FilterRequest {
-    public MutableFilterRequest(FilterRequest immutableFilterRequest, ModelMapper modelMapper) {
+    public MutableFilterRequest(final FilterRequest immutableFilterRequest, final ModelMapper modelMapper) {
         modelMapper.map(immutableFilterRequest, this);
     }
 
     public MutableFilterRequest() {
     }
 
-
-
-    public void setQ(String q) {
+    public void setQ(final String q) {
         this.q = q;
     }
 
-    public void setFair(boolean fair) {
+    public void setFair(final boolean fair) {
         this.fair = fair;
     }
 
-    public void setEcologic(boolean ecologic) {
+    public void setEcologic(final boolean ecologic) {
         this.ecologic = ecologic;
     }
 
-    public void setSmallAndPrecious(boolean smallAndPrecious) {
+    public void setSmallAndPrecious(final boolean smallAndPrecious) {
         this.smallAndPrecious = smallAndPrecious;
     }
 
-    public void setSwappable(boolean swappable) {
+    public void setSwappable(final boolean swappable) {
         this.swappable = swappable;
     }
 
-    public void setBorrowable(boolean borrowable) {
+    public void setBorrowable(final boolean borrowable) {
         this.borrowable = borrowable;
     }
 
-    public void setCondition(String condition) {
+    public void setCondition(final String condition) {
         this.condition = condition;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(final int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public void setZip(String zip) {
+    public void setZip(final String zip) {
         this.zip = zip;
     }
 
-    public void setOrderBy(String orderBy) {
+    public void setOrderBy(final String orderBy) {
         this.orderBy = orderBy;
     }
 
-    public void setSearchInContent(boolean searchInContent) {
+    public void setSearchInContent(final boolean searchInContent) {
         this.searchInContent = searchInContent;
     }
 
-    public void setPriceFrom(String priceFrom) {
+    public void setPriceFrom(final String priceFrom) {
         this.priceFrom = priceFrom;
     }
 
-    public void setPriceTo(String priceTo) {
+    public void setPriceTo(final String priceTo) {
         this.priceTo = priceTo;
     }
 }

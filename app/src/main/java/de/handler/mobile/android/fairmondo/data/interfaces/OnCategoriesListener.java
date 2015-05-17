@@ -6,9 +6,9 @@ import de.handler.mobile.android.fairmondo.data.businessobject.product.Fairmondo
 
 
 /**
- * Informs the implementing ui element that the categories response has arrived from server
+ * Informs the implementing ui element that the categories response has arrived from server.
  */
 public interface OnCategoriesListener {
-    public void onCategoriesResponse(List<FairmondoCategory> categories);
-    public void onSubCategoriesResponse(List<FairmondoCategory> categories);
+    void onCategoriesResponse(List<FairmondoCategory> categories);
+    void onSubCategoriesResponse(List<FairmondoCategory> categories);
 }

@@ -5,7 +5,7 @@ import org.androidannotations.annotations.EBean;
 import de.handler.mobile.android.fairmondo.data.businessobject.cart.FairmondoCartItem;
 
 /**
- * Cart containing all the products a customer wants to buy
+ * Cart containing all the products a customer wants to buy.
  */
 @EBean(scope = EBean.Scope.Singleton)
 public class Cart {
