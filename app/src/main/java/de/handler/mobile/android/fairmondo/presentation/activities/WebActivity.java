@@ -1,11 +1,14 @@
 package de.handler.mobile.android.fairmondo.presentation.activities;
 
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
@@ -16,29 +19,30 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
  * Contains a webView for displaying homepage content.
  */
 @EActivity(R.layout.activity_web)
+@OptionsMenu(R.menu.web)
 public class WebActivity extends AbstractActivity {
     @App
     FairmondoApp app;
 
+    @Extra
+    String mHtml;
+
+    @Extra
+    String mUri;
+
+    @Extra
+    String mCookie;
+
+    @ViewById(R.id.activity_web_toolbar)
+    Toolbar toolbar;
+
     @AfterViews
     void init() {
-        ActionBar actionBar = this.setupActionBar();
+        ActionBar actionBar = this.setupActionBar(toolbar);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String http = getIntent().getStringExtra(WebFragment.HTTP_CONTENT);
-        String uri = getIntent().getStringExtra(WebFragment.URI);
-        String cookie = getIntent().getStringExtra(WebFragment.COOKIE);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(WebFragment.URI, uri);
-        bundle.putString(WebFragment.HTTP_CONTENT, http);
-        bundle.putString(WebFragment.COOKIE, cookie);
-
-        WebFragment webFragment = new WebFragment_();
-        webFragment.setArguments(bundle);
-
-
-        if ((uri != null && app.isConnected()) || http != null) {
+        WebFragment webFragment = WebFragment_.builder().mHtml(mHtml).mUri(mUri).mCookie(mCookie).build();
+        if ((mUri != null && app.isConnected()) || mHtml != null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.activity_web_container, webFragment)
                     .commit();

@@ -16,7 +16,7 @@ public class FairmondoDonation {
         return organization;
     }
 
-    public int getPercent() {
+    public Integer getPercent() {
         return percent;
     }
 }

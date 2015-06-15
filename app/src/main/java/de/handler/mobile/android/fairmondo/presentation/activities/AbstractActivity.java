@@ -1,11 +1,11 @@
 package de.handler.mobile.android.fairmondo.presentation.activities;
 
 import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import org.androidannotations.annotations.Background;
@@ -14,7 +14,6 @@ import org.androidannotations.annotations.Receiver;
 import org.androidannotations.annotations.SystemService;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
-import de.handler.mobile.android.fairmondo.R;
 
 /**
  * Abstract Activity implemented by all other activities.
@@ -48,21 +47,9 @@ public abstract class AbstractActivity extends ActionBarActivity {
     /**
      * ActionBar settings.
      */
-    public ActionBar setupActionBar() {
-
-        // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
-
-        // make action bar transparent
-        actionBar.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        actionBar.setStackedBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        actionBar.setSplitBackgroundDrawable(new ColorDrawable(R.color.transparent_white_80));
-
-        // title bar and icon
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        return actionBar;
+    public ActionBar setupActionBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        return getSupportActionBar();
     }
 
     // Override the method as a custom configuration change has been

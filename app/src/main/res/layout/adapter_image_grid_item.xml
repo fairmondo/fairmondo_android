@@ -31,7 +31,6 @@
             android:src="@drawable/fairmondo_small"
             android:contentDescription="@string/product_hint" />
 
-
         <TextView
             style="@style/textview_banner_style_grid_view"
             android:layout_gravity="bottom"

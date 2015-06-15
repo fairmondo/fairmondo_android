@@ -9,6 +9,4 @@ import de.handler.mobile.android.fairmondo.data.businessobject.Product;
  */
 public interface OnSearchResultListener {
     void onProductsSearchResponse(List<Product> products);
-    void showProgressBar();
-    void hideProgressBar();
 }

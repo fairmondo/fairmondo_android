@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.R;
@@ -25,11 +26,14 @@ import de.handler.mobile.android.fairmondo.R;
  */
 @EFragment(R.layout.fragment_web)
 public class WebFragment extends Fragment {
-    public static final String URI = "activity_web_uri";
-    public static final String HTTP_CONTENT = "http_content";
-    public static final String COOKIE = "cart_cookie";
+    @FragmentArg
+    String mHtml;
 
-    private String mCookie = "";
+    @FragmentArg
+    String mUri;
+
+    @FragmentArg
+    String mCookie;
 
     @ViewById(R.id.fragment_web_webview)
     WebView webView;
@@ -39,27 +43,24 @@ public class WebFragment extends Fragment {
 
     @AfterViews
     public void init() {
-        // Get the bundle arguments
-        String html = getArguments().getString(HTTP_CONTENT);
-        String uri = getArguments().getString(URI);
-        mCookie = getArguments().getString(COOKIE);
-
         // if the html string is null a uri shall be displayed
-        if (html == null) {
-            if (uri == null || uri.equals("")) {
+        if (mHtml == null) {
+            if (mUri == null || mUri.equals("")) {
                 return;
             }
+
             progressContainer.setVisibility(View.VISIBLE);
             if (mCookie == null) {
                 webView.setWebViewClient(new RedirectWebViewClient());
             } else {
-                this.setCookie(webView, mCookie, uri);
+                this.setCookie(webView, mCookie, mUri);
             }
+
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            webView.loadUrl(uri);
+            webView.loadUrl(mUri);
         } else {
-            webView.loadData(html, "text/html; charset=UTF-8", null);
+            webView.loadData(mHtml, "text/html; charset=UTF-8", null);
         }
     }
 

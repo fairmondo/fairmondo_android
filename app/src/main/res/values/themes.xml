@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- enable window content transitions -->
+        <item name="android:windowContentTransitions" tools:ignore="NewApi">true</item>
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/fairmondo_blue_dark</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/fairmondo_blue_dark</item>
+        <!-- colorAccent is used as the default value for colorControlActivated
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/fairmondo_green_dark</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- The layout for the search view. Be careful. -->
+        <!--<item name="layout">...</item>-->
+        <!-- Background for the search query section (e.g. EditText) -->
+        <!--<item name="queryBackground">...</item>-->
+        <!-- Background for the actions section (e.g. voice, submit) -->
+        <!--<item name="submitBackground">...</item>-->
+        <!-- Close button icon -->
+        <!--<item name="closeIcon">...</item>-->
+        <!-- Search button icon -->
+        <!--<item name="searchIcon">...</item>-->
+        <!-- Go/commit button icon -->
+        <!--<item name="goIcon">...</item>-->
+        <!-- Voice search button icon -->
+        <!--<item name="voiceIcon">...</item>-->
+        <!-- Commit icon shown in the query suggestion row -->
+        <!--<item name="commitIcon">...</item>-->
+        <!-- Layout for query suggestion rows -->
+        <!--<item name="suggestionRowLayout">...</item>-->
+    </style>
+</resources>

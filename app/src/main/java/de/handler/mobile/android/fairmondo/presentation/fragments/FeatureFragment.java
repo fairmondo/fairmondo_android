@@ -1,6 +1,6 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
-import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewsById;
 import org.parceler.Parcels;
 
@@ -25,7 +26,8 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  */
 @EFragment(R.layout.fragment_featured)
 public class FeatureFragment extends Fragment implements View.OnClickListener {
-    public static final String FEATURED_PRODUCTS_EXTRA = "featured_product_parcelable_array_list_extra";
+    @FragmentArg
+    Parcelable mProductsParcelable;
 
     @ViewsById({R.id.fragment_feature_image_first, R.id.fragment_feature_image_second, R.id.fragment_feature_image_third})
     List<CustomNetworkImageView> featuredProductsImageViews;
@@ -40,7 +42,7 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
 
     @AfterViews
     public void init() {
-         mProducts = Parcels.unwrap(getArguments().getParcelable(FEATURED_PRODUCTS_EXTRA));
+         mProducts = Parcels.unwrap(mProductsParcelable);
 
         int i;
         if (mProducts.size() >= featuredProductsImageViews.size()) {
@@ -84,8 +86,6 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
             }
         }
 
-        Intent intent = new Intent(getActivity(), WebActivity_.class);
-        intent.putExtra(WebFragment.URI, url);
-        startActivity(intent);
+        WebActivity_.intent(getActivity()).mUri(url).start();
     }
 }

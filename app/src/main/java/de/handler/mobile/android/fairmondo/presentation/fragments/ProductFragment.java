@@ -2,24 +2,23 @@ package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.graphics.Palette;
 import android.view.View;
-import android.widget.Button;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.software.shell.fab.ActionButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.parceler.Parcels;
@@ -40,12 +39,13 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  */
 @EFragment(R.layout.fragment_product)
 public class ProductFragment extends Fragment implements OnCartChangeListener, View.OnClickListener {
-    public static final String PRODUCT_EXTRA = "product_extra";
-
     // TODO display fair, öko, etc tags
     // TODO display product condition
     // TODO display seller details / contact seller
     // TODO show incl. vat if available
+
+    @FragmentArg
+    Parcelable mProductParcelable;
 
     @App
     FairmondoApp app;
@@ -60,49 +60,56 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     RelativeLayout layoutContent;
 
     @ViewById(R.id.fragment_product_title)
-    TextView titleTextView;
+    TextView textViewTitle;
 
-    @ViewById(R.id.fragment_product_price)
-    TextView priceTextView;
+    @ViewById(R.id.fragment_product_textview_price)
+    TextView textViewPrice;
 
-    @ViewById(R.id.fragment_product_price_vat)
-    TextView vatTextview;
+    @ViewById(R.id.fragment_product_textview_price_vat)
+    TextView textViewVat;
 
-    @ViewById(R.id.fragment_product_donation)
+    @ViewById(R.id.fragment_product_textview_donation_title)
     TextView textViewDonation;
 
-    @ViewById(R.id.fragment_product_button_description)
-    Button buttonDescription;
+    @ViewById(R.id.fragment_product_textview_description_title)
+    TextView textViewDescriptionTitle;
 
-    @ViewById(R.id.fragment_product_button_fair_percent)
-    Button buttonFairPercent;
+    @ViewById(R.id.fragment_product_textview_terms_title)
+    TextView textViewTermsTitle;
 
-    @ViewById(R.id.fragment_product_button_terms)
-    Button buttonTerms;
+    @ViewById(R.id.fragment_product_textview_transport_title)
+    TextView textViewTransportTitle;
 
-    @ViewById(R.id.fragment_product_button_transport)
-    Button buttonTransport;
+    @ViewById(R.id.fragment_product_textview_payment_title)
+    TextView textViewPaymentTitle;
 
-    @ViewById(R.id.fragment_product_button_payment)
-    Button buttonPayment;
+    @ViewById(R.id.fragment_product_textview_description_body)
+    WebView textViewDescriptionBody;
+
+    @ViewById(R.id.fragment_product_textview_terms_body)
+    WebView textViewTermsBody;
+
+    @ViewById(R.id.fragment_product_textview_transport_body)
+    WebView textViewTransportBody;
+
+    @ViewById(R.id.fragment_product_textview_payment_body)
+    WebView textViewPaymentBody;
 
     @ViewById(R.id.fragment_product_button_buy)
-    ActionButton buttonBuy;
+    View buttonBuy;
 
     private Product mProduct;
 
     @AfterViews
     public void init() {
         restController.setCartChangeListener(this);
-
-        mProduct = Parcels.unwrap(getArguments().getParcelable(PRODUCT_EXTRA));
+        mProduct = Parcels.unwrap(mProductParcelable);
         if (mProduct != null) {
-            // Create custom typeface
-            // Typeface myTypeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
+            textViewTitle.setText(mProduct.getTitle());
 
-            titleTextView.setText(mProduct.getTitle());
             // Image
             String url = mProduct.getTitleImageUrl();
+            productImageView.setErrorImageResId(R.drawable.fairmondo);
             if (mProduct.getTitleImage() != null && !mProduct.getTitleImage().getOriginalUrl().equals("")) {
                 url = mProduct.getTitleImage().getOriginalUrl();
             }
@@ -123,23 +130,23 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             }
 
             // Description
-            if (mProduct.getContent() == null || mProduct.getContent().equals("")) {
-                buttonDescription.setVisibility(View.GONE);
+            if (mProduct.getContent() != null && !mProduct.getContent().equals("")) {
+                textViewDescriptionBody.loadData(mProduct.getContent(), "text/html; charset=UTF-8", null);
             }
 
             // Terms
-            if (mProduct.getSeller() == null || mProduct.getSeller().getTerms() == null || mProduct.getSeller().getTerms().equals("")) {
-                buttonTerms.setVisibility(View.GONE);
+            if (mProduct.getSeller() != null && mProduct.getSeller().getTerms() != null && !mProduct.getSeller().getTerms().equals("")) {
+                textViewTermsBody.loadData(mProduct.getSeller().getTerms(), "text/html; charset=UTF-8", null);
             }
 
-            // Transport
-            if (mProduct.getTransportHtml() == null || mProduct.getTransportHtml().equals("")) {
-                buttonFairPercent.setVisibility(View.GONE);
+            // Fair Percent
+            if (mProduct.getTransportHtml() != null && !mProduct.getTransportHtml().equals("")) {
+                textViewTransportBody.loadData(mProduct.getTransportHtml(), "text/html; charset=UTF-8", null);
             }
 
             // Payment
-            if (mProduct.getPaymentHtml() == null || mProduct.getPaymentHtml().equals("")) {
-                buttonFairPercent.setVisibility(View.GONE);
+            if (mProduct.getPaymentHtml() != null && !mProduct.getPaymentHtml().equals("")) {
+                textViewPaymentBody.loadData(mProduct.getPaymentHtml(), "text/html; charset=UTF-8", null);
             }
 
             // Donation
@@ -156,43 +163,33 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
             // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
             String price = format.format(priceValue);
-            priceTextView.setText(price + " " + format.getCurrency().getSymbol());
+            textViewPrice.setText(price + " " + format.getCurrency().getSymbol());
 
             if (mProduct.getVat() > 0) {
-                vatTextview.setVisibility(View.GONE);
+                textViewVat.setVisibility(View.GONE);
             }
 
             // Click Listeners
-            buttonDescription.setOnClickListener(this);
-            buttonTerms.setOnClickListener(this);
-            buttonFairPercent.setOnClickListener(this);
-            buttonTransport.setOnClickListener(this);
-            buttonPayment.setOnClickListener(this);
+            textViewDescriptionTitle.setOnClickListener(this);
+            textViewDescriptionBody.setOnClickListener(this);
+            textViewTermsTitle.setOnClickListener(this);
+            textViewTermsBody.setOnClickListener(this);
+            textViewTransportTitle.setOnClickListener(this);
+            textViewTransportBody.setOnClickListener(this);
+            textViewPaymentTitle.setOnClickListener(this);
+            textViewPaymentBody.setOnClickListener(this);
             buttonBuy.setOnClickListener(this);
         }
     }
 
     @UiThread
     public void setFragmentColors(final Bitmap bitmap) {
-        final int[] backgroundColor = new int[1];
-        final int[] foregroundColor = new int[1];
-
         Palette.Builder builder = Palette.from(bitmap);
         builder.generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(final Palette palette) {
-                Palette.Swatch swatch = palette.getLightMutedSwatch();
-                if (swatch != null) {
-                    backgroundColor[0] = swatch.getRgb();
-                    foregroundColor[0] = swatch.getTitleTextColor();
-                } else {
-                    backgroundColor[0] = palette.getLightMutedColor(android.R.color.transparent);
-                    foregroundColor[0] = palette.getLightMutedColor(android.R.color.transparent);
-                }
-
-                productImageView.setBackgroundColor(backgroundColor[0]);
-                layoutContent.setBackgroundColor(backgroundColor[0]);
-                buttonBuy.setButtonColor(foregroundColor[0]);
+                int color = palette.getLightMutedColor(R.color.transparent_grey_20);
+                layoutContent.setBackgroundColor(color);
             }
         });
 
@@ -210,49 +207,36 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     @Override
     public void onClick(final View v) {
-        boolean web = true;
-        //Intent intent = new Intent(getActivity(), WebActivity_.class);
-        //Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
-        Bundle bundle = new Bundle();
-
-        ProductDetailDialog dialog = new ProductDetailDialog_();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-
         switch (v.getId()) {
             case R.id.fragment_product_button_buy:
                 restController.addToCard(Integer.parseInt(mProduct.getId()));
-                web = false;
                 break;
-            case R.id.fragment_product_button_description:
-                //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getContent_html());
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getContent());
-                dialog.setArguments(bundle);
+            case R.id.fragment_product_textview_description_title:
+                textViewDescriptionBody.setVisibility(View.VISIBLE);
                 break;
-            case R.id.fragment_product_button_terms:
-                //intent.putExtra(WebFragment.HTTP_CONTENT, mProduct.getTerms_html());
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getSeller().getTerms());
-                dialog.setArguments(bundle);
+            case R.id.fragment_product_textview_description_body:
+                textViewDescriptionBody.setVisibility(View.GONE);
                 break;
-            case R.id.fragment_product_button_transport:
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getTransportHtml());
-                dialog.setArguments(bundle);
+            case R.id.fragment_product_textview_terms_title:
+                textViewTermsBody.setVisibility(View.VISIBLE);
                 break;
-            case R.id.fragment_product_button_payment:
-                bundle.putString(WebFragment.HTTP_CONTENT, mProduct.getPaymentHtml());
-                dialog.setArguments(bundle);
+            case R.id.fragment_product_textview_terms_body:
+                textViewTermsBody.setVisibility(View.GONE);
+                break;
+            case R.id.fragment_product_textview_transport_title:
+                textViewTransportBody.setVisibility(View.VISIBLE);
+                break;
+            case R.id.fragment_product_textview_transport_body:
+                textViewTransportBody.setVisibility(View.GONE);
+                break;
+            case R.id.fragment_product_textview_payment_title:
+                textViewPaymentBody.setVisibility(View.VISIBLE);
+                break;
+            case R.id.fragment_product_textview_payment_body:
+                textViewPaymentBody.setVisibility(View.GONE);
                 break;
             default:
                 // nothing is done here
-        }
-
-        if (web) {
-            transaction.add(dialog, "Dialog");
-            transaction.setTransition(android.R.anim.decelerate_interpolator).commit();
-            /*if (Build.VERSION.SDK_INT > 15) {
-                getActivity().startActivity(intent, bundle);
-            } else {
-                startActivity(intent);
-            }*/
         }
     }
 }

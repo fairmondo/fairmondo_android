@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_main_toolbar"
+        style="@style/toolbar"/>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/main_title_container"
@@ -12,30 +16,13 @@
         android:orientation="vertical"
         android:animateLayoutChanges="true"/>
 
-    <Spinner
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/main_title_container"
-        android:id="@+id/main_category_spinner"/>
-
-
-    <ProgressBar
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_above="@id/main_category_spinner"
-        android:background="@color/fairmondo_yellow"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:id="@+id/main_progress_bar"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:id="@+id/main_products_container"
         android:orientation="vertical"
-        android:layout_below="@id/main_category_spinner"
+        android:layout_below="@id/main_title_container"
         android:animateLayoutChanges="true"/>
-
 </RelativeLayout>
 

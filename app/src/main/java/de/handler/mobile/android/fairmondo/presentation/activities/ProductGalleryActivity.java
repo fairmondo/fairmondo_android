@@ -2,17 +2,23 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +33,13 @@ import de.handler.mobile.android.fairmondo.presentation.adapter.ProductPagerAdap
  * users can swipe in between the products
  */
 @EActivity(R.layout.activity_gallery)
+@OptionsMenu(R.menu.product)
 public class ProductGalleryActivity extends AbstractActivity {
-    public static final String PAGER_POSITION_EXTRA = "pager_position_extra";
-    public static final String PRODUCT_ARRAY_LIST_EXTRA = "product_array_list_extra";
+    @Extra
+    int mPosition;
+
+    @Extra
+    Parcelable mProductsParcelable;
 
     private ShareActionProvider mShareActionProvider;
     private ArrayList<Product> mProducts;
@@ -40,23 +50,16 @@ public class ProductGalleryActivity extends AbstractActivity {
     @ViewById(R.id.activity_result_pager)
     ViewPager viewPager;
 
+    @ViewById(R.id.activity_gallery_toolbar)
+    Toolbar toolbar;
 
     @AfterViews
-    public void init() {
-        ActionBar actionBar = this.setupActionBar();
+    void init() {
+        ActionBar actionBar = this.setupActionBar(toolbar);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Get the bundle and the contained information
-        // which was attached to the intent in either
-        // ProductSelectionFragment or SearchResultFragment
-        // mProducts = getIntent().getParcelableArrayListExtra(PRODUCT_ARRAY_LIST_EXTRA);
-        mProducts = new ArrayList<>(app.getProducts());
-
-        // The position is used for telling the ViewPager on which item the user touched
-        // and which product therefore should be displayed in detail
-        int position = getIntent().getIntExtra(PAGER_POSITION_EXTRA, 0);
-
-        this.setupViewPager(position, mProducts);
+        mProducts = Parcels.unwrap(mProductsParcelable);
+        this.setupViewPager(mPosition, mProducts);
     }
 
     private void setupViewPager(final int position, final List<Product> products) {
@@ -64,7 +67,6 @@ public class ProductGalleryActivity extends AbstractActivity {
 
         // Set up the ViewPager with the sections adapter.
         viewPager.setAdapter(productPagerAdapter);
-        viewPager.setOffscreenPageLimit(5);
         viewPager.setCurrentItem(position, true);
     }
 
@@ -73,9 +75,6 @@ public class ProductGalleryActivity extends AbstractActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.product, menu);
-
         // Locate MenuItem with ShareActionProvider
         MenuItem menuItem = menu.findItem(R.id.menu_item_share);
         // Fetch and store ShareActionProvider
@@ -83,7 +82,6 @@ public class ProductGalleryActivity extends AbstractActivity {
 
         String text = this.buildSharingText(mProducts.get(viewPager.getCurrentItem()));
         this.setShareIntent(this.getDefaultIntent(text));
-
         return true;
     }
 
@@ -108,19 +106,8 @@ public class ProductGalleryActivity extends AbstractActivity {
         return sendIntent;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                this.openSettings();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void openSettings() {
+    @OptionsItem(R.id.action_settings)
+    void openSettings() {
         // TODO: to implement
     }
 }

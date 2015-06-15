@@ -2,7 +2,6 @@
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
     android:label="@string/app_name"
     android:hint="@string/search_hint"
-    android:searchSuggestAuthority="de.handler.mobile.android.fairmondo.datasource.database.searchprovider"
-    android:searchSuggestIntentAction="android.Intent.action.VIEW"
-    android:searchSuggestIntentData="de.handler.mobile.android.fairmondo.datasource.database/SearchSuggestion">
+    android:searchSuggestAuthority="de.handler.mobile.android.fairmondo.searchsuggestionprovider"
+    android:searchSuggestSelection=" ?" >
 </searchable>

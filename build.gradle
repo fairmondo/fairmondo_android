@@ -15,7 +15,7 @@ buildscript {
 }
 
 ext {
-    supportLibraryVersion = "22.1.1"
+    supportLibraryVersion = "22.2.0"
     volleyVersion = "1.0.15"
     modelMapperVersion = "0.7.4"
     androidAnnotationsVersion = "3.3.1"
@@ -25,7 +25,7 @@ ext {
     espressoVersion = "2.0"
     androidTestRunnerVersion = "0.2"
     parcelerVersion = "0.2.16"
-    floatingActionButtonVersion = "1.1.0"
+    coordinatorVersion = "1.1.5"
 }
 
 allprojects {
