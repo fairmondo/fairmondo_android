@@ -17,7 +17,7 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.ProgressFragme
 @EBean(scope = EBean.Scope.Singleton)
 public class ProgressController {
     private final static String TAG = "progressFragment";
-    private boolean added = false;
+    private boolean mAdded = false;
 
     private FragmentManager mFragmentManager;
     private ProgressFragment mFragment;
@@ -33,9 +33,9 @@ public class ProgressController {
             mFragment = ProgressFragment_.builder().build();
         }
 
-        if (!added) {
+        if (!mAdded) {
             FragmentHelper.addFragmentWithTag(container, mFragment, TAG, mFragmentManager);
-            this.added = true;
+            mAdded = true;
         }
     }
 
@@ -46,6 +46,6 @@ public class ProgressController {
     @UiThread
     public void stopProgress() {
         FragmentHelper.removeFragment(mFragment, mFragmentManager);
-        this.added = false;
+        mAdded = false;
     }
 }

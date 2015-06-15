@@ -41,6 +41,7 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
+import de.handler.mobile.android.fairmondo.presentation.controller.ErrorController;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment_;
@@ -55,71 +56,75 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
 @OptionsMenu(R.menu.main)
 public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnDetailedProductListener, OnSearchResultListener, OnClickItemListener {
     private static final int AGAIN_PRESS_TIME = 1500;
-    private static final int PROGRESS_BAR_CONTAINER = R.id.main_products_container;
 
     @Bean
     ProgressController mProgressController;
 
     @App
-    FairmondoApp app;
+    FairmondoApp mApp;
 
     @SystemService
-    SearchManager searchManager;
+    SearchManager mSearchManager;
 
     @Bean
-    RestCommunicator restController;
+    RestCommunicator mRestCommunicator;
 
     @ViewById(R.id.main_title_container)
-    FrameLayout titleContainer;
+    FrameLayout mTitleContainer;
 
     @ViewById(R.id.main_products_container)
-    FrameLayout productsContainer;
+    FrameLayout mProductsContainer;
 
     @ViewById(R.id.activity_main_toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
 
     // private ProgressController mProgressController;
     // Time for calculating interval between last back press action and new one
     // --> exit only when pressed twice
     private long mLastBackPressTime = System.currentTimeMillis();
-    private int mProductsCount = 0;
+    private int mProductsCount;
     private List<Product> mProducts;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mProductsCount = 0;
+    }
 
     @AfterInject
     public void initRestController() {
-        restController.setProductListener(this);
-        restController.setCategoriesListener(this);
-        restController.setDetailedProductListener(this);
+        mRestCommunicator.setProductListener(this);
+        mRestCommunicator.setCategoriesListener(this);
+        mRestCommunicator.setDetailedProductListener(this);
     }
 
     @AfterViews
     public void init() {
         this.initToolbar();
         this.activateTransitions();
+        // Fill the title fragment with content
         this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
+        // request the categories to be able to fill the category fragment with content
         this.getCategories();
     }
 
 
     private void initToolbar() {
-        ActionBar actionBar = this.setupActionBar(toolbar);
+        ActionBar actionBar = setupActionBar(mToolbar);
         actionBar.setDisplayHomeAsUpEnabled(false);
     }
 
     private void activateTransitions() {
         // Activate standard animations for fragment containers
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            final LayoutTransition titleTransition = titleContainer.getLayoutTransition();
-            titleTransition.enableTransitionType(LayoutTransition.CHANGING);
-            final LayoutTransition bodyTransition = productsContainer.getLayoutTransition();
-            bodyTransition.enableTransitionType(LayoutTransition.CHANGING);
-        }
+        final LayoutTransition titleTransition = mTitleContainer.getLayoutTransition();
+        titleTransition.enableTransitionType(LayoutTransition.CHANGING);
+        final LayoutTransition bodyTransition = mProductsContainer.getLayoutTransition();
+        bodyTransition.enableTransitionType(LayoutTransition.CHANGING);
     }
 
     private void initTitleFragment(@DrawableRes final Integer drawable, final String text) {
         Fragment titleFragment;
-        if (drawable == null) {
+        if (null == drawable) {
             titleFragment = TitleFragment_.builder().mSlogan(text).build();
             FragmentHelper.replaceFragment(R.id.main_title_container, titleFragment, getSupportFragmentManager());
         } else {
@@ -130,7 +135,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     private void getCategories() {
         this.showProgressBar();
-        restController.getCategories();
+        mRestCommunicator.getCategories();
     }
 
     /**
@@ -148,7 +153,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @UiThread
     public void initStartFragment(List<FairmondoCategory> categories) {
-        if (app.isConnected()) {
+        if (mApp.isConnected()) {
             CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
             FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
         } else {
@@ -160,9 +165,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onSubCategoriesResponse(final List<FairmondoCategory> categories) {
         this.hideProgressBar();
         if (categories != null) {
-            if (categories.isEmpty()) {
-                this.getProductSelection("", app.getLastCategory().getId());
-            } else {
+            if (categories.isEmpty() && mApp.getLastCategory() != null) {
+                this.getProductSelection("", mApp.getLastCategory().getId());
+            } else if (categories.size() > 0) {
                 this.initCategoryFragment(categories, true);
             }
         }
@@ -179,16 +184,16 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             }
         } catch (IllegalStateException e) {
             // TODO send exception to fairmondo server
-            e.printStackTrace();
+            ErrorController.displayErrorSnackbar(findViewById(android.R.id.content), e.getMessage());
         }
     }
 
     private void getProductSelection(final String searchRequest, final String categoryId) {
-        if (app.isConnected()) {
+        if (mApp.isConnected()) {
             this.showProgressBar();
-            restController.getProducts(searchRequest, categoryId);
+            mRestCommunicator.getProducts(searchRequest, categoryId);
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+            ErrorController.displayErrorToast(getApplicationContext(), getString(R.string.app_not_connected));
         }
     }
 
@@ -214,7 +219,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         mProducts = new ArrayList<>(products.size());
 
         for (Product product : products) {
-            restController.getDetailedProduct(product.getSlug());
+            mRestCommunicator.getDetailedProduct(product.getSlug());
         }
     }
 
@@ -237,7 +242,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, selectionFragment, getSupportFragmentManager(), "selectionFragment");
         } catch (IllegalStateException e) {
             // TODO send exception to fairmondo server
-            e.printStackTrace();
+            ErrorController.displayErrorSnackbar(findViewById(android.R.id.content), e.getMessage());
         }
     }
 
@@ -260,7 +265,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         // Get the SearchView and set the searchable configuration
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchableActivity_.class)));
+        searchView.setSearchableInfo(mSearchManager.getSearchableInfo(new ComponentName(this, SearchableActivity_.class)));
         searchView.setIconifiedByDefault(true);
         return true;
     }
@@ -270,11 +275,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @OptionsItem(R.id.action_cart)
     void openCart() {
-        Cart cart = app.getCart();
+        Cart cart = mApp.getCart();
         if (cart == null || cart.getCartItem() == null || cart.getCartItem().getRequestedQuantity() <= 0) {
             Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();
         } else {
-            WebActivity_.intent(this).mUri(cart.getCartUrl()).mCookie(app.getCookie()).start();
+            WebActivity_.intent(this).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
         }
     }
 
@@ -308,7 +313,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * Start the progress indication by overlaying the current screen with the ProgressFragment.
      */
     private void showProgressBar() {
-        mProgressController.startProgress(getSupportFragmentManager(), PROGRESS_BAR_CONTAINER);
+        mProgressController.startProgress(getSupportFragmentManager(), android.R.id.content);
     }
 
     /**
@@ -327,7 +332,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onBackPressed() {
         this.hideProgressBar();
-        app.setLastCategory(null);
+        mApp.setLastCategory(null);
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
             getSupportFragmentManager().popBackStack();
 

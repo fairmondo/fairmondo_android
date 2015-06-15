@@ -37,7 +37,7 @@ public class CategoryFragment extends ListFragment {
     Parcelable mCategoriesParcelable;
 
     @Bean
-    ProgressController progressController;
+    ProgressController mProgressController;
 
     @Bean
     RestCommunicator restController;
@@ -85,6 +85,7 @@ public class CategoryFragment extends ListFragment {
     @Override
     public void onListItemClick(final ListView l, final View v, final int position, final long id) {
         onClickItemListener.onItemClick();
+        mProgressController.startProgress(getFragmentManager(), android.R.id.content);
         if (position > 0) {
             // set last category in application context to know
             // which category was last pressed and get the products

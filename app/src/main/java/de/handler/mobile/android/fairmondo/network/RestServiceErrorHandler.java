@@ -23,9 +23,9 @@ import de.handler.mobile.android.fairmondo.presentation.controller.ProgressContr
 @EBean
 public class RestServiceErrorHandler implements RestErrorHandler {
     @Bean
-    ProgressController progressController;
+    ProgressController mProgressController;
 
-    private Context context;
+    private Context mContext;
 
     @Override
     public void onRestClientExceptionThrown(final NestedRuntimeException e) {
@@ -36,28 +36,28 @@ public class RestServiceErrorHandler implements RestErrorHandler {
     }
 
     public void setContext(final Context context) {
-        this.context = context;
+        mContext = context;
     }
 
     @UiThread
     public void showToast(final String message) {
         String toast = null;
-            if (context != null) {
+            if (mContext != null) {
                 if (message.contains("500") || message.contains("expected")) {
-                    toast = context.getString(R.string.server_error);
+                    toast = mContext.getString(R.string.server_error);
                 } else if (message.contains("502") || message.contains("I/O error")) {
-                    toast = context.getString(R.string.server_temporarily_not_available);
+                    toast = mContext.getString(R.string.server_temporarily_not_available);
                 } else if (message.contains("404")) {
-                    toast = context.getString(R.string.server_method_not_available);
+                    toast = mContext.getString(R.string.server_method_not_available);
                 }
 
                 // Show a Toast in corresponding activity with error message
-                Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
             }
 
     }
 
     public void hideProgressBar() {
-        progressController.stopProgress();
+        mProgressController.stopProgress();
     }
 }

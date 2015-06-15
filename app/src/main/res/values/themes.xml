@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- enable window content transitions -->
         <item name="android:windowContentTransitions" tools:ignore="NewApi">true</item>
         <!-- colorPrimary is used for the default action bar background -->
@@ -15,7 +15,7 @@
     </style>
 
     <style name="AppTheme" parent="BaseTheme">
-        <item name="windowActionBarOverlay">true</item>
+        <!-- find a way to make toolbar title white in themes -->
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">

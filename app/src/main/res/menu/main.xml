@@ -16,7 +16,7 @@
         android:title="@string/abc_searchview_description_clear"/>
 
     <item android:id="@+id/action_cart"
-        android:icon="@drawable/cart_black"
+        android:icon="@drawable/cart"
         android:title="@string/action_cart"
         app:showAsAction="collapseActionView|ifRoom"/>
 

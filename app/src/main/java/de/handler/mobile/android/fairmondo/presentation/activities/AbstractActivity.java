@@ -48,6 +48,8 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * ActionBar settings.
      */
     public ActionBar setupActionBar(Toolbar toolbar) {
+        // setting the color in themes or styles is a more preferable solution
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
         return getSupportActionBar();
     }
