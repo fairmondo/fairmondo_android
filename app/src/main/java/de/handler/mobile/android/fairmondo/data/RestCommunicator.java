@@ -62,7 +62,6 @@ public class RestCommunicator {
 
     public void setProductListener(final OnSearchResultListener productListener) {
         this.productListener = productListener;
-        errorHandler.setListener(productListener);
     }
 
     public void setCategoriesListener(final OnCategoriesListener categoriesListener) {
@@ -91,7 +90,6 @@ public class RestCommunicator {
 
     @Background
     public void getProducts(final String searchString, final String categoryId) {
-        productListener.showProgressBar();
         Articles articles = restService.getProducts(searchString, categoryId);
         if (articles == null || articles.articles == null || articles.articles.length < 1) {
             productListener.onProductsSearchResponse(null);
