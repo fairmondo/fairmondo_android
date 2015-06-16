@@ -1,177 +1,163 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:id="@+id/fragment_product_main_container">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="@android:color/white"
-            android:src="@drawable/fairmondo"
-            android:id="@+id/fragment_product_image_view" />
-
-        <view
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/fragment_product_image_view"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="-32dp"
-            android:layout_marginRight="20dp"
-            class="android.support.design.widget.FloatingActionButton"
-            android:id="@+id/fragment_product_button_buy"/>
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:id="@+id/fragment_product_main_container">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
-            android:layout_below="@id/fragment_product_image_view"
-            android:id="@+id/fragment_product_content_container"
-            tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <!-- Title -->
-            <TextView
+            <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:background="@android:color/white"
+                android:src="@drawable/fairmondo"
+                android:id="@+id/fragment_product_image_view" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:minHeight="50dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:id="@+id/fragment_product_title"
-                android:lines="2"
-                android:ellipsize="end"/>
+                android:padding="20dp"
+                android:layout_below="@id/fragment_product_image_view"
+                android:id="@+id/fragment_product_content_container"
+                tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
+                android:orientation="vertical">
 
-            <!-- Description -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/fragment_product_description"
-                android:layout_below="@id/fragment_product_title"
-                android:id="@+id/fragment_product_textview_description_title"/>
+                <!-- Title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:minHeight="50dp"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:id="@+id/fragment_product_title"
+                    android:lines="2"
+                    android:ellipsize="end"/>
 
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="12dp"
-                android:layout_below="@id/fragment_product_textview_description_title"
-                android:id="@+id/fragment_product_textview_description_body"/>
+                <!-- Description -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/fragment_product_description"
+                    android:layout_below="@id/fragment_product_title"
+                    android:id="@+id/fragment_product_textview_description_title"/>
 
-            <!-- Terms -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_terms"
-                android:layout_below="@id/fragment_product_textview_description_body"
-                android:id="@+id/fragment_product_textview_terms_title"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="12dp"
+                    android:layout_below="@id/fragment_product_textview_description_title"
+                    android:id="@+id/fragment_product_textview_description_body"/>
 
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_below="@id/fragment_product_textview_terms_title"
-                android:id="@+id/fragment_product_textview_terms_body"/>
+                <!-- Terms -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_terms"
+                    android:layout_below="@id/fragment_product_textview_description_body"
+                    android:id="@+id/fragment_product_textview_terms_title"
+                    android:visibility="gone"/>
 
-            <!-- fair percent -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="@string/fragment_product_donation"
-                android:layout_below="@id/fragment_product_textview_terms_body"
-                android:id="@+id/fragment_product_textview_fair_percent_title"/>
+                <!-- fair percent -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@string/fragment_product_donation"
+                    android:layout_below="@id/fragment_product_textview_terms_title"
+                    android:id="@+id/fragment_product_textview_fair_percent_title"/>
 
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:visibility="gone"
-                android:layout_below="@id/fragment_product_textview_fair_percent_title"
-                android:id="@+id/fragment_product_textview_fair_percent_body"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    android:layout_below="@id/fragment_product_textview_fair_percent_title"
+                    android:id="@+id/fragment_product_textview_fair_percent_body"/>
 
-            <!-- transport -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_transport"
-                android:layout_below="@id/fragment_product_textview_fair_percent_body"
-                android:id="@+id/fragment_product_textview_transport_title"/>
+                <!-- transport -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_below="@id/fragment_product_textview_fair_percent_body"
+                    android:id="@+id/fragment_product_textview_transport_body"/>
 
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_below="@id/fragment_product_textview_transport_title"
-                android:id="@+id/fragment_product_textview_transport_body"/>
+                <!-- payment -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_below="@id/fragment_product_textview_transport_body"
+                    android:id="@+id/fragment_product_textview_payment_body"/>
 
-            <!-- payment -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_payment"
-                android:layout_below="@id/fragment_product_textview_transport_body"
-                android:id="@+id/fragment_product_textview_payment_title"/>
+                <!-- donation -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_textview_payment_body"
+                    android:gravity="end"
+                    android:padding="15dp"
+                    android:id="@+id/fragment_product_textview_donation_title"/>
 
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_below="@id/fragment_product_textview_payment_title"
-                android:id="@+id/fragment_product_textview_payment_body"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_textview_donation_title"
+                    android:gravity="end"
+                    android:padding="15dp"
+                    android:id="@+id/fragment_product_textview_donation_body"/>
 
-            <!-- donation -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                android:layout_below="@id/fragment_product_textview_payment_body"
-                android:gravity="end"
-                android:padding="15dp"
-                android:id="@+id/fragment_product_textview_donation_title"/>
+                <!-- price -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_textview_donation_body"
+                    android:textSize="30sp"
+                    android:gravity="end"
+                    android:paddingTop="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingEnd="15dp"
+                    android:id="@+id/fragment_product_textview_price"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                android:layout_below="@id/fragment_product_textview_donation_title"
-                android:gravity="end"
-                android:padding="15dp"
-                android:id="@+id/fragment_product_textview_donation_body"/>
-
-            <!-- price -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                android:layout_below="@id/fragment_product_textview_donation_body"
-                android:textSize="30sp"
-                android:gravity="end"
-                android:paddingTop="15dp"
-                android:paddingRight="15dp"
-                android:paddingEnd="15dp"
-                android:id="@+id/fragment_product_textview_price"/>
-
-            <!-- vat -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                android:layout_below="@id/fragment_product_textview_price"
-                android:text="@string/fragment_product_vat"
-                android:gravity="end"
-                android:paddingEnd="15dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="15dp"
-                android:id="@+id/fragment_product_textview_price_vat"/>
+                <!-- vat -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_below="@id/fragment_product_textview_price"
+                    android:text="@string/fragment_product_vat"
+                    android:gravity="end"
+                    android:paddingEnd="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="15dp"
+                    android:id="@+id/fragment_product_textview_price_vat"/>
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+
+    <view
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/fragment_product_main_container"
+        android:layout_alignRight="@id/fragment_product_main_container"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="20dp"
+        class="android.support.design.widget.FloatingActionButton"
+        android:id="@+id/fragment_product_button_buy"/>
+
+</RelativeLayout>

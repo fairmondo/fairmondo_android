@@ -13,6 +13,4 @@ import de.handler.mobile.android.fairmondo.R;
  */
 @EFragment(R.layout.fragment_progress)
 public class ProgressFragment extends Fragment {
-    @ViewById(R.id.fragment_progress_bar)
-    ProgressBar mProgressBar;
 }

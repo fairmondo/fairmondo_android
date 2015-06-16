@@ -157,7 +157,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
             FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
         } else {
-            Toast.makeText(getApplicationContext(), R.string.app_not_connected, Toast.LENGTH_SHORT).show();
+            ErrorController.displayErrorToast(getApplicationContext(), getString(R.string.app_not_connected));
         }
     }
 
@@ -178,7 +178,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
         try {
             if (backstack) {
-                FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, categoryFragment, getSupportFragmentManager(), "categoryFragment");
+                FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, categoryFragment, getSupportFragmentManager(), categoryFragment.getClass().getCanonicalName());
             } else {
                 FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
             }
