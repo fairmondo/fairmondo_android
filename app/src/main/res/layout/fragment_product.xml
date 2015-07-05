@@ -48,9 +48,7 @@
 
                 <!-- Description -->
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    style="@style/product_detail_section_title"
                     android:text="@string/fragment_product_description"
                     android:layout_below="@id/fragment_product_title"
                     android:id="@+id/fragment_product_textview_description_title"/>
@@ -74,9 +72,7 @@
 
                 <!-- fair percent -->
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    style="@style/product_detail_section_title"
                     android:text="@string/fragment_product_donation"
                     android:layout_below="@id/fragment_product_textview_terms_title"
                     android:id="@+id/fragment_product_textview_fair_percent_title"/>
@@ -107,12 +103,8 @@
 
                 <!-- donation -->
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/secondary_text_light"
+                    style="@style/product_detail_section_title"
                     android:layout_below="@id/fragment_product_textview_payment_body"
-                    android:gravity="end"
-                    android:padding="15dp"
                     android:id="@+id/fragment_product_textview_donation_title"/>
 
                 <TextView
@@ -120,16 +112,29 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/secondary_text_light"
                     android:layout_below="@id/fragment_product_textview_donation_title"
-                    android:gravity="end"
-                    android:padding="15dp"
+                    android:gravity="left"
                     android:id="@+id/fragment_product_textview_donation_body"/>
+
+                <!-- condition -->
+                <TextView
+                    android:text="@string/fragment_product_condition"
+                    android:layout_below="@id/fragment_product_textview_donation_body"
+                    android:id="@+id/fragment_product_textview_condition_title"
+                    style="@style/product_detail_section_title" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fragment_product_textview_condition_title"
+                    android:gravity="left"
+                    android:id="@+id/fragment_product_textview_condition_body"/>
 
                 <!-- price -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/secondary_text_light"
-                    android:layout_below="@id/fragment_product_textview_donation_body"
+                    android:layout_below="@id/fragment_product_textview_condition_body"
                     android:textSize="30sp"
                     android:gravity="end"
                     android:paddingTop="15dp"

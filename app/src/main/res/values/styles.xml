@@ -62,4 +62,15 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
+
+    <style name="product_detail_section_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:gravity">left</item>
+    </style>
 </resources>

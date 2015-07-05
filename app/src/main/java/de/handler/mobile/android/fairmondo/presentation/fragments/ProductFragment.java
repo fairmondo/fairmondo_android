@@ -1,9 +1,7 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 
-import android.os.Build;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
@@ -39,10 +37,6 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  */
 @EFragment(R.layout.fragment_product)
 public class ProductFragment extends Fragment implements OnCartChangeListener, View.OnClickListener {
-    // TODO display fair, öko, etc tags
-    // TODO display product condition
-    // TODO display seller details / contact seller
-    // TODO show incl. vat if available
 
     @FragmentArg
     Parcelable mProductParcelable;
@@ -86,6 +80,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @ViewById(R.id.fragment_product_textview_payment_body)
     TextView mTextViewPaymentBody;
 
+    @ViewById(R.id.fragment_product_textview_condition_title)
+    TextView mTextViewConditionTitle;
+
+    @ViewById(R.id.fragment_product_textview_condition_body)
+    TextView mTextViewConditionBody;
+
     @ViewById(R.id.fragment_product_button_buy)
     Button mButtonBuy;
 
@@ -102,7 +102,8 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     }
 
     private void displayProductData() {
-
+        // TODO display fair, öko, etc tags
+        // TODO display seller details / contact seller
         mTextViewTitle.setText(mProduct.getTitle());
 
         // Image
@@ -141,6 +142,11 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                             + mProduct.getDonation().getPercent()
                             + " % an "
                             + mProduct.getDonation().getOrganization().getName());
+        }
+
+        if (mProduct.getTags() != null) {
+            mTextViewConditionBody.setText(mProduct.getTags().getCondition());
+            mTextViewConditionTitle.setVisibility(View.VISIBLE);
         }
 
         // Price TODO: if last number is a 0 it is omitted -  change if possible
