@@ -3,7 +3,6 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 import android.animation.LayoutTransition;
 import android.app.SearchManager;
 import android.content.ComponentName;
-import android.os.Build;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;

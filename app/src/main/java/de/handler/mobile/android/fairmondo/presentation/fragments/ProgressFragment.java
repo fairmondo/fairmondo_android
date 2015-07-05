@@ -1,10 +1,8 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 import android.support.v4.app.Fragment;
-import android.widget.ProgressBar;
 
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.R;
 

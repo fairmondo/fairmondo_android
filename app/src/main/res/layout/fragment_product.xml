@@ -1,22 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/fragment_product_main_container">
 
     <ScrollView
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:id="@+id/fragment_product_main_container">
+        android:paddingBottom="@dimen/button_height"
+        android:animateLayoutChanges="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_product_product_container">
 
             <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:background="@android:color/white"
                 android:src="@drawable/fairmondo"
@@ -150,14 +153,13 @@
         </RelativeLayout>
     </ScrollView>
 
-    <view
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/fragment_product_main_container"
-        android:layout_alignRight="@id/fragment_product_main_container"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="20dp"
-        class="android.support.design.widget.FloatingActionButton"
-        android:id="@+id/fragment_product_button_buy"/>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:id="@+id/fragment_product_button_buy"
+        android:background="@color/fairmondo_blue_dark"
+        android:text="@string/fragment_product_buy"
+        android:textColor="@android:color/white"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

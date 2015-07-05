@@ -83,7 +83,7 @@ public class WebFragment extends Fragment {
      * Web View Client which
      * 1. Displays a ProgressBar until the content is completely shown and
      * 2. Prompts the user to use its own browser to be able to navigate to further links.
-     * Workaround for dividing the app from the internet page as some content as the cart
+     * Workaround for dividing the mApp from the internet page as some content as the cart
      * up to now only works on the internet page.
      */
     private class RedirectWebViewClient extends WebViewClient {
