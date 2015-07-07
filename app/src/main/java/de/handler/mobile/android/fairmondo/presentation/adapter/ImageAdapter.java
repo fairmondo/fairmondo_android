@@ -33,6 +33,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     private final List<Product> mProducts;
     private final Context mContext;
 
+    /**
+     * Creates an instance of the ImageAdapter.
+     */
     public ImageAdapter(final Context context, final List<Product> products) {
         mContext = context;
         if (products != null) {

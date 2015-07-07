@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/margin_activity_horizontal"
+    android:paddingRight="@dimen/margin_activity_horizontal"
+    android:paddingTop="@dimen/margin_activity_vertical"
+    android:paddingBottom="@dimen/margin_activity_vertical"
+    tools:context=".MainActivity"
+    android:id="@+id/view_snackbar_root">
+
+    <TextView
+        android:id="@+id/view_snackbar_textViewCart"
+        android:text="@string/view_snackbar_goto"
+        android:drawableStart="@drawable/cart"
+        android:drawableLeft="@drawable/cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

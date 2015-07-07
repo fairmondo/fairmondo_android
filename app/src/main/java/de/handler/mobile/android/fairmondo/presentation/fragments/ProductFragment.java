@@ -1,15 +1,18 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -179,7 +182,16 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     public void onCartChanged(final Cart cart) {
         if (cart != null && cart.getCartItem() != null) {
             int itemCount = cart.getCartItem().getRequestedQuantity();
-            Toast.makeText(getActivity(), itemCount + " items added to your cart", Toast.LENGTH_LONG).show();
+            Snackbar.make(mLayoutContent, itemCount + " Element zum Einkaufswagen hinzugefügt", Snackbar.LENGTH_LONG)
+                    .setAction("Zum Einkaufswagen",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            WebActivity_.intent(getActivity()).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
+                        }
+                    })
+                    .setActionTextColor(Color.YELLOW)
+                    .show();
         }
     }
 

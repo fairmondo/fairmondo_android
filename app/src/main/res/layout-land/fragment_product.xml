@@ -8,7 +8,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/height_button"
         android:animateLayoutChanges="true">
 
         <RelativeLayout
@@ -28,7 +27,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:layout_below="@id/fragment_product_image_view"
                 android:id="@+id/fragment_product_content_container"
                 tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
@@ -159,12 +160,16 @@
     </ScrollView>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="@dimen/height_button"
         android:id="@+id/fragment_product_button_buy"
         android:background="@drawable/ripple"
+        android:gravity="center"
         android:text="@string/fragment_product_buy"
         android:textColor="@android:color/white"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:layout_alignParentBottom="true"/>
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp" tools:ignore="newApi"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

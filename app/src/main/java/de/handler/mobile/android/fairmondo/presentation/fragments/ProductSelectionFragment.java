@@ -3,9 +3,10 @@ package de.handler.mobile.android.fairmondo.presentation.fragments;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.GestureDetector;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,7 +42,6 @@ public class ProductSelectionFragment extends Fragment {
     FairmondoApp app;
 
     private List<Product> mProducts;
-    private GestureDetector mGestureDetector;
 
     @AfterViews
     public void init() {
@@ -60,7 +60,7 @@ public class ProductSelectionFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        // specify an adapter (see also next example)
+        // specify an adapter
         recyclerView.setAdapter(new ImageAdapter(getActivity(), mProducts));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
