@@ -1,14 +1,12 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -181,8 +179,8 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @Override
     public void onCartChanged(final Cart cart) {
         if (cart != null && cart.getCartItem() != null) {
-            int itemCount = cart.getCartItem().getRequestedQuantity();
-            Snackbar.make(mLayoutContent, itemCount + " Element zum Einkaufswagen hinzugefügt", Snackbar.LENGTH_LONG)
+            final int itemCount = cart.getCartItem().getRequestedQuantity();
+            Snackbar.make(mLayoutContent, itemCount + " Element zum Einkaufswagen hinzugefügt", Snackbar.LENGTH_SHORT)
                     .setAction("Zum Einkaufswagen",
                     new View.OnClickListener() {
                         @Override
