@@ -31,7 +31,8 @@
                 android:layout_below="@id/fragment_product_image_view"
                 android:id="@+id/fragment_product_content_container"
                 tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="RtlSymmetry, RtlHardcoded">
 
                 <!-- Title -->
                 <TextView
@@ -111,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/secondary_text_light"
                     android:layout_below="@id/fragment_product_textview_donation_title"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:id="@+id/fragment_product_textview_donation_body"/>
 
                 <!-- condition -->
@@ -126,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_product_textview_condition_title"
                     android:gravity="left"
-                    android:id="@+id/fragment_product_textview_condition_body"/>
+                    android:id="@+id/fragment_product_textview_condition_body" />
 
                 <!-- price -->
                 <TextView

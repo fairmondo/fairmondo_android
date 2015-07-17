@@ -1,8 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+    style="@style/container_default.opaque"
     android:id="@+id/fragment_product_main_container">
 
     <ScrollView
@@ -33,7 +32,8 @@
                 android:layout_below="@id/fragment_product_image_view"
                 android:id="@+id/fragment_product_content_container"
                 tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="RtlSymmetry, RtlHardcoded">
 
                 <!-- Title -->
                 <TextView
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/secondary_text_light"
                     android:layout_below="@id/fragment_product_textview_donation_title"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:id="@+id/fragment_product_textview_donation_body"/>
 
                 <!-- condition -->
@@ -127,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_product_textview_condition_title"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:id="@+id/fragment_product_textview_condition_body"/>
 
                 <!-- price -->
@@ -169,7 +169,7 @@
         android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_marginBottom="8dp"
-        android:elevation="4dp" tools:ignore="newApi"
+        android:elevation="4dp" tools:ignore="UnusedAttribute"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

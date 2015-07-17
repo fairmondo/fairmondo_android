@@ -109,7 +109,7 @@ public class SearchableActivity extends AbstractActivity implements OnDetailedPr
         }
 
         try {
-            FragmentHelper.replaceFragmentWithTagToBackStack(R.id.activity_search_result_container, selectionFragment, getSupportFragmentManager(), "selectionFragment");
+            FragmentHelper.replaceFragment(R.id.activity_search_result_container, selectionFragment, getSupportFragmentManager());
         } catch (IllegalStateException e) {
             // TODO send exception to fairmondo server
             UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());

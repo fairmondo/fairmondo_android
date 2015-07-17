@@ -27,6 +27,8 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
+import org.androidannotations.annotations.sharedpreferences.SharedPref;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -44,6 +46,8 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
+import de.handler.mobile.android.fairmondo.presentation.SharedPrefs;
+import de.handler.mobile.android.fairmondo.presentation.SharedPrefs_;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment;
@@ -72,6 +76,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Bean
     RestCommunicator mRestCommunicator;
 
+    @Pref
+    SharedPrefs_ prefs;
+
     @ViewById(R.id.main_title_container)
     FrameLayout mTitleContainer;
 
@@ -94,6 +101,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         mProductsCount = 0;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        prefs.cookie().put(mApp.getCookie());
+    }
+
     @AfterInject
     public void initRestController() {
         mRestCommunicator.setProductListener(this);
@@ -105,6 +118,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void init() {
         setupActionBar(mToolbar);
         mOrientation = this.determineScreenOrientation();
+        mApp.setCookie(prefs.cookie().get());
         this.activateTransitions();
         // Fill the title fragment with content
         this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));

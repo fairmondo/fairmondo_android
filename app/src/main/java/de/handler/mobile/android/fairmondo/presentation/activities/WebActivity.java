@@ -42,7 +42,7 @@ public class WebActivity extends AbstractActivity {
 
         if ((mUri != null && mApp.isConnected()) || mHtml != null) {
             final WebFragment webFragment = WebFragment_.builder().mHtml(mHtml).mUri(mUri).mCookie(mCookie).build();
-            FragmentHelper.replaceFragment(R.id.activity_web_container, webFragment, getSupportFragmentManager());
+            FragmentHelper.replaceFragment(android.R.id.content, webFragment, getSupportFragmentManager());
         } else {
             finish();
         }
