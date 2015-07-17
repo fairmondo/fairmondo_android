@@ -3,8 +3,9 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -19,7 +20,7 @@ import de.handler.mobile.android.fairmondo.FairmondoApp;
  * Abstract Activity implemented by all other activities.
  */
 @EActivity
-public abstract class AbstractActivity extends ActionBarActivity {
+public abstract class AbstractActivity extends AppCompatActivity {
     @SystemService
     ConnectivityManager connectivityManager;
 
@@ -34,10 +35,10 @@ public abstract class AbstractActivity extends ActionBarActivity {
         Log.i("FAIRMONDO_APP ", "NETWORKSTATECHANGE");
     }
 
-    public void checkNetworkState() {
-        FairmondoApp app = (FairmondoApp) getApplicationContext();
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null) {
+    protected void checkNetworkState() {
+        final FairmondoApp app = (FairmondoApp) getApplicationContext();
+        final NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (null != activeNetwork) {
             app.setConnected(activeNetwork.isConnected());
         } else {
             app.setConnected(false);
@@ -47,9 +48,13 @@ public abstract class AbstractActivity extends ActionBarActivity {
     /**
      * ActionBar settings.
      */
-    public ActionBar setupActionBar(Toolbar toolbar) {
+    protected void setHomeUpEnabled(@NonNull final Toolbar toolbar) {
+        final ActionBar actionBar = this.setupActionBar(toolbar);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    protected ActionBar setupActionBar(@NonNull final Toolbar toolbar) {
         // setting the color in themes or styles is a more preferable solution
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
         return getSupportActionBar();
     }

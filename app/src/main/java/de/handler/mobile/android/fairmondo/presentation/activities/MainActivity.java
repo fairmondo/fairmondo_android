@@ -3,15 +3,19 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 import android.animation.LayoutTransition;
 import android.app.SearchManager;
 import android.content.ComponentName;
+import android.content.res.Configuration;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.Menu;
+import android.view.Surface;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -40,8 +44,8 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
-import de.handler.mobile.android.fairmondo.presentation.controller.ErrorController;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
+import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment_;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment;
@@ -77,11 +81,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @ViewById(R.id.activity_main_toolbar)
     Toolbar mToolbar;
 
-    // private ProgressController mProgressController;
     // Time for calculating interval between last back press action and new one
     // --> exit only when pressed twice
     private long mLastBackPressTime = System.currentTimeMillis();
     private int mProductsCount;
+    private int mOrientation;
     private List<Product> mProducts;
 
     @Override
@@ -99,7 +103,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @AfterViews
     public void init() {
-        this.initToolbar();
+        setupActionBar(mToolbar);
+        mOrientation = this.determineScreenOrientation();
         this.activateTransitions();
         // Fill the title fragment with content
         this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
@@ -107,10 +112,9 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         this.getCategories();
     }
 
-
-    private void initToolbar() {
-        ActionBar actionBar = setupActionBar(mToolbar);
-        actionBar.setDisplayHomeAsUpEnabled(false);
+    private int determineScreenOrientation() {
+        final Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        return display.getRotation();
     }
 
     private void activateTransitions() {
@@ -121,14 +125,19 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         bodyTransition.enableTransitionType(LayoutTransition.CHANGING);
     }
 
-    private void initTitleFragment(@DrawableRes final Integer drawable, final String text) {
-        Fragment titleFragment;
-        if (null == drawable) {
-            titleFragment = TitleFragment_.builder().mSlogan(text).build();
-            FragmentHelper.replaceFragment(R.id.main_title_container, titleFragment, getSupportFragmentManager());
+    private void initTitleFragment(@Nullable @DrawableRes final Integer drawable, @Nullable final String text) {
+        final Fragment titleFragment;
+        if (mOrientation == Configuration.ORIENTATION_PORTRAIT || mOrientation == Surface.ROTATION_0 || mOrientation == Surface.ROTATION_180) {
+            if (null == drawable) {
+                titleFragment = TitleFragment_.builder().mSlogan(text).build();
+                FragmentHelper.replaceFragment(R.id.main_title_container, titleFragment, getSupportFragmentManager());
+            } else {
+                titleFragment = TitleFragment_.builder().mDrawable(drawable).mSlogan(text).build();
+                FragmentHelper.replaceFragmentWithTag(R.id.main_title_container, titleFragment, getSupportFragmentManager(), "titleFragment");
+            }
         } else {
-            titleFragment = TitleFragment_.builder().mDrawable(drawable).mSlogan(text).build();
-            FragmentHelper.replaceFragmentWithTag(R.id.main_title_container, titleFragment, getSupportFragmentManager(), "titleFragment");
+            titleFragment = TitleFragment_.builder().build();
+            FragmentHelper.replaceFragment(R.id.main_title_container, titleFragment, getSupportFragmentManager());
         }
     }
 
@@ -142,7 +151,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * @param categories a list of available categories
      */
     @Override
-    public void onCategoriesResponse(final List<FairmondoCategory> categories) {
+    public void onCategoriesResponse(@Nullable final List<FairmondoCategory> categories) {
         this.hideProgressBar();
         if (categories != null) {
             // getSubCategories is called from the CategoryFragment
@@ -151,17 +160,17 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     }
 
     @UiThread
-    public void initStartFragment(List<FairmondoCategory> categories) {
+    public void initStartFragment(@NonNull final List<FairmondoCategory> categories) {
         if (mApp.isConnected()) {
             CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
             FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
         } else {
-            ErrorController.displayErrorToast(getApplicationContext(), getString(R.string.app_not_connected));
+            UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.app_not_connected));
         }
     }
 
     @Override
-    public void onSubCategoriesResponse(final List<FairmondoCategory> categories) {
+    public void onSubCategoriesResponse(@Nullable final List<FairmondoCategory> categories) {
         this.hideProgressBar();
         if (categories != null) {
             if (categories.isEmpty() && mApp.getLastCategory() != null) {
@@ -169,30 +178,32 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             } else if (categories.size() > 0) {
                 this.initCategoryFragment(categories, true);
             }
+        } else {
+            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), getString(R.string.category_count_error));
+        }
+    }
+
+    private void getProductSelection(@NonNull final String searchRequest, @NonNull final String categoryId) {
+        if (mApp.isConnected()) {
+            this.showProgressBar();
+            mRestCommunicator.getProducts(searchRequest, categoryId);
+        } else {
+            UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.app_not_connected));
         }
     }
 
     @UiThread
-    public void initCategoryFragment(final List<FairmondoCategory> categories, boolean backstack) {
-        CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
+    public void initCategoryFragment(@NonNull final List<FairmondoCategory> categories, boolean backstack) {
+        final CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
         try {
             if (backstack) {
                 FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, categoryFragment, getSupportFragmentManager(), categoryFragment.getClass().getCanonicalName());
             } else {
                 FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
             }
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             // TODO send exception to fairmondo server
-            ErrorController.displayErrorSnackbar(findViewById(android.R.id.content), e.getMessage());
-        }
-    }
-
-    private void getProductSelection(final String searchRequest, final String categoryId) {
-        if (mApp.isConnected()) {
-            this.showProgressBar();
-            mRestCommunicator.getProducts(searchRequest, categoryId);
-        } else {
-            ErrorController.displayErrorToast(getApplicationContext(), getString(R.string.app_not_connected));
+            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());
         }
     }
 
@@ -200,8 +211,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * Callback for products server response.
      */
     @Override
-    public void onProductsSearchResponse(final List<Product> products) {
-        if (products != null && products.size() > 0) {
+    public void onProductsSearchResponse(@Nullable final List<Product> products) {
+        if (products != null && !products.isEmpty()) {
             this.getDetailedProducts(products);
         } else {
             this.hideProgressBar();
@@ -211,19 +222,18 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     // The basic product information has been received,
     // now query more detailed information about each product
-    private void getDetailedProducts(final List<Product> products) {
+    private void getDetailedProducts(@NonNull final List<Product> products) {
         // Set product count as listener responds to each single product
         // and app needs to react when all products have finished loading
         mProductsCount = products.size();
-        mProducts = new ArrayList<>(products.size());
-
-        for (Product product : products) {
+        mProducts = new ArrayList<>();
+        for (final Product product : products) {
             mRestCommunicator.getDetailedProduct(product.getSlug());
         }
     }
 
     @Override
-    public void onDetailedProductResponse(final Product product) {
+    public void onDetailedProductResponse(@Nullable final Product product) {
         mProducts.add(product);
         if (mProducts.size() == mProductsCount) {
             this.hideProgressBar();
@@ -231,7 +241,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         }
     }
 
-    private void initSelectionFragment(final List<Product> products) {
+    private void initSelectionFragment(@Nullable final List<Product> products) {
         ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
         if (products != null) {
             selectionFragment = ProductSelectionFragment_.builder().mProductsParcelable(Parcels.wrap(List.class, products)).build();
@@ -241,7 +251,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, selectionFragment, getSupportFragmentManager(), "selectionFragment");
         } catch (IllegalStateException e) {
             // TODO send exception to fairmondo server
-            ErrorController.displayErrorSnackbar(findViewById(android.R.id.content), e.getMessage());
+            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());
         }
     }
 
@@ -250,8 +260,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * In case it is needed it should be called instead of initStartFragment()
      * @param featuredProductsHtml a html string of the featured products of fairmondo.
      */
-    private void initFeatureFragment(final String featuredProductsHtml) {
-        WebFragment featureFragment = WebFragment_.builder().mHtml(featuredProductsHtml).build();
+    private void initFeatureFragment(@NonNull final String featuredProductsHtml) {
+        final WebFragment featureFragment = WebFragment_.builder().mHtml(featuredProductsHtml).build();
         FragmentHelper.replaceFragment(R.id.main_products_container, featureFragment, getSupportFragmentManager());
     }
 
@@ -262,7 +272,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         // Get the SearchView and set the searchable configuration
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(mSearchManager.getSearchableInfo(new ComponentName(this, SearchableActivity_.class)));
         searchView.setIconifiedByDefault(true);
@@ -274,20 +284,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @OptionsItem(R.id.action_cart)
     void openCart() {
-        Cart cart = mApp.getCart();
+        final Cart cart = mApp.getCart();
         if (cart == null || cart.getCartItem() == null || cart.getCartItem().getRequestedQuantity() <= 0) {
-            Toast.makeText(this, getString(R.string.cart_has_no_items), Toast.LENGTH_SHORT).show();
+            UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.cart_has_no_items));
         } else {
             WebActivity_.intent(this).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
         }
-    }
-
-    /**
-     * Is called when the action item "settings" is called and shows the preferences screen.
-     */
-    @OptionsItem(R.id.action_settings)
-    void openSettings() {
-        // TODO: to implement
     }
 
     /**
@@ -295,7 +297,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @OptionsItem(R.id.action_search_delete)
     void clearSearchSuggestions() {
-        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+        final SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
         suggestions.clearHistory();
     }
 
@@ -303,7 +305,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      * Informs this activity about an item click in the CategoryFragment to be able to start the progress.
      */
     @Override
-    public void onItemClick() {
+    public void onItemInFragmentClicked() {
         this.showProgressBar();
         this.initTitleFragment(null, null);
     }
@@ -335,21 +337,31 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
             getSupportFragmentManager().popBackStack();
 
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 // Reset standard title
                 this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
-            }
+                }
         } else {
-            // Reset standard title
-            this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
             // Handle Back Navigation - if shortly after another back is pushed exit app
             if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
                 this.mLastBackPressTime = System.currentTimeMillis();
-                Toast.makeText(getApplicationContext(), getString(R.string.close_app), Toast.LENGTH_SHORT).show();
-
+                UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.close_app));
             } else {
                 super.onBackPressed();
             }
+        }
+    }
+
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        final int configOrientation = newConfig.orientation;
+        if (configOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mOrientation = Surface.ROTATION_90;
+        } else {
+            mOrientation = Surface.ROTATION_0;
         }
     }
 }

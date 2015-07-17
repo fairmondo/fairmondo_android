@@ -4,14 +4,9 @@
     tools:context=".MainActivity" >
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/menu_item_share"
         app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_share"
         android:title="@string/abc_shareactionprovider_share_with"
         app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
 </menu>

@@ -13,7 +13,7 @@ import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoTitleIma
  * as json by Fairmondo server
  */
 public class Product {
-    public Long id;
+    public String id;
     public String slug;
     public String title;
     public int price_cents;

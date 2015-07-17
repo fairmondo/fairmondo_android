@@ -1,5 +1,6 @@
 package de.handler.mobile.android.fairmondo.presentation.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -17,7 +18,10 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.ProductFragmen
 public class ProductPagerAdapter extends FragmentStatePagerAdapter {
     private final List<Product> mProducts;
 
-    public ProductPagerAdapter(final FragmentManager fm, final List<Product> products) {
+    /**
+     * Creates an instance of the ProductPagerAdapter.
+     */
+    public ProductPagerAdapter(@NonNull final FragmentManager fm, @NonNull final List<Product> products) {
         super(fm);
         mProducts = products;
     }

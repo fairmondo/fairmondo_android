@@ -1,6 +1,5 @@
 package de.handler.mobile.android.fairmondo.presentation.activities;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import org.androidannotations.annotations.AfterViews;
@@ -12,6 +11,7 @@ import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
+import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
 import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
 
@@ -22,7 +22,7 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
 @OptionsMenu(R.menu.web)
 public class WebActivity extends AbstractActivity {
     @App
-    FairmondoApp app;
+    FairmondoApp mApp;
 
     @Extra
     String mHtml;
@@ -34,20 +34,17 @@ public class WebActivity extends AbstractActivity {
     String mCookie;
 
     @ViewById(R.id.activity_web_toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
 
     @AfterViews
     void init() {
-        ActionBar actionBar = this.setupActionBar(toolbar);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setHomeUpEnabled(mToolbar);
 
-        WebFragment webFragment = WebFragment_.builder().mHtml(mHtml).mUri(mUri).mCookie(mCookie).build();
-        if ((mUri != null && app.isConnected()) || mHtml != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.activity_web_container, webFragment)
-                    .commit();
+        if ((mUri != null && mApp.isConnected()) || mHtml != null) {
+            final WebFragment webFragment = WebFragment_.builder().mHtml(mHtml).mUri(mUri).mCookie(mCookie).build();
+            FragmentHelper.replaceFragment(R.id.activity_web_container, webFragment, getSupportFragmentManager());
         } else {
-            this.finish();
+            finish();
         }
     }
 }

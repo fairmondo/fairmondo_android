@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/white"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/container_default.opaque">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/activity_main_toolbar"
+        app:popupTheme="@style/popupTheme"
         style="@style/toolbar"/>
 
     <FrameLayout

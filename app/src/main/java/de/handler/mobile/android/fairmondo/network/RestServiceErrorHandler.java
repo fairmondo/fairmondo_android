@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.network;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,12 +36,12 @@ public class RestServiceErrorHandler implements RestErrorHandler {
         this.hideProgressBar();
     }
 
-    public void setContext(final Context context) {
+    public void setContext(@NonNull final Context context) {
         mContext = context;
     }
 
     @UiThread
-    public void showToast(final String message) {
+    public void showToast(@NonNull final String message) {
         String toast = null;
             if (mContext != null) {
                 if (message.contains("500") || message.contains("expected")) {

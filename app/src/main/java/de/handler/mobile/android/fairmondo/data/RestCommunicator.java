@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.data;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterInject;
@@ -28,7 +29,7 @@ import de.handler.mobile.android.fairmondo.network.FairmondoRestService;
 import de.handler.mobile.android.fairmondo.network.RestServiceErrorHandler;
 import de.handler.mobile.android.fairmondo.network.dto.Articles;
 import de.handler.mobile.android.fairmondo.network.dto.Product;
-import de.handler.mobile.android.fairmondo.presentation.controller.ErrorController;
+import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 /**
  * Encapsulates all communication with the server
@@ -50,8 +51,8 @@ public class RestCommunicator {
     private OnCartChangeListener mCartChangeListener;
     private final Context mContext;
 
-    public RestCommunicator(final Context context) {
-        this.mContext = context;
+    public RestCommunicator(@NonNull final Context context) {
+        mContext = context;
     }
 
     @AfterInject
@@ -63,33 +64,33 @@ public class RestCommunicator {
     /**
      * Sets the OnSearchResultListener which informs the implementing class that the products have been fetched.
      */
-    public void setProductListener(final OnSearchResultListener productListener) {
+    public void setProductListener(@NonNull final OnSearchResultListener productListener) {
         mProductListener = productListener;
     }
 
     /**
      * Sets the OnCategoriesListener which informs the implementing class that the categories and sub categories have been fetched.
      */
-    public void setCategoriesListener(final OnCategoriesListener categoriesListener) {
+    public void setCategoriesListener(@NonNull final OnCategoriesListener categoriesListener) {
         mCategoriesListener = categoriesListener;
     }
 
     /**
      * Sets the OnDetailedProductListener which informs the implementing class that the detailed product information has been fetched.
      */
-    public void setDetailedProductListener(final OnDetailedProductListener detailedProductListener) {
+    public void setDetailedProductListener(@NonNull final OnDetailedProductListener detailedProductListener) {
         mDetailedProductListener = detailedProductListener;
     }
 
     /**
      * Sets the OnCartChangeListener which informs the implementing class that the cart has been updated.
      */
-    public void setCartChangeListener(final OnCartChangeListener cartChangeListener) {
+    public void setCartChangeListener(@NonNull final OnCartChangeListener cartChangeListener) {
         mCartChangeListener = cartChangeListener;
     }
 
     @Background
-    public void getProducts(final String searchString) {
+    public void getProducts(@NonNull final String searchString) {
         final Articles articles = mRestService.getProducts(searchString);
         final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() {}.getType();
         if (articles == null || articles.articles == null) {
@@ -101,7 +102,7 @@ public class RestCommunicator {
     }
 
     @Background
-    public void getProducts(final String searchString, final String categoryId) {
+    public void getProducts(@NonNull final String searchString, @NonNull final String categoryId) {
         final Articles articles = mRestService.getProducts(searchString, categoryId);
         if (articles == null || articles.articles == null || articles.articles.length < 1) {
             mProductListener.onProductsSearchResponse(null);
@@ -114,7 +115,7 @@ public class RestCommunicator {
     }
 
     @Background
-    public void getDetailedProduct(final String slug) {
+    public void getDetailedProduct(@NonNull final String slug) {
         final Product article = mRestService.getDetailedProduct(slug);
         if (article == null) {
             mDetailedProductListener.onDetailedProductResponse(null);
@@ -133,7 +134,7 @@ public class RestCommunicator {
     }
 
     @Background(id = "cancellable_task")
-    public void getSubCategories(final String id) {
+    public void getSubCategories(@NonNull final String id) {
         final Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
         final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getSubCategories(id);
         final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
@@ -141,7 +142,7 @@ public class RestCommunicator {
     }
 
     @Background(id = "cancellable_task")
-    public void addToCard(final int productId) {
+    public void addToCard(@NonNull final String productId) {
         mRestService.setCookie("cart", mApp.getCookie());
         final de.handler.mobile.android.fairmondo.network.dto.Cart cartDTO = mRestService.addProductToCart(productId, 1);
         final Cart cart = mApp.getModelMapper().map(cartDTO, Cart.class);
@@ -158,6 +159,6 @@ public class RestCommunicator {
 
     @UiThread
     public void makeToast() {
-        ErrorController.displayErrorToast(mContext, mContext.getString(R.string.item_amount_too_big));
+        UIInformationController.displayToastInformation(mContext, mContext.getString(R.string.item_amount_too_big));
     }
 }

@@ -19,8 +19,4 @@
         android:icon="@drawable/cart"
         android:title="@string/action_cart"
         app:showAsAction="collapseActionView|ifRoom"/>
-
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
 </menu>

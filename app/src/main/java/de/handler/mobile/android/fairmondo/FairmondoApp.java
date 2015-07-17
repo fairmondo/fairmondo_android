@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import com.android.volley.toolbox.ImageLoader;
 
@@ -27,7 +28,6 @@ public class FairmondoApp extends Application {
     private ImageLoader imageLoader;
     private FairmondoCategory lastCategory;
     private String cookie;
-    private List<Product> products;
     private Cart cart;
     private boolean isConnected = false;
 
@@ -136,7 +136,7 @@ public class FairmondoApp extends Application {
      * Sets the cart a user uses in the app.
      * @param cart the current cart instance
      */
-    public void setCart(final Cart cart) {
+    public void setCart(@NonNull final Cart cart) {
         this.cart = cart;
     }
 
@@ -146,21 +146,5 @@ public class FairmondoApp extends Application {
      */
     public ModelMapper getModelMapper() {
         return modelMapper;
-    }
-
-    /**
-     * Returns the products a user selected.
-     * @return the products a user selected
-     */
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    /**
-     * Sets the products a user selected.
-     * @param products the products a user selected
-     */
-    public void setProducts(final List<Product> products) {
-        this.products = products;
     }
 }

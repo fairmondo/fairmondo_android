@@ -3,6 +3,7 @@ package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -38,7 +39,6 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  */
 @EFragment(R.layout.fragment_product)
 public class ProductFragment extends Fragment implements OnCartChangeListener, View.OnClickListener {
-
     @FragmentArg
     Parcelable mProductParcelable;
 
@@ -96,7 +96,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     public void init() {
         mRestController.setCartChangeListener(this);
         mProduct = Parcels.unwrap(mProductParcelable);
-        if (mProduct != null) {
+        if (null != mProduct) {
             this.displayProductData();
             this.setOnClickListeners();
         }
@@ -104,40 +104,39 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
 
     private void displayProductData() {
         // TODO display fair, öko, etc tags
-        // TODO display seller details / contact seller
         mTextViewTitle.setText(mProduct.getTitle());
 
         // Image
         String url = mProduct.getTitleImageUrl();
         mProductImageView.setErrorImageResId(R.drawable.fairmondo);
-        if (mProduct.getTitleImage() != null && !mProduct.getTitleImage().getOriginalUrl().equals("")) {
+        if (null != mProduct.getTitleImage() && !mProduct.getTitleImage().getOriginalUrl().equals("")) {
             url = mProduct.getTitleImage().getOriginalUrl();
         }
 
         mProductImageView.setImageUrl(url, mApp.getImageLoader());
 
         // Description
-        if (mProduct.getContent() != null && !mProduct.getContent().equals("")) {
+        if (null != mProduct.getContent() && !mProduct.getContent().equals("")) {
             mTextViewDescriptionBody.setText(this.parseHtml(mProduct.getContent()));
         }
 
         // Terms
-        if (mProduct.getSeller() != null && mProduct.getSeller().getTerms() != null && !mProduct.getSeller().getTerms().equals("")) {
+        if (null != mProduct.getSeller() && null != mProduct.getSeller().getTerms() && !mProduct.getSeller().getTerms().equals("")) {
             mTextViewTermsTitle.setVisibility(View.VISIBLE);
         }
 
         // Fair Percent
-        if (mProduct.getTransportHtml() != null && !mProduct.getTransportHtml().equals("")) {
+        if (null != mProduct.getTransportHtml() && !mProduct.getTransportHtml().equals("")) {
             mTextViewTransportBody.setText(this.parseHtml(mProduct.getTransportHtml()));
         }
 
         // Payment
-        if (mProduct.getPaymentHtml() != null && !mProduct.getPaymentHtml().equals("")) {
+        if (null != mProduct.getPaymentHtml() && !mProduct.getPaymentHtml().equals("")) {
             mTextViewPaymentBody.setText(this.parseHtml(mProduct.getPaymentHtml()));
         }
 
         // Donation
-        if (mProduct.getDonation() != null) {
+        if (null != mProduct.getDonation()) {
             mTextViewDonation.setText(
                     "Diese*r Anbieter*in spendet "
                             + mProduct.getDonation().getPercent()
@@ -145,17 +144,18 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
                             + mProduct.getDonation().getOrganization().getName());
         }
 
-        if (mProduct.getTags() != null) {
+        if (null != mProduct.getTags()) {
             mTextViewConditionBody.setText(mProduct.getTags().getCondition());
             mTextViewConditionTitle.setVisibility(View.VISIBLE);
         }
 
-        // Price TODO: if last number is a 0 it is omitted -  change if possible
-        double priceValue = (mProduct.getPriceCents() / 100.00);
+        // Price
+        final double priceValue = (mProduct.getPriceCents() / 100.00);
         // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
-        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
-        String price = format.format(priceValue);
-        mTextViewPrice.setText(price + " " + format.getCurrency().getSymbol());
+        final NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+        format.setMinimumFractionDigits(2);
+        final String price = format.format(priceValue);
+        mTextViewPrice.setText(price + " €");
 
         if (mProduct.getVat() > 0) {
             mTextViewVat.setVisibility(View.GONE);
@@ -171,14 +171,14 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     /**
      * parse the html text retrieved from the Fairmondo server to normal text.
      */
-    private Spanned parseHtml(final String html) {
+    private Spanned parseHtml(@NonNull final String html) {
         return Html.fromHtml(html);
     }
 
     @UiThread
     @Override
     public void onCartChanged(final Cart cart) {
-        if (cart != null && cart.getCartItem() != null) {
+        if (null != cart && null != cart.getCartItem()) {
             final int itemCount = cart.getCartItem().getRequestedQuantity();
             Snackbar.make(mLayoutContent, itemCount + " Element zum Einkaufswagen hinzugefügt", Snackbar.LENGTH_SHORT)
                     .setAction("Zum Einkaufswagen",
@@ -196,7 +196,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, V
     @Override
     public void onClick(final View view) {
         if (view.getId() == R.id.fragment_product_button_buy) {
-            mRestController.addToCard(Integer.parseInt(mProduct.getId()));
+            mRestController.addToCard(mProduct.getId());
         } else if (view.getId() == R.id.fragment_product_textview_terms_title) {
             WebActivity_.intent(getActivity()).mHtml(mProduct.getSeller().getTerms()).start();
         }

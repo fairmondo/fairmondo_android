@@ -3,7 +3,8 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.provider.SearchRecentSuggestions;
-import android.support.v7.app.ActionBar;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
@@ -12,11 +13,11 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
@@ -24,7 +25,11 @@ import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.RestCommunicator;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.data.datasource.SearchSuggestionProvider;
+import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
+import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
+import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
+import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment_;
 
@@ -33,35 +38,41 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelecti
  */
 @EActivity(R.layout.activity_search)
 @OptionsMenu(R.menu.search)
-public class SearchableActivity extends AbstractActivity implements OnSearchResultListener {
+public class SearchableActivity extends AbstractActivity implements OnDetailedProductListener, OnSearchResultListener {
+    @Bean
+    ProgressController mProgressController;
+
     @App
-    FairmondoApp app;
+    FairmondoApp mApp;
 
     @Bean
-    RestCommunicator restController;
+    RestCommunicator mRestCommunicator;
+
+    @ViewById(R.id.activity_search_toolbar)
+    Toolbar mToolbar;
+
+    private List<Product> mProducts;
+    private int mProductsCount;
+
 
     @AfterInject
     public void initRestController() {
-        restController.setProductListener(this);
+        mRestCommunicator.setProductListener(this);
+        mRestCommunicator.setDetailedProductListener(this);
     }
-
-    @ViewById(R.id.activity_search_toolbar)
-    Toolbar toolbar;
 
     @AfterViews
     void init() {
-        ActionBar actionBar = this.setupActionBar(toolbar);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
+        setHomeUpEnabled(mToolbar);
         this.processSearch(getIntent());
     }
 
-    private void processSearch(final Intent intent) {
+    private void processSearch(@NonNull final Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            final String query = intent.getStringExtra(SearchManager.QUERY);
 
             // Store in Search Suggestion Provider
-            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+            final SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
                     SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
             suggestions.saveRecentQuery(query, null);
 
@@ -69,12 +80,13 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
         }
     }
 
-    private void searchProducts(final String query) {
-        if (app.isConnected()) {
+    private void searchProducts(@Nullable final String query) {
+        if (mApp.isConnected()) {
             if (query != null) {
-                restController.getProducts(query);
+                mRestCommunicator.getProducts(query);
+                mProgressController.startProgress(getSupportFragmentManager(), android.R.id.content);
             } else {
-                this.finish();
+                finish();
             }
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
@@ -83,12 +95,45 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
 
     @Override
     public void onProductsSearchResponse(final List<Product> products) {
-        ProductSelectionFragment searchResultFragment = ProductSelectionFragment_.builder().mProductsParcelable(Parcels.wrap(List.class, products)).build();
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_search_result_container, searchResultFragment).commit();
+        if (products != null && !products.isEmpty()) {
+            this.getDetailedProducts(products);
+        } else {
+            this.initSelectionFragment(null);
+        }
     }
 
-    @OptionsItem(R.id.action_settings)
-    void openSettings() {
-        // TODO to implement
+    private void initSelectionFragment(@Nullable final List<Product> products) {
+        ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
+        if (products != null) {
+            selectionFragment = ProductSelectionFragment_.builder().mProductsParcelable(Parcels.wrap(List.class, products)).build();
+        }
+
+        try {
+            FragmentHelper.replaceFragmentWithTagToBackStack(R.id.activity_search_result_container, selectionFragment, getSupportFragmentManager(), "selectionFragment");
+        } catch (IllegalStateException e) {
+            // TODO send exception to fairmondo server
+            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());
+        }
+    }
+
+    // The basic product information has been received,
+    // now query more detailed information about each product
+    private void getDetailedProducts(@NonNull final List<Product> products) {
+        // Set product count as listener responds to each single product
+        // and app needs to react when all products have finished loading
+        mProductsCount = products.size();
+        mProducts = new ArrayList<>();
+        for (final Product product : products) {
+            mRestCommunicator.getDetailedProduct(product.getSlug());
+        }
+    }
+
+    @Override
+    public void onDetailedProductResponse(@Nullable final Product product) {
+        mProducts.add(product);
+        if (mProducts.size() == mProductsCount) {
+            this.mProgressController.stopProgress();
+            this.initSelectionFragment(mProducts);
+        }
     }
 }

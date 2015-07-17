@@ -5,5 +5,5 @@
 
     <!-- height -->
     <dimen name="height_button">56dp</dimen>
-    <dimen name="height_grid_item">180dp</dimen>
+    <dimen name="height_grid_item">280dp</dimen>
 </resources>

@@ -3,6 +3,8 @@ package de.handler.mobile.android.fairmondo.presentation.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +17,6 @@ import com.android.volley.toolbox.ImageLoader;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
@@ -36,19 +37,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     /**
      * Creates an instance of the ImageAdapter.
      */
-    public ImageAdapter(final Context context, final List<Product> products) {
+    public ImageAdapter(@NonNull final Context context, @NonNull final List<Product> products) {
         mContext = context;
-        if (products != null) {
-            mProducts = products;
-        } else {
-            mProducts = new ArrayList<>();
-        }
+        mProducts = products;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
-        final View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, viewGroup, false);
-        return new ViewHolder(v, mContext, mProducts);
+        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, viewGroup, false);
+        return new ViewHolder(view, mContext, mProducts);
     }
 
     @Override
@@ -58,27 +55,27 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             final Product product = mProducts.get(position);
             if (product != null) {
                 // Set image
-                FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
                 String url = product.getTitleImageUrl();
                 if (product.getTitleImage() != null && !product.getTitleImage().getOriginalUrl().equals("")) {
                     url = product.getTitleImage().getOriginalUrl();
                 }
 
+                final FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
                 this.loadImage(app, viewHolder, url);
 
                 // Set text
-                String description = product.getTitle();
-                viewHolder.textView.setText(description);
+                final String description = product.getTitle();
+                viewHolder.mTextView.setText(description);
 
             } else {
-                viewHolder.imageView.setVisibility(View.GONE);
-                viewHolder.textView.setVisibility(View.GONE);
-                viewHolder.cardView.setVisibility(View.GONE);
+                viewHolder.mImageView.setVisibility(View.GONE);
+                viewHolder.mTextView.setVisibility(View.GONE);
+                viewHolder.mCardView.setVisibility(View.GONE);
             }
         }
     }
 
-    private void loadImage(final FairmondoApp app, final ImageAdapter.ViewHolder viewHolder, final String url) {
+    private void loadImage(@NonNull final FairmondoApp app, @NonNull final ImageAdapter.ViewHolder viewHolder, @Nullable final String url) {
         if (url != null) {
             app.getImageLoader().get(url, new ImageLoader.ImageListener() {
                 @Override
@@ -97,8 +94,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    public void setImage(final ViewHolder viewHolder, final Bitmap bitmap) {
-        viewHolder.imageView.setLocalImageBitmap(bitmap);
+    public void setImage(@NonNull final ViewHolder viewHolder, @NonNull final Bitmap bitmap) {
+        viewHolder.mImageView.setLocalImageBitmap(bitmap);
     }
 
     @Override
@@ -112,23 +109,23 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        protected final CustomNetworkImageView imageView;
-        protected final TextView textView;
-        protected final CardView cardView;
+    protected static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final CustomNetworkImageView mImageView;
+        private final TextView mTextView;
+        private final CardView mCardView;
 
         private final Context mContext;
         private final List<Product> mProducts;
         private int mPosition;
 
-        public ViewHolder(final View view, final Context context, final List<Product> products) {
+        public ViewHolder(@NonNull final View view, @NonNull final Context context, @NonNull final List<Product> products) {
             super(view);
-            this.imageView = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image);
-            this.textView = (TextView) view.findViewById(R.id.image_adapter_text);
-            this.cardView = (CardView) view.findViewById(R.id.image_adapter_card_view);
-            this.cardView.setOnClickListener(this);
-            this.mContext = context;
-            this.mProducts = products;
+            mImageView = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image);
+            mTextView = (TextView) view.findViewById(R.id.image_adapter_text);
+            mCardView = (CardView) view.findViewById(R.id.image_adapter_card_view);
+            mCardView.setOnClickListener(this);
+            mContext = context;
+            mProducts = products;
         }
 
         protected void bindPosition(final int position) {
@@ -136,7 +133,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(final View view) {
             this.startProductGallery(mPosition);
         }
 

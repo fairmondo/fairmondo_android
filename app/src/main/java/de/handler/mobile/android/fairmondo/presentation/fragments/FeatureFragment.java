@@ -30,13 +30,13 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
     Parcelable mProductsParcelable;
 
     @ViewsById({R.id.fragment_feature_image_first, R.id.fragment_feature_image_second, R.id.fragment_feature_image_third})
-    List<CustomNetworkImageView> featuredProductsImageViews;
+    List<CustomNetworkImageView> mFeaturedProductsImageViews;
 
     @ViewsById({R.id.fragment_feature_text_first, R.id.fragment_feature_text_second, R.id.fragment_feature_text_third})
-    List<TextView> featuredProductsTitles;
+    List<TextView> mFeaturedProductsTitles;
 
     @App
-    FairmondoApp app;
+    FairmondoApp mApp;
 
     private ArrayList<Product> mProducts = new ArrayList<>();
 
@@ -45,18 +45,18 @@ public class FeatureFragment extends Fragment implements View.OnClickListener {
          mProducts = Parcels.unwrap(mProductsParcelable);
 
         int i;
-        if (mProducts.size() >= featuredProductsImageViews.size()) {
+        if (mProducts.size() >= mFeaturedProductsImageViews.size()) {
             i = 0;
         } else {
-            i = featuredProductsImageViews.size() - mProducts.size();
+            i = mFeaturedProductsImageViews.size() - mProducts.size();
         }
 
-        for (; i < featuredProductsImageViews.size(); i++) {
-            featuredProductsImageViews.get(i).setImageUrl(
+        for (; i < mFeaturedProductsImageViews.size(); i++) {
+            mFeaturedProductsImageViews.get(i).setImageUrl(
                     mProducts.get(i).getTitleImage().getOriginalUrl(),
-                    app.getImageLoader());
-            featuredProductsImageViews.get(i).setOnClickListener(this);
-            featuredProductsTitles.get(i).setText(mProducts.get(i).getTitle());
+                    mApp.getImageLoader());
+            mFeaturedProductsImageViews.get(i).setOnClickListener(this);
+            mFeaturedProductsTitles.get(i).setText(mProducts.get(i).getTitle());
         }
     }
 

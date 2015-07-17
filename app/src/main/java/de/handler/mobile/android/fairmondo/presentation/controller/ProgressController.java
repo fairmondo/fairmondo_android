@@ -29,12 +29,12 @@ public class ProgressController {
     @UiThread
     public void startProgress(@NonNull final FragmentManager fragmentManager, @IdRes final int container) {
         mFragmentManager = fragmentManager;
-        if (mFragment == null) {
+        if (null == mFragment) {
             mFragment = ProgressFragment_.builder().build();
         }
 
         if (!mAdded) {
-            FragmentHelper.addFragmentWithTag(container, mFragment, TAG, mFragmentManager);
+            FragmentHelper.addFragmentWithTag(container, mFragment, mFragmentManager, TAG);
             mAdded = true;
         }
     }

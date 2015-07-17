@@ -14,6 +14,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.InstanceState;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -40,10 +41,10 @@ public class CategoryFragment extends ListFragment {
     ProgressController mProgressController;
 
     @Bean
-    RestCommunicator restController;
+    RestCommunicator mRestController;
 
     @App
-    FairmondoApp app;
+    FairmondoApp mApp;
 
     private OnClickItemListener onClickItemListener;
     private Activity mActivity;
@@ -52,8 +53,9 @@ public class CategoryFragment extends ListFragment {
     @Override
     public void onAttach(final Activity activity) {
         super.onAttach(activity);
-        mActivity = activity;
+        setRetainInstance(true);
 
+        mActivity = activity;
         try {
             onClickItemListener = (OnClickItemListener) activity;
         } catch (ClassCastException e) {
@@ -63,8 +65,8 @@ public class CategoryFragment extends ListFragment {
 
     @AfterInject
     public void initRestController() {
-        restController.setCategoriesListener((OnCategoriesListener) mActivity);
-        restController.setProductListener((OnSearchResultListener) mActivity);
+        mRestController.setCategoriesListener((OnCategoriesListener) mActivity);
+        mRestController.setProductListener((OnSearchResultListener) mActivity);
     }
 
     @AfterViews
@@ -72,9 +74,9 @@ public class CategoryFragment extends ListFragment {
         // Get categories which have been added to the fragment bundle in the calling class
         mCategories = Parcels.unwrap(mCategoriesParcelable);
         // Extract the title of each category
-        List<String> categoryStrings = new ArrayList<>(mCategories.size());
+        final List<String> categoryStrings = new ArrayList<>(mCategories.size());
         categoryStrings.add(getString(R.string.all_products));
-        for (FairmondoCategory category : mCategories) {
+        for (final FairmondoCategory category : mCategories) {
             categoryStrings.add(category.getName());
         }
 
@@ -84,21 +86,21 @@ public class CategoryFragment extends ListFragment {
 
     @Override
     public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-        onClickItemListener.onItemClick();
+        onClickItemListener.onItemInFragmentClicked();
         mProgressController.startProgress(getFragmentManager(), android.R.id.content);
         if (position > 0) {
             // set last category in application context to know
             // which category was last pressed and get the products
             // if the user wishes it
-            app.setLastCategory(mCategories.get(position - 1));
-            restController.getSubCategories(app.getLastCategory().getId());
+            mApp.setLastCategory(mCategories.get(position - 1));
+            mRestController.getSubCategories(mApp.getLastCategory().getId());
         } else {
             // onAnimationListener.onMinimizeTitleFragment();
             // if user selects "all products" - position 0 - get the products
-            if (null == app.getLastCategory()) {
-                restController.getProducts("");
+            if (null == mApp.getLastCategory()) {
+                mRestController.getProducts("");
             } else {
-                restController.getProducts("", app.getLastCategory().getId());
+                mRestController.getProducts("", mApp.getLastCategory().getId());
             }
         }
     }

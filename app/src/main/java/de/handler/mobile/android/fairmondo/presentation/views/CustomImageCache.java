@@ -2,6 +2,7 @@ package de.handler.mobile.android.fairmondo.presentation.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.LruCache;
 
@@ -50,25 +51,16 @@ public class CustomImageCache extends LruCache<String, Bitmap> implements ImageL
         return maxMemory / 8;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected int sizeOf(final String key, final Bitmap value) {
         return value.getRowBytes() * value.getHeight() / 1024;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Bitmap getBitmap(final String url) {
         return get(url);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void putBitmap(final String url, final Bitmap bitmap) {
         put(url, bitmap);
@@ -77,7 +69,7 @@ public class CustomImageCache extends LruCache<String, Bitmap> implements ImageL
     /**
      * Change standard Volley RequestQueue which is memory based to a disk based solution.
      */
-    public static RequestQueue newRequestQueue(final Context context) {
+    public static RequestQueue newRequestQueue(@NonNull final Context context) {
         // define cache folder
         File rootCache = context.getExternalCacheDir();
         if (rootCache == null) {
@@ -86,13 +78,13 @@ public class CustomImageCache extends LruCache<String, Bitmap> implements ImageL
             rootCache = context.getCacheDir();
         }
 
-        File cacheDir = new File(rootCache, DEFAULT_CACHE_DIR);
+        final File cacheDir = new File(rootCache, DEFAULT_CACHE_DIR);
         cacheDir.mkdirs();
 
-        HttpStack stack = new HurlStack();
-        Network network = new BasicNetwork(stack);
-        DiskBasedCache diskBasedCache = new DiskBasedCache(cacheDir, DEFAULT_DISK_USAGE_BYTES);
-        RequestQueue queue = new RequestQueue(diskBasedCache, network);
+        final HttpStack stack = new HurlStack();
+        final Network network = new BasicNetwork(stack);
+        final DiskBasedCache diskBasedCache = new DiskBasedCache(cacheDir, DEFAULT_DISK_USAGE_BYTES);
+        final RequestQueue queue = new RequestQueue(diskBasedCache, network);
         queue.start();
         return queue;
     }

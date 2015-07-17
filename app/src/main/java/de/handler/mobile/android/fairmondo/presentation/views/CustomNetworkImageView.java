@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -46,11 +47,9 @@ public class CustomNetworkImageView extends NetworkImageView {
      * Set a bitmap manually.
      * @param bitmap the image which should be displayed
      */
-    public void setLocalImageBitmap(final Bitmap bitmap) {
-        if (bitmap != null) {
-            mShowLocalBitmap = true;
-        }
-        this.mLocalBitmap = bitmap;
+    public void setLocalImageBitmap(@NonNull final Bitmap bitmap) {
+        mShowLocalBitmap = true;
+        mLocalBitmap = bitmap;
         requestLayout();
     }
 
@@ -60,7 +59,7 @@ public class CustomNetworkImageView extends NetworkImageView {
      * @param imageLoader the image loader volley uses to get the images from the url
      */
     @Override
-    public void setImageUrl(final String url, final ImageLoader imageLoader) {
+    public void setImageUrl(@NonNull final String url, @NonNull final ImageLoader imageLoader) {
         mShowLocalBitmap = false;
         super.setImageUrl(url, imageLoader);
     }
@@ -80,9 +79,6 @@ public class CustomNetworkImageView extends NetworkImageView {
         td.startTransition(FADE_IN_TIME_MS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         super.onLayout(changed, left, top, right, bottom);

@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -36,36 +37,36 @@ public class WebFragment extends Fragment {
     String mCookie;
 
     @ViewById(R.id.fragment_web_webview)
-    WebView webView;
+    WebView mWebView;
 
     @ViewById(R.id.fragment_web_progress_container)
-    RelativeLayout progressContainer;
+    RelativeLayout mProgressContainer;
 
     @AfterViews
     public void init() {
         // if the html string is null a uri shall be displayed
-        if (mHtml == null) {
-            if (mUri == null || mUri.equals("")) {
+        if (null == mHtml) {
+            if (null == mUri || mUri.equals("")) {
                 return;
             }
 
-            progressContainer.setVisibility(View.VISIBLE);
-            if (mCookie == null) {
-                webView.setWebViewClient(new RedirectWebViewClient());
+            mProgressContainer.setVisibility(View.VISIBLE);
+            if (null == mCookie) {
+                mWebView.setWebViewClient(new RedirectWebViewClient());
             } else {
-                this.setCookie(webView, mCookie, mUri);
+                this.setCookie(mWebView, mCookie, mUri);
             }
 
-            WebSettings webSettings = webView.getSettings();
+            final WebSettings webSettings = mWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            webView.loadUrl(mUri);
+            mWebView.loadUrl(mUri);
         } else {
-            webView.loadData(mHtml, "text/html; charset=UTF-8", null);
+            mWebView.loadData(mHtml, "text/html; charset=UTF-8", null);
         }
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    void setCookie(final WebView webView, final String cookie, final String uri) {
+    void setCookie(@NonNull final WebView webView, @NonNull final String cookie, @NonNull final String uri) {
         webView.setWebViewClient(new RedirectWebViewClient(false));
         // Since LOLLIPOP the cookie manager has not to be explicitly retrieved any more.
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -83,45 +84,39 @@ public class WebFragment extends Fragment {
      * Web View Client which
      * 1. Displays a ProgressBar until the content is completely shown and
      * 2. Prompts the user to use its own browser to be able to navigate to further links.
-     * Workaround for dividing the mApp from the internet page as some content as the cart
+     * Workaround for dividing the app from the internet page as some content as the cart
      * up to now only works on the internet page.
      */
     private class RedirectWebViewClient extends WebViewClient {
-        private boolean handleKeyEvent = true;
+        private boolean mHandleKeyEvent = true;
 
         RedirectWebViewClient (final boolean handleKeyEvent) {
-            this.handleKeyEvent = handleKeyEvent;
+            this.mHandleKeyEvent = handleKeyEvent;
         }
 
         RedirectWebViewClient() { }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             super.shouldOverrideUrlLoading(view, url);
             Log.d(getClass().getCanonicalName(), "redirected to: " + url);
 
-            if (handleKeyEvent) {
+            if (mHandleKeyEvent) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
             } else {
                 if (mCookie != null) {
-                    setCookie(webView, mCookie, url);
+                    setCookie(mWebView, mCookie, url);
                 }
             }
-            return handleKeyEvent;
+            return mHandleKeyEvent;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public void onPageFinished(final WebView view, final String url) {
             super.onPageFinished(view, url);
-            progressContainer.setVisibility(View.GONE);
+            mProgressContainer.setVisibility(View.GONE);
         }
     }
 }

@@ -57,9 +57,8 @@
     </style>
 
     <style name="toolbar">
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
@@ -72,5 +71,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:visibility">gone</item>
         <item name="android:gravity">left</item>
+    </style>
+
+    <style name="container_default">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="container_default.opaque">
+        <item name="android:background">@android:color/white</item>
     </style>
 </resources>

@@ -39,7 +39,7 @@ public interface FairmondoRestService extends RestClientErrorHandling {
     @SetsCookie({"cart"})
     @RequiresCookie({"cart"})
     @Post("line_items.json?line_item[article_id]={productId}&line_item[requested_quantity]={quantity}")
-    Cart addProductToCart(final int productId, final int quantity);
+    Cart addProductToCart(final String productId, final int quantity);
 
     void setCookie(final String name, final String value);
 

@@ -1,8 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+    style="@style/container_default.opaque"
     android:id="@+id/fragment_product_main_container">
 
     <ScrollView
@@ -162,7 +161,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_button"
         android:id="@+id/fragment_product_button_buy"
-        android:background="@drawable/ripple"
+        android:background="@drawable/button_background"
         android:text="@string/fragment_product_buy"
         android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"

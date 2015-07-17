@@ -45,5 +45,6 @@
     <string name="fragment_product_fair_percent">Das faire Prozent</string>
     <string name="fragment_product_condition">Zustand:</string>
     <string name="view_snackbar_goto">Zum Warenkorb</string>
+    <string name="category_count_error">categories were null</string>
 
 </resources>

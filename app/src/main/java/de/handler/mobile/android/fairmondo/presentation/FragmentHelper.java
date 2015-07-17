@@ -33,7 +33,7 @@ public class FragmentHelper {
      * @param tag the tag which adds the fragment to the back stack
      * @param fragmentManager the fragment manager which does the transaction
      */
-    public static void addFragmentWithTag(@IdRes final int container, @NonNull final Fragment fragment, final String tag, @NonNull final FragmentManager fragmentManager) {
+    public static void addFragmentWithTag(@IdRes final int container, @NonNull final Fragment fragment, @NonNull final FragmentManager fragmentManager, @NonNull final String tag) {
         fragmentManager.beginTransaction().add(container, fragment, tag).commit();
     }
 
@@ -70,6 +70,9 @@ public class FragmentHelper {
     public static void replaceFragmentWithTag(@IdRes final int container, @NonNull final Fragment fragment, @NonNull final FragmentManager fragmentManager, @NonNull final String tag) {
         if (fragmentManager.findFragmentByTag(tag) == null) {
             fragmentManager.beginTransaction().replace(container, fragment, tag).commit();
+        } else {
+            final Fragment taggedFragment = fragmentManager.findFragmentByTag(tag);
+            fragmentManager.beginTransaction().replace(container, taggedFragment, tag).commit();
         }
     }
 

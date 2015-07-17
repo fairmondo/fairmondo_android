@@ -27,13 +27,14 @@ public class TitleFragment extends Fragment {
     String mSlogan;
 
     @App
-    FairmondoApp app;
+    FairmondoApp mApp;
 
     @ViewById(R.id.fragment_title_image)
     ImageView mImageViewTitle;
 
     @ViewById(R.id.fragment_title_image_description)
     TextView mTextViewDescription;
+
 
     @AfterViews
     public void init() {
