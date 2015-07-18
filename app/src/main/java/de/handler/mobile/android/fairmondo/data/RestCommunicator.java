@@ -164,8 +164,7 @@ public class RestCommunicator {
     @Background(id = "cancellable_task")
     public void getCategories() {
         if (mApp.isConnected()) {
-            final Type listType = new TypeToken<List<FairmondoCategory>>() {
-            }.getType();
+            final Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
             final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getCategories();
             final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
             mCategoriesListener.onCategoriesResponse(categories);
@@ -230,6 +229,6 @@ public class RestCommunicator {
 
     @UiThread
     public void makeNetworkDialog(final String text, final OnNetworkAvailableListener listener) {
-        UIInformationController.displayDialogInformation(mContext, text, listener, mApp).show();
+        UIInformationController.displayDialogInformation(mContext, text, listener).show();
     }
 }

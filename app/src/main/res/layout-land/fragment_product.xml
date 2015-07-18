@@ -128,33 +128,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_product_textview_condition_title"
                     android:gravity="start"
-                    android:id="@+id/fragment_product_textview_condition_body"/>
-
-                <!-- price -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/secondary_text_light"
-                    android:layout_below="@id/fragment_product_textview_condition_body"
-                    android:textSize="30sp"
-                    android:gravity="end"
-                    android:paddingTop="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingEnd="15dp"
-                    android:id="@+id/fragment_product_textview_price"/>
-
-                <!-- vat -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/secondary_text_light"
-                    android:layout_below="@id/fragment_product_textview_price"
-                    android:text="@string/fragment_product_vat"
-                    android:gravity="end"
-                    android:paddingEnd="15dp"
-                    android:paddingRight="15dp"
                     android:paddingBottom="15dp"
-                    android:id="@+id/fragment_product_textview_price_vat"/>
+                    android:id="@+id/fragment_product_textview_condition_body"/>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
@@ -172,4 +147,18 @@
         android:elevation="4dp" tools:ignore="UnusedAttribute"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <!-- vat -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_white_80"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@android:color/secondary_text_light"
+        android:layout_alignParentBottom="true"
+        android:gravity="right"
+        android:text="@string/fragment_product_vat"
+        android:paddingRight="15dp"
+        android:id="@+id/fragment_product_textview_price_vat"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
 </RelativeLayout>

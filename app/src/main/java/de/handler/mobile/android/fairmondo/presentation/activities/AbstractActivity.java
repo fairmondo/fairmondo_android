@@ -35,14 +35,14 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Background
     void onConnectionChange() {
         this.checkNetworkState();
-        Log.i("FAIRMONDO_APP ", "NETWORKSTATECHANGE");
+        Log.i("FAIRMONDO_APP ", "NETWORK_STATE_CHANGE");
     }
 
     protected void checkNetworkState() {
         final FairmondoApp app = (FairmondoApp_) getApplicationContext();
         final NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (null != activeNetwork) {
-            app.setConnected(activeNetwork.isConnected());
+        if (null != activeNetwork && activeNetwork.isConnected()) {
+            app.setConnected(true);
         } else {
             app.setConnected(false);
         }

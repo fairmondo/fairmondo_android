@@ -62,12 +62,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
     @ViewById(R.id.fragment_product_title)
     TextView mTextViewTitle;
 
-    @ViewById(R.id.fragment_product_textview_price)
-    TextView mTextViewPrice;
-
-    @ViewById(R.id.fragment_product_textview_price_vat)
-    TextView mTextViewVat;
-
     @ViewById(R.id.fragment_product_textview_donation_title)
     TextView mTextViewDonation;
 
@@ -170,11 +164,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         final NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
         format.setMinimumFractionDigits(2);
         final String price = format.format(priceValue);
-        mTextViewPrice.setText(price + " €");
-
-        if (product.getVat() > 0) {
-            mTextViewVat.setVisibility(View.GONE);
-        }
+        mButtonBuy.setText(getString(R.string.fragment_product_buy) + " für " + price + " €");
     }
 
     @UiThread

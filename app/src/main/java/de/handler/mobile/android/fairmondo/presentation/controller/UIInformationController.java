@@ -36,14 +36,12 @@ public class UIInformationController {
     /**
      * Displays a message as Snackbar.
      */
-    public static AlertDialog displayDialogInformation(@NonNull final Context context, @NonNull final String errorMessage, @NonNull final OnNetworkAvailableListener listener, @NonNull final FairmondoApp mApp) {
+    public static AlertDialog displayDialogInformation(@NonNull final Context context, @NonNull final String errorMessage, @NonNull final OnNetworkAvailableListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(errorMessage).setTitle(R.string.app_not_connected);
         builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (mApp.isConnected()) {
-                    listener.onNetworkAvailable();
-                }
+                listener.onNetworkAvailable();
             }
         });
         return builder.create();
