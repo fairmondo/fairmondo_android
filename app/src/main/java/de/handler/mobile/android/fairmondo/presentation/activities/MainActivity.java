@@ -103,9 +103,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @AfterViews
     public void init() {
+        checkNetworkState();
         setupActionBar(mToolbar);
+
         mOrientation = this.determineScreenOrientation();
         mApp.setCookie(prefs.cookie().get());
+
         this.activateTransitions();
         // Fill the title fragment with content
         this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));

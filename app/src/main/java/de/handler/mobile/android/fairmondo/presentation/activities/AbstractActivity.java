@@ -3,6 +3,8 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import org.androidannotations.annotations.Receiver;
 import org.androidannotations.annotations.SystemService;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
+import de.handler.mobile.android.fairmondo.FairmondoApp_;
 
 /**
  * Abstract Activity implemented by all other activities.
@@ -36,7 +39,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     }
 
     protected void checkNetworkState() {
-        final FairmondoApp app = (FairmondoApp) getApplicationContext();
+        final FairmondoApp app = (FairmondoApp_) getApplicationContext();
         final NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if (null != activeNetwork) {
             app.setConnected(activeNetwork.isConnected());
