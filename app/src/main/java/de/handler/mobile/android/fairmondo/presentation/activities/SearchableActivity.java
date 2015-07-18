@@ -17,7 +17,6 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
@@ -25,7 +24,6 @@ import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.RestCommunicator;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.data.datasource.SearchSuggestionProvider;
-import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
@@ -38,7 +36,7 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelecti
  */
 @EActivity(R.layout.activity_search)
 @OptionsMenu(R.menu.search)
-public class SearchableActivity extends AbstractActivity implements OnDetailedProductListener, OnSearchResultListener {
+public class SearchableActivity extends AbstractActivity implements OnSearchResultListener {
     @Bean
     ProgressController mProgressController;
 
@@ -51,14 +49,9 @@ public class SearchableActivity extends AbstractActivity implements OnDetailedPr
     @ViewById(R.id.activity_search_toolbar)
     Toolbar mToolbar;
 
-    private List<Product> mProducts;
-    private int mProductsCount;
-
-
     @AfterInject
     public void initRestController() {
         mRestCommunicator.setProductListener(this);
-        mRestCommunicator.setDetailedProductListener(this);
     }
 
     @AfterViews
@@ -95,11 +88,8 @@ public class SearchableActivity extends AbstractActivity implements OnDetailedPr
 
     @Override
     public void onProductsSearchResponse(final List<Product> products) {
-        if (products != null && !products.isEmpty()) {
-            this.getDetailedProducts(products);
-        } else {
-            this.initSelectionFragment(null);
-        }
+        this.mProgressController.stopProgress();
+        this.initSelectionFragment(products);
     }
 
     private void initSelectionFragment(@Nullable final List<Product> products) {
@@ -113,27 +103,6 @@ public class SearchableActivity extends AbstractActivity implements OnDetailedPr
         } catch (IllegalStateException e) {
             // TODO send exception to fairmondo server
             UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());
-        }
-    }
-
-    // The basic product information has been received,
-    // now query more detailed information about each product
-    private void getDetailedProducts(@NonNull final List<Product> products) {
-        // Set product count as listener responds to each single product
-        // and app needs to react when all products have finished loading
-        mProductsCount = products.size();
-        mProducts = new ArrayList<>();
-        for (final Product product : products) {
-            mRestCommunicator.getDetailedProduct(product.getSlug());
-        }
-    }
-
-    @Override
-    public void onDetailedProductResponse(@Nullable final Product product) {
-        mProducts.add(product);
-        if (mProducts.size() == mProductsCount) {
-            this.mProgressController.stopProgress();
-            this.initSelectionFragment(mProducts);
         }
     }
 }

@@ -31,7 +31,6 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
@@ -43,7 +42,6 @@ import de.handler.mobile.android.fairmondo.data.businessobject.product.Fairmondo
 import de.handler.mobile.android.fairmondo.data.datasource.SearchSuggestionProvider;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
-import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
 import de.handler.mobile.android.fairmondo.presentation.SharedPrefs_;
@@ -60,7 +58,7 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
 
 @EActivity(R.layout.activity_main)
 @OptionsMenu(R.menu.main)
-public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnDetailedProductListener, OnSearchResultListener, OnClickItemListener {
+public class MainActivity extends AbstractActivity implements OnCategoriesListener, OnSearchResultListener, OnClickItemListener {
     private static final int AGAIN_PRESS_TIME = 1500;
 
     @Bean
@@ -90,21 +88,17 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     // Time for calculating interval between last back press action and new one
     // --> exit only when pressed twice
     private long mLastBackPressTime = System.currentTimeMillis();
-    private int mProductsCount;
     private int mOrientation;
-    private List<Product> mProducts;
 
     @Override
     protected void onResume() {
         super.onResume();
-        mProductsCount = 0;
     }
 
     @AfterInject
     public void initRestController() {
         mRestCommunicator.setProductListener(this);
         mRestCommunicator.setCategoriesListener(this);
-        mRestCommunicator.setDetailedProductListener(this);
     }
 
     @AfterViews
@@ -219,33 +213,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
      */
     @Override
     public void onProductsSearchResponse(@Nullable final List<Product> products) {
-        if (products != null && !products.isEmpty()) {
-            this.getDetailedProducts(products);
-        } else {
-            this.hideProgressBar();
-            this.initSelectionFragment(null);
-        }
-    }
-
-    // The basic product information has been received,
-    // now query more detailed information about each product
-    private void getDetailedProducts(@NonNull final List<Product> products) {
-        // Set product count as listener responds to each single product
-        // and app needs to react when all products have finished loading
-        mProductsCount = products.size();
-        mProducts = new ArrayList<>();
-        for (final Product product : products) {
-            mRestCommunicator.getDetailedProduct(product.getSlug());
-        }
-    }
-
-    @Override
-    public void onDetailedProductResponse(@Nullable final Product product) {
-        mProducts.add(product);
-        if (mProducts.size() == mProductsCount) {
-            this.hideProgressBar();
-            this.initSelectionFragment(mProducts);
-        }
+        this.hideProgressBar();
+        this.initSelectionFragment(products);
     }
 
     private void initSelectionFragment(@Nullable final List<Product> products) {
@@ -345,10 +314,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
             getSupportFragmentManager().popBackStack();
 
-                if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 // Reset standard title
                 this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
-                }
+            }
         } else {
             // Handle Back Navigation - if shortly after another back is pushed exit app
             if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
