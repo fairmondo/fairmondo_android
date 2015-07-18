@@ -19,8 +19,7 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
  * Contains a webView for displaying homepage content.
  */
 @EActivity(R.layout.activity_web)
-@OptionsMenu(R.menu.web)
-public class WebActivity extends AbstractActivity {
+ public class WebActivity extends AbstractActivity {
     @App
     FairmondoApp mApp;
 
@@ -42,7 +41,7 @@ public class WebActivity extends AbstractActivity {
 
         if ((mUri != null && mApp.isConnected()) || mHtml != null) {
             final WebFragment webFragment = WebFragment_.builder().mHtml(mHtml).mUri(mUri).mCookie(mCookie).build();
-            FragmentHelper.replaceFragment(android.R.id.content, webFragment, getSupportFragmentManager());
+            FragmentHelper.replaceFragment(R.id.activity_web_container, webFragment, getSupportFragmentManager());
         } else {
             finish();
         }

@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.Surface;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import org.androidannotations.annotations.AfterInject;
@@ -28,7 +29,6 @@ import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
-import org.androidannotations.annotations.sharedpreferences.SharedPref;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -46,7 +46,6 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
-import de.handler.mobile.android.fairmondo.presentation.SharedPrefs;
 import de.handler.mobile.android.fairmondo.presentation.SharedPrefs_;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
@@ -99,12 +98,6 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     protected void onResume() {
         super.onResume();
         mProductsCount = 0;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        prefs.cookie().put(mApp.getCookie());
     }
 
     @AfterInject
@@ -287,7 +280,8 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public boolean onCreateOptionsMenu(final Menu menu) {
         // Get the SearchView and set the searchable configuration
         final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        // Assumes current activity is the searchable activity
+        // change the color of the search hint text to white
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(getResources().getColor(android.R.color.white));
         searchView.setSearchableInfo(mSearchManager.getSearchableInfo(new ComponentName(this, SearchableActivity_.class)));
         searchView.setIconifiedByDefault(true);
         return true;

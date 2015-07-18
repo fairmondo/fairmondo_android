@@ -54,7 +54,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
     }
 
     protected ActionBar setupActionBar(@NonNull final Toolbar toolbar) {
-        // setting the color in themes or styles is a more preferable solution
         setSupportActionBar(toolbar);
         return getSupportActionBar();
     }

@@ -11,6 +11,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.modelmapper.TypeToken;
 
 import java.lang.reflect.Type;
@@ -29,6 +30,7 @@ import de.handler.mobile.android.fairmondo.network.FairmondoRestService;
 import de.handler.mobile.android.fairmondo.network.RestServiceErrorHandler;
 import de.handler.mobile.android.fairmondo.network.dto.Articles;
 import de.handler.mobile.android.fairmondo.network.dto.Product;
+import de.handler.mobile.android.fairmondo.presentation.SharedPrefs_;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 /**
@@ -41,6 +43,9 @@ public class RestCommunicator {
 
     @RestService
     FairmondoRestService mRestService;
+
+    @Pref
+    SharedPrefs_ mPrefs;
 
     @App
     FairmondoApp mApp;
@@ -152,6 +157,7 @@ public class RestCommunicator {
             this.makeToast();
         } else {
             mApp.setCookie(cookie);
+            mPrefs.cookie().put(cookie);
             mApp.setCart(cart);
             mCartChangeListener.onCartChanged(cart);
         }
