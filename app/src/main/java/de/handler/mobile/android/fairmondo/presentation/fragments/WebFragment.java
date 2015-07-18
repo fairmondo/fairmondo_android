@@ -1,5 +1,6 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,6 +43,7 @@ public class WebFragment extends Fragment {
     @ViewById(R.id.fragment_web_progress_container)
     RelativeLayout mProgressContainer;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @AfterViews
     public void init() {
         // if the html string is null a uri shall be displayed

@@ -102,9 +102,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         mRestController.setCartChangeListener(this);
         mRestController.setDetailedProductListener(this);
 
-        mProgressController.startProgress(getFragmentManager(), android.R.id.content);
         mProduct = Parcels.unwrap(mProductParcelable);
         mRestController.getDetailedProduct(mProduct.getSlug());
+        mProgressController.startProgress(getFragmentManager(), R.id.fragment_product_main_container);
     }
 
     @Override

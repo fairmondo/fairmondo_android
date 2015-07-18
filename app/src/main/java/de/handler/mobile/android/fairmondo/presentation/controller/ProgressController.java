@@ -3,6 +3,7 @@ package de.handler.mobile.android.fairmondo.presentation.controller;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
@@ -45,7 +46,12 @@ public class ProgressController {
      */
     @UiThread
     public void stopProgress() {
-        FragmentHelper.removeFragment(mFragment, mFragmentManager);
+        try {
+            FragmentHelper.removeFragment(mFragment, mFragmentManager);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            Log.d(ProgressController.TAG, e.getMessage());
+        }
         mAdded = false;
     }
 }

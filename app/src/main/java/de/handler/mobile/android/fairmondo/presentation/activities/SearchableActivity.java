@@ -74,15 +74,11 @@ public class SearchableActivity extends AbstractActivity implements OnSearchResu
     }
 
     private void searchProducts(@Nullable final String query) {
-        if (mApp.isConnected()) {
-            if (query != null) {
-                mRestCommunicator.getProducts(query);
-                mProgressController.startProgress(getSupportFragmentManager(), android.R.id.content);
-            } else {
-                finish();
-            }
+        if (query != null) {
+            mRestCommunicator.getProducts(query);
+            mProgressController.startProgress(getSupportFragmentManager(), android.R.id.content);
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.app_not_connected), Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

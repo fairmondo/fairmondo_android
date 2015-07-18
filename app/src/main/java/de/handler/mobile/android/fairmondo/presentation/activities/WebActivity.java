@@ -41,7 +41,7 @@ import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
 
         if ((mUri != null && mApp.isConnected()) || mHtml != null) {
             final WebFragment webFragment = WebFragment_.builder().mHtml(mHtml).mUri(mUri).mCookie(mCookie).build();
-            FragmentHelper.replaceFragment(R.id.activity_web_container, webFragment, getSupportFragmentManager());
+            FragmentHelper.replaceFragmentWithTag(R.id.activity_web_container, webFragment, getSupportFragmentManager(), "webfragment");
         } else {
             finish();
         }

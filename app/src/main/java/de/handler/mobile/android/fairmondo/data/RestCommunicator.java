@@ -2,6 +2,7 @@ package de.handler.mobile.android.fairmondo.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterInject;
@@ -27,6 +28,7 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.network.FairmondoRestService;
+import de.handler.mobile.android.fairmondo.data.interfaces.OnNetworkAvailableListener;
 import de.handler.mobile.android.fairmondo.network.RestServiceErrorHandler;
 import de.handler.mobile.android.fairmondo.network.dto.Articles;
 import de.handler.mobile.android.fairmondo.network.dto.Product;
@@ -96,75 +98,138 @@ public class RestCommunicator {
 
     @Background
     public void getProducts(@NonNull final String searchString) {
-        final Articles articles = mRestService.getProducts(searchString);
-        final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() {}.getType();
-        if (articles == null || articles.articles == null) {
-            mProductListener.onProductsSearchResponse(null);
+        if (mApp.isConnected()) {
+            final Articles articles = mRestService.getProducts(searchString);
+            final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() { }.getType();
+            if (articles == null || articles.articles == null) {
+                mProductListener.onProductsSearchResponse(null);
+            } else {
+                List<de.handler.mobile.android.fairmondo.data.businessobject.Product> products = mApp.getModelMapper().map(articles.articles, listType);
+                mProductListener.onProductsSearchResponse(products);
+            }
         } else {
-            List<de.handler.mobile.android.fairmondo.data.businessobject.Product> products = mApp.getModelMapper().map(articles.articles, listType);
-            mProductListener.onProductsSearchResponse(products);
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    getProducts(searchString);
+                }
+            });
         }
+
     }
 
     @Background
     public void getProducts(@NonNull final String searchString, @NonNull final String categoryId) {
-        final Articles articles = mRestService.getProducts(searchString, categoryId);
-        if (articles == null || articles.articles == null || articles.articles.length < 1) {
-            mProductListener.onProductsSearchResponse(null);
-            Log.e(getClass().getCanonicalName(), " getProducts: articles are null");
+        if (mApp.isConnected()) {
+            final Articles articles = mRestService.getProducts(searchString, categoryId);
+            if (articles == null || articles.articles == null || articles.articles.length < 1) {
+                mProductListener.onProductsSearchResponse(null);
+                Log.e(getClass().getCanonicalName(), " getProducts: articles are null");
+            } else {
+                final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() {
+                }.getType();
+                final List<de.handler.mobile.android.fairmondo.data.businessobject.Product> products = mApp.getModelMapper().map(Arrays.asList(articles.articles), listType);
+                mProductListener.onProductsSearchResponse(products);
+            }
         } else {
-            final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() {}.getType();
-            final List<de.handler.mobile.android.fairmondo.data.businessobject.Product> products = mApp.getModelMapper().map(Arrays.asList(articles.articles), listType);
-            mProductListener.onProductsSearchResponse(products);
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    getProducts(searchString, categoryId);
+                }
+            });;
         }
     }
 
     @Background
     public void getDetailedProduct(@NonNull final String slug) {
-        final Product article = mRestService.getDetailedProduct(slug);
-        if (article == null) {
-            mDetailedProductListener.onDetailedProductResponse(null);
+        if (mApp.isConnected()) {
+            final Product article = mRestService.getDetailedProduct(slug);
+            if (article == null) {
+                mDetailedProductListener.onDetailedProductResponse(null);
+            } else {
+                final de.handler.mobile.android.fairmondo.data.businessobject.Product product = mApp.getModelMapper().map(article, de.handler.mobile.android.fairmondo.data.businessobject.Product.class);
+                mDetailedProductListener.onDetailedProductResponse(product);
+            }
         } else {
-            final de.handler.mobile.android.fairmondo.data.businessobject.Product product = mApp.getModelMapper().map(article, de.handler.mobile.android.fairmondo.data.businessobject.Product.class);
-            mDetailedProductListener.onDetailedProductResponse(product);
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    getDetailedProduct(slug);
+                }
+            });
         }
     }
 
     @Background(id = "cancellable_task")
     public void getCategories() {
-        final Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
-        final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getCategories();
-        final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
-        mCategoriesListener.onCategoriesResponse(categories);
+        if (mApp.isConnected()) {
+            final Type listType = new TypeToken<List<FairmondoCategory>>() {
+            }.getType();
+            final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getCategories();
+            final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
+            mCategoriesListener.onCategoriesResponse(categories);
+        } else {
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    getCategories();
+                }
+            });
+        }
     }
 
     @Background(id = "cancellable_task")
     public void getSubCategories(@NonNull final String id) {
-        final Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
-        final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getSubCategories(id);
-        final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
-        mCategoriesListener.onSubCategoriesResponse(categories);
+        if (mApp.isConnected()) {
+            final Type listType = new TypeToken<List<FairmondoCategory>>() {
+            }.getType();
+            final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getSubCategories(id);
+            final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
+            mCategoriesListener.onSubCategoriesResponse(categories);
+        } else {
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    getSubCategories(id);
+                }
+            });
+        }
     }
 
     @Background(id = "cancellable_task")
     public void addToCard(@NonNull final String productId) {
-        mRestService.setCookie("cart", mApp.getCookie());
-        final de.handler.mobile.android.fairmondo.network.dto.Cart cartDTO = mRestService.addProductToCart(productId, 1);
-        final Cart cart = mApp.getModelMapper().map(cartDTO, Cart.class);
-        final String cookie = mRestService.getCookie("cart");
+        if (mApp.isConnected()) {
+            mRestService.setCookie("cart", mApp.getCookie());
+            final de.handler.mobile.android.fairmondo.network.dto.Cart cartDTO = mRestService.addProductToCart(productId, 1);
+            final Cart cart = mApp.getModelMapper().map(cartDTO, Cart.class);
+            final String cookie = mRestService.getCookie("cart");
 
-        if (null == cart || null == cart.getCartId()) {
-            this.makeToast();
+            if (null == cart || null == cart.getCartId()) {
+                this.makeToast(mContext.getString(R.string.item_amount_too_big));
+            } else {
+                mApp.setCookie(cookie);
+                mPrefs.cookie().put(cookie);
+                mApp.setCart(cart);
+                mCartChangeListener.onCartChanged(cart);
+            }
         } else {
-            mApp.setCookie(cookie);
-            mPrefs.cookie().put(cookie);
-            mApp.setCart(cart);
-            mCartChangeListener.onCartChanged(cart);
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    addToCard(productId);
+                }
+            });
         }
     }
 
     @UiThread
-    public void makeToast() {
-        UIInformationController.displayToastInformation(mContext, mContext.getString(R.string.item_amount_too_big));
+    public void makeToast(final String text) {
+        UIInformationController.displayToastInformation(mContext, text);
+    }
+
+    @UiThread
+    public void makeNetworkDialog(final String text, final OnNetworkAvailableListener listener) {
+        UIInformationController.displayDialogInformation(mContext, text, listener, mApp).show();
     }
 }

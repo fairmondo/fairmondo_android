@@ -28,6 +28,7 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
+import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 /**
  * Fragment showing a list of categories.

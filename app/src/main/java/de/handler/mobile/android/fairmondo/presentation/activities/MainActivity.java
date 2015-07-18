@@ -166,7 +166,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
             FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
         } else {
-            UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.app_not_connected));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.app_not_connected));
         }
     }
 
@@ -189,7 +189,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.showProgressBar();
             mRestCommunicator.getProducts(searchRequest, categoryId);
         } else {
-            UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.app_not_connected));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.app_not_connected));
         }
     }
 
@@ -263,7 +263,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     void openCart() {
         final Cart cart = mApp.getCart();
         if (cart == null || cart.getCartItem() == null || cart.getCartItem().getRequestedQuantity() <= 0) {
-            UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.cart_has_no_items));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.cart_has_no_items));
         } else {
             WebActivity_.intent(this).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
         }
