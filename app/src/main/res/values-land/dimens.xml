@@ -3,6 +3,8 @@
     <dimen name="margin_activity_horizontal">56dp</dimen>
     <dimen name="margin_activity_vertical">56dp</dimen>
 
+    <dimen name="margin_app">56dp</dimen>
+
     <!-- height -->
     <dimen name="height_button">56dp</dimen>
     <dimen name="height_grid_item">280dp</dimen>

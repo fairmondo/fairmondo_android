@@ -23,12 +23,27 @@
                 android:src="@drawable/fairmondo"
                 android:id="@+id/fragment_product_image_view" />
 
+            <!-- vat -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent_white_80"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/secondary_text_light"
+                android:layout_below="@id/fragment_product_image_view"
+                android:layout_marginTop="-15dp"
+                android:paddingRight="15dp"
+                android:gravity="right"
+                android:text="@string/fragment_product_vat"
+                android:id="@+id/fragment_product_textview_price_vat"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingRight="@dimen/margin_app"
+                android:paddingLeft="@dimen/margin_app"
                 android:layout_below="@id/fragment_product_image_view"
                 android:id="@+id/fragment_product_content_container"
                 tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
@@ -147,18 +162,4 @@
         android:elevation="4dp" tools:ignore="UnusedAttribute"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
-    <!-- vat -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent_white_80"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@android:color/secondary_text_light"
-        android:layout_alignParentBottom="true"
-        android:gravity="right"
-        android:text="@string/fragment_product_vat"
-        android:paddingRight="15dp"
-        android:id="@+id/fragment_product_textview_price_vat"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
 </RelativeLayout>

@@ -24,6 +24,21 @@
                 android:src="@drawable/fairmondo"
                 android:id="@+id/fragment_product_image_view" />
 
+            <!-- vat -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent_white_80"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/secondary_text_light"
+                android:layout_below="@id/fragment_product_image_view"
+                android:gravity="right"
+                android:text="@string/fragment_product_vat"
+                android:layout_marginTop="-15dp"
+                android:paddingRight="15dp"
+                android:id="@+id/fragment_product_textview_price_vat"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,18 +157,4 @@
         android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:layout_alignParentBottom="true"/>
-
-    <!-- vat -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent_white_80"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@android:color/secondary_text_light"
-        android:layout_above="@id/fragment_product_button_buy"
-        android:gravity="right"
-        android:text="@string/fragment_product_vat"
-        android:paddingRight="15dp"
-        android:id="@+id/fragment_product_textview_price_vat"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
 </RelativeLayout>

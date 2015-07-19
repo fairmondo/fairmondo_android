@@ -11,21 +11,22 @@
         android:id="@+id/image_adapter_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:selectableItemBackground"
-
         android:layout_gravity="center"
-        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_alignParentTop="true"
-        card_view:cardElevation="20sp"
+        card_view:cardElevation="4dp"
         card_view:cardCornerRadius="4dp">
 
         <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
+            android:paddingBottom="4dp"
             android:minHeight="150dp"
             android:id="@+id/image_adapter_image"
             android:src="@drawable/fairmondo_small"
@@ -37,8 +38,4 @@
             android:id="@+id/image_adapter_text" />
 
     </android.support.v7.widget.CardView>
-
-
-
-
 </RelativeLayout>

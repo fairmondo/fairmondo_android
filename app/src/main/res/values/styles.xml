@@ -29,6 +29,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:paddingTop">8dp</item>
+        <item name="android:background">@color/transparent_grey_80</item>
         <item name="android:singleLine">true</item>
     </style>
 
@@ -59,6 +60,7 @@
     <style name="toolbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
@@ -76,6 +78,7 @@
     <style name="container_default">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/fairmondo_gray_light</item>
     </style>
 
     <style name="container_default.opaque">
