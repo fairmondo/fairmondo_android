@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/container_default">
+    style="@style/container_default"
+    android:paddingBottom="@dimen/margin_app">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_product_category_gridview"
