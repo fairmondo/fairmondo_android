@@ -8,4 +8,5 @@
     <!-- height -->
     <dimen name="height_button">56dp</dimen>
     <dimen name="height_grid_item">280dp</dimen>
+    <dimen name="height_filter">64dp</dimen>
 </resources>

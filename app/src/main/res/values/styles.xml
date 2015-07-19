@@ -78,10 +78,38 @@
     <style name="container_default">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/fairmondo_gray_light</item>
+        <item name="android:background">@color/transparent_blue_20</item>
     </style>
 
     <style name="container_default.opaque">
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="filter_row">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_filter</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">10</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="basic_view">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+    </style>
+
+    <style name="basic_view.radio_button">
+        <item name="android:layout_height">@dimen/height_filter</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="basic_view.header">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingLeft">24dp</item>
     </style>
 </resources>

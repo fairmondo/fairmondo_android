@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    style="@style/container_default">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_product_selection_toolbar"
+        app:theme="@style/AppTheme.Toolbar"
+        style="@style/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activity_product_selection_main_container"/>
+
+</LinearLayout>

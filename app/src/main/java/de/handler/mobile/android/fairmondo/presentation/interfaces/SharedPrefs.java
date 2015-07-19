@@ -1,4 +1,4 @@
-package de.handler.mobile.android.fairmondo.presentation;
+package de.handler.mobile.android.fairmondo.presentation.interfaces;
 
 import org.androidannotations.annotations.sharedpreferences.DefaultString;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;

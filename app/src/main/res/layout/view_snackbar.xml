@@ -10,8 +10,8 @@
     <TextView
         android:id="@+id/view_snackbar_textViewCart"
         android:text="@string/view_snackbar_goto"
-        android:drawableStart="@drawable/cart"
-        android:drawableLeft="@drawable/cart"
+        android:drawableStart="@drawable/ic_shopping_cart_white_48dp"
+        android:drawableLeft="@drawable/ic_shopping_cart_white_48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

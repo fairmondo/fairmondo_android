@@ -47,5 +47,9 @@
     <string name="view_snackbar_goto">Zum Warenkorb</string>
     <string name="category_count_error">categories were null</string>
     <string name="retry">noch einmal versuchen</string>
+    <string name="action_filter">Filter</string>
+    <string name="sort_alphabetically">Produkte alphabetisch sortieren</string>
+    <string name="sort_price">Produkte nach Preis sortieren</string>
+    <string name="text_sort_title">Sortieren</string>
 
 </resources>

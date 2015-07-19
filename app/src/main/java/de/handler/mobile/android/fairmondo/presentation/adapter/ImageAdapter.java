@@ -31,8 +31,8 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  * Image Adapter used in GridView Fragments.
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-    private final List<Product> mProducts;
     private final Context mContext;
+    private List<Product> mProducts;
 
     /**
      * Creates an instance of the ImageAdapter.

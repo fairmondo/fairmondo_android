@@ -1,57 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/container_default.opaque"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:ignore="UnusedAttribute">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <TextView
+        style="@style/basic_view.header"
+        android:text="@string/text_sort_title"/>
+
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_filter_row_one"
-        android:weightSum="2">
+        android:padding="16dp">
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/fragment_filter_spinner_condition" />
+        <RadioButton
+            android:id="@+id/fragment_filter_price_radio_button"
+            android:text="@string/sort_price"
+            style="@style/basic_view.radio_button" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/fragment_filter_spinner_filter" />
+        <RadioButton
+            android:id="@+id/fragment_filter_alphabetical_radio_button"
+            android:text="@string/sort_alphabetically"
+            style="@style/basic_view.radio_button" />
 
-    </LinearLayout>
+    </RadioGroup>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_filter_row_two"
-        android:layout_below="@+id/fragment_filter_row_one"
-        android:weightSum="2">
+        android:text="@android:string/ok"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_background"
+        android:id="@+id/fragment_filter_button_ok"
+        style="@style/Widget.AppCompat.ButtonBar"/>
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/fragment_filter_spinner_price" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/fragment_filter_spinner_location" />
-
-    </LinearLayout>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_below="@+id/fragment_filter_row_two"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_filter_spinner_sorting" />
-
-
-</RelativeLayout>
+</LinearLayout>

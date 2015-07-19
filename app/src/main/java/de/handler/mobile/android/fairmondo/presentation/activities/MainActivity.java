@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.Surface;
@@ -44,16 +45,14 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
-import de.handler.mobile.android.fairmondo.presentation.SharedPrefs_;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment_;
-import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment;
-import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment_;
 import de.handler.mobile.android.fairmondo.presentation.fragments.TitleFragment_;
 import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
+import de.handler.mobile.android.fairmondo.presentation.interfaces.SharedPrefs_;
 
 
 @EActivity(R.layout.activity_main)
@@ -206,8 +205,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
             }
         } catch (final IllegalStateException e) {
-            // TODO send exception to fairmondo server
-            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());
+            Log.e(getClass().getCanonicalName(), e.getMessage());
         }
     }
 
@@ -217,21 +215,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     @Override
     public void onProductsSearchResponse(@Nullable final List<Product> products) {
         this.hideProgressBar();
-        this.initSelectionFragment(products);
+        this.startSelectionActivity(products);
     }
 
-    private void initSelectionFragment(@Nullable final List<Product> products) {
-        ProductSelectionFragment selectionFragment = new ProductSelectionFragment_();
-        if (products != null) {
-            selectionFragment = ProductSelectionFragment_.builder().mProductsParcelable(Parcels.wrap(List.class, products)).build();
-        }
-
-        try {
-            FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, selectionFragment, getSupportFragmentManager(), "selectionFragment");
-        } catch (IllegalStateException e) {
-            // TODO send exception to fairmondo server
-            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), e.getMessage());
-        }
+    private void startSelectionActivity(@Nullable final List<Product> products) {
+        ProductSelectionActivity_.intent(this).mProductListParcelable(Parcels.wrap(List.class, products)).start();
     }
 
     /**

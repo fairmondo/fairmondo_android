@@ -2,7 +2,6 @@ package de.handler.mobile.android.fairmondo.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterInject;
@@ -26,13 +25,13 @@ import de.handler.mobile.android.fairmondo.data.businessobject.product.Fairmondo
 import de.handler.mobile.android.fairmondo.data.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
+import de.handler.mobile.android.fairmondo.data.interfaces.OnNetworkAvailableListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.network.FairmondoRestService;
-import de.handler.mobile.android.fairmondo.data.interfaces.OnNetworkAvailableListener;
 import de.handler.mobile.android.fairmondo.network.RestServiceErrorHandler;
 import de.handler.mobile.android.fairmondo.network.dto.Articles;
 import de.handler.mobile.android.fairmondo.network.dto.Product;
-import de.handler.mobile.android.fairmondo.presentation.SharedPrefs_;
+import de.handler.mobile.android.fairmondo.presentation.interfaces.SharedPrefs_;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 /**
@@ -137,7 +136,7 @@ public class RestCommunicator {
                 public void onNetworkAvailable() {
                     getProducts(searchString, categoryId);
                 }
-            });;
+            });
         }
     }
 
