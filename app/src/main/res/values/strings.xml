@@ -51,5 +51,6 @@
     <string name="sort_alphabetically">Produkte alphabetisch sortieren</string>
     <string name="sort_price">Produkte nach Preis sortieren</string>
     <string name="text_sort_title">Sortieren</string>
+    <string name="end_of_list">Sie haben das Ende der Liste erreicht</string>
 
 </resources>

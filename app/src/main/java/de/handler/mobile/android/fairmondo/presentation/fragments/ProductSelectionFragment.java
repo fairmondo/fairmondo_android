@@ -31,6 +31,7 @@ import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.data.businessobject.product.FairmondoCategory;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.adapter.ImageAdapter;
+import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 /**
  * Displays all categories for products.
@@ -106,9 +107,16 @@ public class ProductSelectionFragment extends Fragment implements OnSearchResult
     }
 
     @Override
-    public void onProductsSearchResponse(final List<Product> products) {
-        mProducts.addAll(products);
-        this.updateAdapter(mProducts);
+    public void onProductsSearchResponse(@Nullable List<Product> products) {
+        if (products == null) {
+            UIInformationController.displaySnackbarInformation(getActivity().findViewById(android.R.id.content), getString(R.string.end_of_list));
+            return;
+        }
+
+        final boolean updated = mProducts.addAll(products);
+        if (updated) {
+            this.updateAdapter(mProducts);
+        }
     }
 
     @UiThread
