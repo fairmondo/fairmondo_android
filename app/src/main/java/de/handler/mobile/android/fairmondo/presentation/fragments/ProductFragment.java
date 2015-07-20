@@ -32,6 +32,7 @@ import de.handler.mobile.android.fairmondo.data.businessobject.Cart;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
+import de.handler.mobile.android.fairmondo.presentation.FormatHelper;
 import de.handler.mobile.android.fairmondo.presentation.activities.WebActivity_;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
 import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView;
@@ -159,11 +160,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         }
 
         // Price
-        final double priceValue = (product.getPriceCents() / 100.00);
-        // Localized price value (e.g. instead of '.' use ',' in German) and corresponding currency
-        final NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
-        format.setMinimumFractionDigits(2);
-        final String price = format.format(priceValue);
+        final String price = FormatHelper.formatPrice(product.getPriceCents());
         mButtonBuy.setText(getString(R.string.fragment_product_buy) + " für " + price + " €");
     }
 

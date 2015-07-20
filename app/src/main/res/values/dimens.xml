@@ -9,4 +9,5 @@
     <dimen name="height_button">56dp</dimen>
     <dimen name="height_grid_item">180dp</dimen>
     <dimen name="height_filter">64dp</dimen>
+    <dimen name="height_list_item">88dp</dimen>
 </resources>

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 /**
  * Handles the fragment transactions.
  */
-public class FragmentHelper {
+public final class FragmentHelper {
     /**
      * Private Contructor to prevent instantiation of helper class.
      */

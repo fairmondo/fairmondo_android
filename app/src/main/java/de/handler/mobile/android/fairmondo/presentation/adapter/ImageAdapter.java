@@ -5,11 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -23,6 +23,7 @@ import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.FairmondoApp_;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
+import de.handler.mobile.android.fairmondo.presentation.FormatHelper;
 import de.handler.mobile.android.fairmondo.presentation.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView;
 
@@ -44,7 +45,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
-        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_grid_item, viewGroup, false);
+        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_list_item, viewGroup, false);
         return new ViewHolder(view, mContext, mProducts);
     }
 
@@ -54,6 +55,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         if (mProducts.size() > 0) {
             final Product product = mProducts.get(position);
             if (product != null) {
+
                 // Set image
                 String url = product.getTitleImageUrl();
                 if (product.getTitleImage() != null && !product.getTitleImage().getOriginalUrl().equals("")) {
@@ -63,14 +65,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 final FairmondoApp_ app = (FairmondoApp_) mContext.getApplicationContext();
                 this.loadImage(app, viewHolder, url);
 
+                // Set price
+                final String price = FormatHelper.formatPrice(product.getPriceCents());
+                viewHolder.mTextViewPrice.setText(price + " €");
+
                 // Set text
                 final String description = product.getTitle();
-                viewHolder.mTextView.setText(description);
+                viewHolder.mTextViewTitle.setText(description);
 
             } else {
-                viewHolder.mImageView.setVisibility(View.GONE);
-                viewHolder.mTextView.setVisibility(View.GONE);
-                viewHolder.mCardView.setVisibility(View.GONE);
+                viewHolder.mListItem.setVisibility(View.GONE);
             }
         }
     }
@@ -111,8 +115,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     protected static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final CustomNetworkImageView mImageView;
-        private final TextView mTextView;
-        private final CardView mCardView;
+        private final TextView mTextViewTitle;
+        private final TextView mTextViewPrice;
+        private final LinearLayout mListItem;
 
         private final Context mContext;
         private final List<Product> mProducts;
@@ -121,9 +126,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         public ViewHolder(@NonNull final View view, @NonNull final Context context, @NonNull final List<Product> products) {
             super(view);
             mImageView = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image);
-            mTextView = (TextView) view.findViewById(R.id.image_adapter_text);
-            mCardView = (CardView) view.findViewById(R.id.image_adapter_card_view);
-            mCardView.setOnClickListener(this);
+            mTextViewTitle = (TextView) view.findViewById(R.id.image_adapter_text);
+            mTextViewPrice = (TextView) view.findViewById(R.id.image_adapter_price);
+            mListItem = (LinearLayout) view.findViewById(R.id.image_adapter_list_item);
+            mListItem.setOnClickListener(this);
             mContext = context;
             mProducts = products;
         }

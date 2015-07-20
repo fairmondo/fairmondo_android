@@ -27,10 +27,10 @@
 
     <style name="textview_banner_style_grid_view" parent="textview_banner_style">
         <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginTop">30dp</item>
-        <item name="android:paddingTop">8dp</item>
+        <item name="android:padding">4dp</item>
         <item name="android:background">@color/transparent_grey_80</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="style_grid_item">
@@ -78,7 +78,7 @@
     <style name="container_default">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/transparent_blue_20</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="container_default.opaque">
