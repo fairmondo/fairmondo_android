@@ -43,6 +43,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         mProducts = products;
     }
 
+    /**
+     * Enables external changes to the adapter without instantiating it again.
+     * @param products the updated lis of items.
+     */
+    public void updateItems(@NonNull final List<Product> products) {
+        mProducts = products;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_list_item, viewGroup, false);

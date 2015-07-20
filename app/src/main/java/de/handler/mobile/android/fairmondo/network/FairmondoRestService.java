@@ -21,6 +21,9 @@ import de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory
  */
 @Rest(rootUrl = "https://www.fairmondo.de/", converters = {GsonHttpMessageConverter.class}, interceptors = {HttpResponseInterceptor.class})
 public interface FairmondoRestService extends RestClientErrorHandling {
+    @Get("articles.json?article_search_form[q]={searchString}&article_search_form[category_id]={categoryId}&[page]={page}")
+    Articles getProducts(final String searchString, final String categoryId, final int page);
+
     @Get("articles.json?article_search_form[q]={searchString}&article_search_form[category_id]={categoryId}")
     Articles getProducts(final String searchString, final String categoryId);
 

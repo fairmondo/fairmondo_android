@@ -125,8 +125,29 @@ public class RestCommunicator {
                 mProductListener.onProductsSearchResponse(null);
                 Log.e(getClass().getCanonicalName(), " getProducts: articles are null");
             } else {
-                final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() {
-                }.getType();
+                final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() { }.getType();
+                final List<de.handler.mobile.android.fairmondo.data.businessobject.Product> products = mApp.getModelMapper().map(Arrays.asList(articles.articles), listType);
+                mProductListener.onProductsSearchResponse(products);
+            }
+        } else {
+            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+                @Override
+                public void onNetworkAvailable() {
+                    getProducts(searchString, categoryId);
+                }
+            });
+        }
+    }
+
+    @Background
+    public void getProducts(@NonNull final String searchString, @NonNull final String categoryId, @NonNull final Integer page) {
+        if (mApp.isConnected()) {
+            final Articles articles = mRestService.getProducts(searchString, categoryId, page);
+            if (articles == null || articles.articles == null || articles.articles.length < 1) {
+                mProductListener.onProductsSearchResponse(null);
+                Log.e(getClass().getCanonicalName(), " getProducts: articles are null");
+            } else {
+                final Type listType = new TypeToken<List<de.handler.mobile.android.fairmondo.data.businessobject.Product>>() { }.getType();
                 final List<de.handler.mobile.android.fairmondo.data.businessobject.Product> products = mApp.getModelMapper().map(Arrays.asList(articles.articles), listType);
                 mProductListener.onProductsSearchResponse(products);
             }
