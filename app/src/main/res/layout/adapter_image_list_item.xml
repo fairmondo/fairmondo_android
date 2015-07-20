@@ -9,9 +9,8 @@
     android:id="@+id/image_adapter_list_item">
 
     <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
-        android:layout_width="wrap_content"
+        android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:minWidth="64dp"
         android:layout_weight="3"
         android:scaleType="centerCrop"
         android:paddingBottom="4dp"
@@ -29,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:lines="2"
             android:ellipsize="end"
@@ -40,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/darker_gray"
             android:textSize="16sp"
             android:textStyle="bold"
             android:id="@+id/image_adapter_price"
