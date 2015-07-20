@@ -1,160 +1,192 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/container_default.opaque"
-    android:id="@+id/fragment_product_main_container">
+    style="@style/container_default.opaque">
 
-    <ScrollView
+    <RelativeLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/height_button"
-        android:animateLayoutChanges="true">
+        android:id="@+id/fragment_product_main_container">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_product_product_container">
-
-            <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:background="@android:color/white"
-                android:src="@drawable/fairmondo"
-                android:id="@+id/fragment_product_image_view" />
-
-            <!-- vat -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent_white_80"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@android:color/secondary_text_light"
-                android:layout_below="@id/fragment_product_image_view"
-                android:gravity="right"
-                android:text="@string/fragment_product_vat"
-                android:layout_marginTop="-15dp"
-                android:paddingRight="15dp"
-                android:id="@+id/fragment_product_textview_price_vat"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:paddingBottom="@dimen/height_button"
+            android:animateLayoutChanges="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_below="@id/fragment_product_image_view"
-                android:id="@+id/fragment_product_content_container"
-                tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
-                android:orientation="vertical"
-                tools:ignore="RtlSymmetry, RtlHardcoded">
+                android:id="@+id/fragment_product_product_container">
 
-                <!-- Title -->
+                <de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/white"
+                    android:src="@drawable/fairmondo"
+                    android:id="@+id/fragment_product_image_view" />
+
+                <!-- vat -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:minHeight="50dp"
-                    android:textSize="30sp"
-                    android:gravity="center"
-                    android:id="@+id/fragment_product_title"
-                    android:lines="2"
-                    android:ellipsize="end"/>
-
-                <!-- Description -->
-                <TextView
-                    style="@style/product_detail_section_title"
-                    android:text="@string/fragment_product_description"
-                    android:layout_below="@id/fragment_product_title"
-                    android:id="@+id/fragment_product_textview_description_title"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:layout_marginTop="12dp"
-                    android:layout_below="@id/fragment_product_textview_description_title"
-                    android:id="@+id/fragment_product_textview_description_body"/>
-
-                <!-- Terms -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_product_terms"
-                    android:layout_below="@id/fragment_product_textview_description_body"
-                    android:id="@+id/fragment_product_textview_terms_title"
-                    android:visibility="gone"/>
-
-                <!-- fair percent -->
-                <TextView
-                    style="@style/product_detail_section_title"
-                    android:text="@string/fragment_product_donation"
-                    android:layout_below="@id/fragment_product_textview_terms_title"
-                    android:id="@+id/fragment_product_textview_fair_percent_title"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:visibility="gone"
-                    android:layout_below="@id/fragment_product_textview_fair_percent_title"
-                    android:id="@+id/fragment_product_textview_fair_percent_body"/>
-
-                <!-- transport -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:layout_below="@id/fragment_product_textview_fair_percent_body"
-                    android:id="@+id/fragment_product_textview_transport_body"/>
-
-                <!-- payment -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:layout_below="@id/fragment_product_textview_transport_body"
-                    android:id="@+id/fragment_product_textview_payment_body"/>
-
-                <!-- donation -->
-                <TextView
-                    style="@style/product_detail_section_title"
-                    android:layout_below="@id/fragment_product_textview_payment_body"
-                    android:id="@+id/fragment_product_textview_donation_title"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:background="@color/transparent_white_80"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@android:color/secondary_text_light"
-                    android:layout_below="@id/fragment_product_textview_donation_title"
-                    android:gravity="start"
-                    android:id="@+id/fragment_product_textview_donation_body"/>
+                    android:layout_below="@id/fragment_product_image_view"
+                    android:gravity="right"
+                    android:text="@string/fragment_product_vat"
+                    android:layout_marginTop="-15dp"
+                    android:paddingRight="15dp"
+                    android:id="@+id/fragment_product_textview_price_vat"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-                <!-- condition -->
-                <TextView
-                    android:text="@string/fragment_product_condition"
-                    android:layout_below="@id/fragment_product_textview_donation_body"
-                    android:id="@+id/fragment_product_textview_condition_title"
-                    style="@style/product_detail_section_title" />
-
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fragment_product_textview_condition_title"
-                    android:gravity="start"
-                    android:paddingBottom="15dp"
-                    android:id="@+id/fragment_product_textview_condition_body" />
-            </RelativeLayout>
-        </RelativeLayout>
-    </ScrollView>
+                    android:padding="20dp"
+                    android:layout_below="@id/fragment_product_image_view"
+                    android:id="@+id/fragment_product_content_container"
+                    tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
+                    android:orientation="vertical"
+                    tools:ignore="RtlSymmetry, RtlHardcoded">
 
-    <Button
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="20dp"
+                        android:minHeight="50dp"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:id="@+id/fragment_product_title"
+                        android:lines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- Description -->
+                    <TextView
+                        style="@style/product_detail_section_title"
+                        android:text="@string/fragment_product_description"
+                        android:layout_below="@id/fragment_product_title"
+                        android:id="@+id/fragment_product_textview_description_title"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@id/fragment_product_textview_description_title"
+                        android:id="@+id/fragment_product_textview_description_body"/>
+
+                    <!-- Terms -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_product_terms"
+                        android:layout_below="@id/fragment_product_textview_description_body"
+                        android:id="@+id/fragment_product_textview_terms_title"
+                        android:visibility="gone"/>
+
+                    <!-- fair percent -->
+                    <TextView
+                        style="@style/product_detail_section_title"
+                        android:text="@string/fragment_product_donation"
+                        android:layout_below="@id/fragment_product_textview_terms_title"
+                        android:id="@+id/fragment_product_textview_fair_percent_title"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:visibility="gone"
+                        android:layout_below="@id/fragment_product_textview_fair_percent_title"
+                        android:id="@+id/fragment_product_textview_fair_percent_body"/>
+
+                    <!-- transport -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_below="@id/fragment_product_textview_fair_percent_body"
+                        android:id="@+id/fragment_product_textview_transport_body"/>
+
+                    <!-- payment -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_below="@id/fragment_product_textview_transport_body"
+                        android:id="@+id/fragment_product_textview_payment_body"/>
+
+                    <!-- donation -->
+                    <TextView
+                        style="@style/product_detail_section_title"
+                        android:layout_below="@id/fragment_product_textview_payment_body"
+                        android:id="@+id/fragment_product_textview_donation_title"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:layout_below="@id/fragment_product_textview_donation_title"
+                        android:gravity="start"
+                        android:id="@+id/fragment_product_textview_donation_body"/>
+
+                    <!-- condition -->
+                    <TextView
+                        android:text="@string/fragment_product_condition"
+                        android:layout_below="@id/fragment_product_textview_donation_body"
+                        android:id="@+id/fragment_product_textview_condition_title"
+                        style="@style/product_detail_section_title" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/fragment_product_textview_condition_title"
+                        android:gravity="start"
+                        android:paddingBottom="15dp"
+                        android:id="@+id/fragment_product_textview_condition_body" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:id="@+id/fragment_product_button_buy"
+            android:background="@drawable/button_background"
+            android:text="@string/fragment_product_buy"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_button"
-        android:id="@+id/fragment_product_button_buy"
-        android:background="@drawable/button_background"
-        android:text="@string/fragment_product_buy"
-        android:textColor="@android:color/white"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="match_parent"
+        android:padding="32dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:id="@+id/fragment_product_container_product_unavailable"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/empty_fragment_error"
+            android:layout_weight="5"
+            android:gravity="bottom"
+            android:text="@string/fragment_product_not_available_title">
+        </TextView>
+
+        <TextView
+            style="@style/empty_fragment_error"
+            android:layout_weight="5"
+            android:gravity="top"
+            android:paddingTop="16dp"
+            android:textSize="16sp"
+            android:text="@string/fragment_product_not_available_text">
+        </TextView>
+    </LinearLayout>
 </RelativeLayout>

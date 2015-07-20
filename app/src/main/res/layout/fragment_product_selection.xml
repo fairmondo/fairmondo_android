@@ -8,16 +8,9 @@
         android:scrollbars="vertical"
         style="@style/style_grid_item"/>
 
-
     <TextView
+        style="@style/empty_fragment_error"
         android:id="@+id/fragment_product_selection_empty"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textSize="22sp"
-        android:text="@string/fragment_product_selection_empty"/>
-
-
+        android:text="@string/fragment_product_selection_empty"
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -10,9 +10,9 @@ import de.handler.mobile.android.fairmondo.data.businessobject.product.seller.Fa
 @Parcel
 public class FairmondoSeller {
     protected String nickname;
-    protected boolean legalEntity;
-    protected boolean ngo;
-    protected boolean vacationing;
+    protected Boolean legalEntity;
+    protected Boolean ngo;
+    protected Boolean vacationing;
     protected String name;
     protected String type;
     protected String typeName;

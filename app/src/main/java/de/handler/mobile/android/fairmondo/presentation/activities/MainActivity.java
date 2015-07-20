@@ -302,6 +302,10 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     public void onBackPressed() {
         this.hideProgressBar();
         mApp.setLastCategory(null);
+
+        // Reset Title
+        setTitle(getString(R.string.app_name));
+
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
             getSupportFragmentManager().popBackStack();
 

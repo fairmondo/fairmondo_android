@@ -5,8 +5,8 @@ package de.handler.mobile.android.fairmondo.network.dto.product.seller;
  */
 public class FairmondoRating {
     public String url;
-    public int count;
-    public double positive_percent;
-    public double negative_percent;
-    public double neutral_percent;
+    public Integer count;
+    public Double positive_percent;
+    public Double negative_percent;
+    public Double neutral_percent;
 }

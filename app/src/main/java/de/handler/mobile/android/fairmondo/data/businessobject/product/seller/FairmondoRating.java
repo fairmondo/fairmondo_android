@@ -8,10 +8,10 @@ import org.parceler.Parcel;
 @Parcel
 public class FairmondoRating {
     protected String url;
-    protected int count;
-    protected double positivePercent;
-    protected double negativePercent;
-    protected double neutralPercent;
+    protected Integer count;
+    protected Double positivePercent;
+    protected Double negativePercent;
+    protected Double neutralPercent;
 
     public String getUrl() {
         return url;

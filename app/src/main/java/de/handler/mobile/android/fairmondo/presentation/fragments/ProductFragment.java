@@ -8,8 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,8 +24,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.parceler.Parcels;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.lang.reflect.Field;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
 import de.handler.mobile.android.fairmondo.R;
@@ -57,8 +58,14 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
     @ViewById(R.id.fragment_product_image_view)
     CustomNetworkImageView mProductImageView;
 
-    @ViewById(R.id.fragment_product_content_container)
+    @ViewById(R.id.fragment_product_main_container)
+    RelativeLayout mLayoutBody;
+
+    @ViewById(R.id.fragment_product_product_container)
     RelativeLayout mLayoutContent;
+
+    @ViewById(R.id.fragment_product_container_product_unavailable)
+    LinearLayout mLayoutError;
 
     @ViewById(R.id.fragment_product_title)
     TextView mTextViewTitle;
@@ -104,11 +111,31 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
 
     @Override
     public void onDetailedProductResponse(final Product product) {
-        if (null != product) {
+        if (null != product && productContentNotNull(product)) {
             this.displayProductData(product);
             this.setOnClickListeners();
+        } else {
+            this.showProductUnavailable();
         }
         mProgressController.stopProgress();
+    }
+
+    private boolean productContentNotNull(@NonNull final Product product) {
+        boolean notNull = false;
+        try {
+            for (final Field field : product.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                final Object value;
+                value = field.get(product);
+
+                if (null != value) {
+                    notNull = !((value.equals("<div class=\"commendation\"></div>")) || value == 0);
+                }
+            }
+        } catch (final IllegalAccessException e) {
+            Log.e(getClass().getCanonicalName(), e.getMessage());
+        }
+        return notNull;
     }
 
     @UiThread
@@ -160,8 +187,10 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         }
 
         // Price
-        final String price = FormatHelper.formatPrice(product.getPriceCents());
-        mButtonBuy.setText(getString(R.string.fragment_product_buy) + " für " + price + " €");
+        if (product.getPriceCents() != null) {
+            final String price = FormatHelper.formatPrice(product.getPriceCents());
+            mButtonBuy.setText(getString(R.string.fragment_product_buy) + " für " + price + " €");
+        }
     }
 
     @UiThread
@@ -169,6 +198,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         // Click Listeners
         mTextViewTermsTitle.setOnClickListener(this);
         mButtonBuy.setOnClickListener(this);
+    }
+
+    @UiThread
+    void showProductUnavailable() {
+        mLayoutBody.setVisibility(View.GONE);
+        mLayoutError.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -185,12 +220,12 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
             final int itemCount = cart.getCartItem().getRequestedQuantity();
             Snackbar.make(mLayoutContent, itemCount + " Element zum Einkaufswagen hinzugefügt", Snackbar.LENGTH_SHORT)
                     .setAction("Zum Einkaufswagen",
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            WebActivity_.intent(getActivity()).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
-                        }
-                    })
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    WebActivity_.intent(getActivity()).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
+                                }
+                            })
                     .setActionTextColor(Color.YELLOW)
                     .show();
         }

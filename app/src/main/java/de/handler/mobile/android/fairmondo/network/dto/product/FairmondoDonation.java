@@ -6,6 +6,6 @@ import de.handler.mobile.android.fairmondo.network.dto.product.donation.Fairmond
  * Subclass of article.
  */
 public class FairmondoDonation {
-    public int percent;
+    public Integer percent;
     public FairmondoOrganization organization;
 }

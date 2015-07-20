@@ -74,6 +74,15 @@ public class CategoryFragment extends ListFragment {
     public void init() {
         // Get categories which have been added to the fragment bundle in the calling class
         mCategories = Parcels.unwrap(mCategoriesParcelable);
+        if (mCategories == null) {
+            mCategories = new ArrayList<>();
+        }
+
+        // Set title this category fragment
+        if (null != mApp.getLastCategory()) {
+            getActivity().setTitle(mApp.getLastCategory().getName());
+        }
+
         // Extract the title of each category
         final List<String> categoryStrings = new ArrayList<>(mCategories.size());
         categoryStrings.add(getString(R.string.all_products));

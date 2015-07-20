@@ -7,9 +7,9 @@ import de.handler.mobile.android.fairmondo.network.dto.product.seller.FairmondoR
  */
 public class FairmondoSeller {
     public String nickname;
-    public boolean legal_entity;
-    public boolean ngo;
-    public boolean vacationing;
+    public Boolean legal_entity;
+    public Boolean ngo;
+    public Boolean vacationing;
     public String name;
     public String type;
     public String type_name;

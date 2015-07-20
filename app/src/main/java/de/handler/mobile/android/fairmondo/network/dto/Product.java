@@ -16,9 +16,9 @@ public class Product {
     public String id;
     public String slug;
     public String title;
-    public int price_cents;
-    public int quantity_available;
-    public int vat;
+    public Integer price_cents;
+    public Integer quantity_available;
+    public Integer vat;
     public FairmondoTag tags;
     public FairmondoDonation donation;
     public FairmondoCategory[] categories;

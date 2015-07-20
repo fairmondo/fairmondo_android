@@ -21,9 +21,9 @@ public class Product {
     protected String id;
     protected String slug;
     protected String title;
-    protected int priceCents = 0;
-    protected int quantityAvailable = 0;
-    protected int vat = 0;
+    protected Integer priceCents;
+    protected Integer quantityAvailable;
+    protected Integer vat;
     protected FairmondoTag tags;
     protected FairmondoDonation donation;
     protected FairmondoCategory[] categories;

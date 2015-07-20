@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Parcel
 public class FairmondoCategory {
-    protected String  id;
+    protected String id;
     protected String name;
     protected String slug;
     protected List<String> ancestors = new ArrayList<>();

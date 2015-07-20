@@ -9,7 +9,7 @@ import de.handler.mobile.android.fairmondo.data.businessobject.product.donation.
  */
 @Parcel
 public class FairmondoDonation {
-    protected int percent;
+    protected Integer percent;
     protected FairmondoOrganization organization;
 
     public FairmondoOrganization getOrganization() {
