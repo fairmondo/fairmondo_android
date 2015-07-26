@@ -27,16 +27,60 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent_white_80"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@android:color/secondary_text_light"
                 android:layout_below="@id/fragment_product_image_view"
-                android:layout_marginTop="-15dp"
+                android:layout_marginTop="-22dp"
+                android:padding="2dp"
                 android:paddingRight="15dp"
                 android:gravity="right"
+                android:visibility="gone"
                 android:text="@string/fragment_product_vat"
                 android:id="@+id/fragment_product_textview_price_vat"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent_white_80"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="-20dp"
+                android:padding="2dp"
+                android:layout_below="@id/fragment_product_textview_price_vat"
+                android:orientation="horizontal"
+                android:id="@+id/fragment_product_tags">
+
+                <!-- condition -->
+                <TextView
+                    style="@style/text_view_condition"
+                    android:gravity="start"
+                    android:layout_marginLeft="@dimen/margin_app"
+                    android:paddingBottom="15dp"
+                    android:id="@+id/fragment_product_textview_condition"
+                    tools:ignore="RtlHardcoded" />
+
+                <!-- fair -->
+                <TextView
+                    style="@style/text_view_tag"
+                    android:background="@drawable/background_round_blue"
+                    android:text="@string/adapter_image_fair"
+                    tools:visibility="visible"
+                    android:paddingBottom="15dp"
+                    android:id="@+id/fragment_product_textview_tag_fair"
+                    tools:ignore="RtlHardcoded" />
+
+                <!-- ecological -->
+                <TextView
+                    style="@style/text_view_tag"
+                    android:background="@drawable/background_round_green"
+                    android:text="@string/adapter_image_eco"
+                    tools:visibility="visible"
+                    android:paddingBottom="15dp"
+                    android:id="@+id/fragment_product_textview_tag_ecological"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -44,7 +88,7 @@
                 android:paddingTop="20dp"
                 android:paddingRight="@dimen/margin_app"
                 android:paddingLeft="@dimen/margin_app"
-                android:layout_below="@id/fragment_product_image_view"
+                android:layout_below="@id/fragment_product_tags"
                 android:id="@+id/fragment_product_content_container"
                 tools:context="android.mobile.handler.de.fairmondo.ui.fragments.ProductFragment"
                 android:orientation="vertical"
@@ -54,13 +98,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
+                    android:paddingTop="10dp"
                     android:minHeight="50dp"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:gravity="left|center_horizontal"
                     android:id="@+id/fragment_product_title"
                     android:lines="2"
-                    android:ellipsize="end"/>
+                    android:ellipsize="end"
+                    tools:ignore="RtlHardcoded" />
 
                 <!-- Description -->
                 <TextView
@@ -130,21 +175,6 @@
                     android:layout_below="@id/fragment_product_textview_donation_title"
                     android:gravity="start"
                     android:id="@+id/fragment_product_textview_donation_body"/>
-
-                <!-- condition -->
-                <TextView
-                    android:text="@string/fragment_product_condition"
-                    android:layout_below="@id/fragment_product_textview_donation_body"
-                    android:id="@+id/fragment_product_textview_condition_title"
-                    style="@style/product_detail_section_title" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/fragment_product_textview_condition_title"
-                    android:gravity="start"
-                    android:paddingBottom="15dp"
-                    android:id="@+id/fragment_product_textview_condition_body"/>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

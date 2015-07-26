@@ -39,11 +39,11 @@
     <string name="item_amount_too_big">Der Artikel ist nicht in der Anzahl verfügbar</string>
     <string name="all_products">Alle Artikel</string>
     <string name="fragment_product_transport">Versand</string>
-    <string name="fragment_product_vat">* Verkaufspreis</string>
+    <string name="fragment_product_vat">exklusive Mehrwertsteuer</string>
     <string name="fragment_product_payment">Bezahloptionen</string>
     <string name="share_text">Ich habe ein tolles Produkt auf Fairmondo gefunden. Schau mal hier: \n</string>
     <string name="fragment_product_fair_percent">Das faire Prozent</string>
-    <string name="fragment_product_condition">Zustand:</string>
+    <string name="fragment_product_tags">Tags</string>
     <string name="view_snackbar_goto">Zum Warenkorb</string>
     <string name="category_count_error">categories were null</string>
     <string name="retry">noch einmal versuchen</string>

@@ -24,6 +24,7 @@ import de.handler.mobile.android.fairmondo.FairmondoApp_;
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.presentation.FormatHelper;
+import de.handler.mobile.android.fairmondo.presentation.ProductConstants;
 import de.handler.mobile.android.fairmondo.presentation.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView;
 
@@ -32,8 +33,6 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  * Image Adapter used in GridView Fragments.
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-    private final static String CONDITION_OLD = "old";
-    private final static String CONDITION_NEW = "new";
     private final Context mContext;
     private List<Product> mProducts;
 
@@ -88,13 +87,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     // Set condition
                     final String condition = product.getTags().getCondition();
                     switch (condition) {
-                        case CONDITION_OLD:
-                            viewHolder.mConditionTextViewOld.setVisibility(View.VISIBLE);
-                            viewHolder.mConditionTextViewNew.setVisibility(View.GONE);
+                        case ProductConstants.CONDITION_OLD:
+                            viewHolder.mConditionTextView.setVisibility(View.VISIBLE);
+                            viewHolder.mConditionTextView.setText(mContext.getString(R.string.adapter_image_condition_old));
                             break;
-                        case CONDITION_NEW:
-                            viewHolder.mConditionTextViewNew.setVisibility(View.VISIBLE);
-                            viewHolder.mConditionTextViewOld.setVisibility(View.GONE);
+                        case ProductConstants.CONDITION_NEW:
+                            viewHolder.mConditionTextView.setVisibility(View.VISIBLE);
+                            viewHolder.mConditionTextView.setText(mContext.getString(R.string.adapter_image_condition_new));
                             break;
                         default:
                             // nothing is done here
@@ -151,8 +150,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     protected static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final CustomNetworkImageView mProductImageView;
-        private final TextView mConditionTextViewOld;
-        private final TextView mConditionTextViewNew;
+        private final TextView mConditionTextView;
         private final TextView mTagFairTextView;
         private final TextView mTagEcoTextView;
         private final TextView mTextViewTitle;
@@ -166,8 +164,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         public ViewHolder(@NonNull final View view, @NonNull final Context context, @NonNull final List<Product> products) {
             super(view);
             mProductImageView = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image_view_product);
-            mConditionTextViewOld = (TextView) view.findViewById(R.id.image_adapter_text_view_condition_old);
-            mConditionTextViewNew = (TextView) view.findViewById(R.id.image_adapter_text_view_condition_new);
+            mConditionTextView = (TextView) view.findViewById(R.id.image_adapter_text_view_condition);
             mTagFairTextView = (TextView) view.findViewById(R.id.image_adapter_text_view_tag_fair);
             mTagEcoTextView = (TextView) view.findViewById(R.id.image_adapter_text_view_tag_eco);
             mTextViewTitle = (TextView) view.findViewById(R.id.image_adapter_text_view_title);

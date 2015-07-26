@@ -4,6 +4,7 @@ package de.handler.mobile.android.fairmondo.presentation.fragments;
 import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -34,6 +35,7 @@ import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnCartChangeListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnDetailedProductListener;
 import de.handler.mobile.android.fairmondo.presentation.FormatHelper;
+import de.handler.mobile.android.fairmondo.presentation.ProductConstants;
 import de.handler.mobile.android.fairmondo.presentation.activities.WebActivity_;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
 import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView;
@@ -67,6 +69,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
     @ViewById(R.id.fragment_product_container_product_unavailable)
     LinearLayout mLayoutError;
 
+    @ViewById(R.id.fragment_product_textview_price_vat)
+    TextView mTextViewVat;
+
     @ViewById(R.id.fragment_product_title)
     TextView mTextViewTitle;
 
@@ -88,11 +93,14 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
     @ViewById(R.id.fragment_product_textview_payment_body)
     TextView mTextViewPaymentBody;
 
-    @ViewById(R.id.fragment_product_textview_condition_title)
-    TextView mTextViewConditionTitle;
+    @ViewById(R.id.fragment_product_textview_condition)
+    TextView mTextViewCondition;
 
-    @ViewById(R.id.fragment_product_textview_condition_body)
-    TextView mTextViewConditionBody;
+    @ViewById(R.id.fragment_product_textview_tag_fair)
+    TextView mTextViewTagFair;
+
+    @ViewById(R.id.fragment_product_textview_tag_ecological)
+    TextView mTextViewTagEcological;
 
     @ViewById(R.id.fragment_product_button_buy)
     Button mButtonBuy;
@@ -140,7 +148,6 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
 
     @UiThread
     void displayProductData(@NonNull final Product product) {
-        // TODO display fair, öko, etc tags
         mTextViewTitle.setText(product.getTitle());
 
         // Image
@@ -160,6 +167,7 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         // Terms
         if (null != product.getSeller() && null != product.getSeller().getTerms() && !product.getSeller().getTerms().equals("")) {
             mTextViewTermsTitle.setVisibility(View.VISIBLE);
+            mTextViewTermsTitle.setText(product.getSeller().getTerms());
         }
 
         // Fair Percent
@@ -181,15 +189,37 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
                             + product.getDonation().getOrganization().getName());
         }
 
+        // Set tags
         if (null != product.getTags()) {
-            mTextViewConditionBody.setText(product.getTags().getCondition());
-            mTextViewConditionTitle.setVisibility(View.VISIBLE);
+            final String condition = product.getTags().getCondition();
+            switch (condition) {
+                case ProductConstants.CONDITION_OLD:
+                    this.initConditionText(R.string.adapter_image_condition_old);
+                    break;
+                case ProductConstants.CONDITION_NEW:
+                    this.initConditionText(R.string.adapter_image_condition_new);
+                    break;
+                default:
+                    // nothing is done here
+            }
+
+            // Make tags visible
+            if (product.getTags().isEcologic()) {
+                mTextViewTagEcological.setVisibility(View.VISIBLE);
+            }
+            if (product.getTags().isFair()) {
+                mTextViewTagFair.setVisibility(View.VISIBLE);
+            }
         }
 
         // Price
         if (product.getPriceCents() != null) {
             final String price = FormatHelper.formatPrice(product.getPriceCents());
             mButtonBuy.setText(getString(R.string.fragment_product_buy) + " für " + price + " €");
+        }
+
+        if (product.getVat() == null) {
+            mTextViewVat.setVisibility(View.VISIBLE);
         }
     }
 
@@ -204,6 +234,11 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
     void showProductUnavailable() {
         mLayoutBody.setVisibility(View.GONE);
         mLayoutError.setVisibility(View.VISIBLE);
+    }
+
+    private void initConditionText(@StringRes final int stringResource) {
+        mTextViewCondition.setVisibility(View.VISIBLE);
+        mTextViewCondition.setText(getString(stringResource));
     }
 
     /**

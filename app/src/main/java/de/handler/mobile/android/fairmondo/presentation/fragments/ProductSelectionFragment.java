@@ -78,11 +78,7 @@ public class ProductSelectionFragment extends Fragment {
 
         // Always set up RecyclerView as otherwise there will be an error
         this.setupRecyclerView(products);
-        if (null == products) {
-            mTextViewEmpty.setVisibility(View.VISIBLE);
-        } else {
-            mTextViewEmpty.setVisibility(View.GONE);
-        }
+        this.checkListNull(products);
     }
 
     private void setupRecyclerView(@Nullable List<Product> products) {
@@ -100,8 +96,21 @@ public class ProductSelectionFragment extends Fragment {
     }
 
     @UiThread
-    public void updateAdapter(@NonNull final List<Product> products) {
-        ((ImageAdapter) mRecyclerView.getAdapter()).updateItems(products);
+    public void updateAdapter(@Nullable final List<Product> products) {
+        this.checkListNull(products);
+        if (null != products) {
+            ((ImageAdapter) mRecyclerView.getAdapter()).updateItems(products);
+        }
         mLoading = true;
+    }
+
+    private void checkListNull(List<Product> products) {
+        if (null == products || products.isEmpty()) {
+            mTextViewEmpty.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            mTextViewEmpty.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 }

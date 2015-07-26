@@ -70,18 +70,13 @@
                     android:text="@string/adapter_image_eco"
                     tools:visibility="visible"
                     android:background="@drawable/background_round_green"
+                    android:layout_marginLeft="4dp"
                     style="@style/text_view_tag"/>
 
                 <TextView
-                    android:id="@+id/image_adapter_text_view_condition_new"
-                    android:text="@string/adapter_image_condition_new"
+                    android:id="@+id/image_adapter_text_view_condition"
                     tools:visibility="visible"
-                    style="@style/text_view_condition" />
-
-                <TextView
-                    android:id="@+id/image_adapter_text_view_condition_old"
-                    android:text="@string/adapter_image_condition_old"
-                    tools:visibility="visible"
+                    android:layout_marginLeft="4dp"
                     style="@style/text_view_condition" />
 
             </LinearLayout>
