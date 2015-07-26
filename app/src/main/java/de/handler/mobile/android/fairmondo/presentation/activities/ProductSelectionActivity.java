@@ -31,9 +31,9 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListene
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.FilterFragment_;
-import de.handler.mobile.android.fairmondo.presentation.fragments.SortFragment_;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment_;
+import de.handler.mobile.android.fairmondo.presentation.fragments.SortFragment_;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnEndlessScrollListener;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnFilterSelectedListener;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnSortingSelectedListener;

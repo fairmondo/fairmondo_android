@@ -14,7 +14,6 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.InstanceState;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import de.handler.mobile.android.fairmondo.data.interfaces.OnCategoriesListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnClickItemListener;
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
-import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 /**
  * Fragment showing a list of categories.

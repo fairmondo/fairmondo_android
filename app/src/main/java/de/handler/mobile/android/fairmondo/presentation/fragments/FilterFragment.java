@@ -14,7 +14,6 @@ import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnFilterSelectedListener;
-import de.handler.mobile.android.fairmondo.presentation.interfaces.OnSortingSelectedListener;
 
 /**
  * Shows the sorting options and reacts to user inputs.

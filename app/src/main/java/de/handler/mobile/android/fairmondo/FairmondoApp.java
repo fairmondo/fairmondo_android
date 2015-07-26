@@ -10,10 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTokenizers;
 
-import java.util.List;
-
 import de.handler.mobile.android.fairmondo.data.businessobject.Cart;
-import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.data.businessobject.product.FairmondoCategory;
 import de.handler.mobile.android.fairmondo.presentation.views.CustomImageCache;
 

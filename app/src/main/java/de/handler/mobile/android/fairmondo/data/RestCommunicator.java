@@ -31,8 +31,8 @@ import de.handler.mobile.android.fairmondo.network.FairmondoRestService;
 import de.handler.mobile.android.fairmondo.network.RestServiceErrorHandler;
 import de.handler.mobile.android.fairmondo.network.dto.Articles;
 import de.handler.mobile.android.fairmondo.network.dto.Product;
-import de.handler.mobile.android.fairmondo.presentation.interfaces.SharedPrefs_;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
+import de.handler.mobile.android.fairmondo.presentation.interfaces.SharedPrefs_;
 
 /**
  * Encapsulates all communication with the server
