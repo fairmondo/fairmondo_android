@@ -8,8 +8,13 @@
         android:title="@string/action_cart"
         app:showAsAction="collapseActionView|ifRoom"/>
 
-    <item android:id="@+id/action_filter"
+    <item android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort_white_48dp"
+        android:title="@string/action_filter"
+        app:showAsAction="collapseActionView|ifRoom"/>
+
+    <item android:id="@+id/action_filter"
+        android:icon="@drawable/ic_filter_list_white_48dp"
         android:title="@string/action_filter"
         app:showAsAction="collapseActionView|ifRoom"/>
 </menu>

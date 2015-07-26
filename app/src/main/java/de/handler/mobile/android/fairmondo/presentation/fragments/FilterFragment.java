@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -15,26 +14,23 @@ import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnFilterSelectedListener;
+import de.handler.mobile.android.fairmondo.presentation.interfaces.OnSortingSelectedListener;
 
 /**
- * Shows the filter options and reacts to user inputs.
+ * Shows the sorting options and reacts to user inputs.
  */
 @EFragment(R.layout.fragment_filter)
 public class FilterFragment extends Fragment {
-    @ViewById(R.id.fragment_filter_price_radio_button)
-    RadioButton mPriceRadioButton;
+    @ViewById(R.id.fragment_filter_checkbox_fair)
+    CheckBox mCheckboxFair;
 
-    @ViewById(R.id.fragment_filter_alphabetical_radio_button)
-    RadioButton mAlphabeticalRadioButton;
-
-    @ViewById(R.id.fragment_filter_condition_radio_button)
-    RadioButton mConditionRadioButton;
+    @ViewById(R.id.fragment_filter_checkbox_ecological)
+    CheckBox mCheckboxEcological;
 
     @ViewById(R.id.fragment_filter_button_ok)
     Button mButtonOk;
 
     private OnFilterSelectedListener mOnFilterSelectedListener;
-
 
     @Override
     public void onAttach(final Activity activity) {
@@ -48,36 +44,23 @@ public class FilterFragment extends Fragment {
 
     @AfterViews
     void init() {
-        mPriceRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckboxFair.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mOnFilterSelectedListener.onPriceFilterSelected(true);
-                }
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                mOnFilterSelectedListener.onFairFilterSelected(isChecked);
             }
         });
 
-        mAlphabeticalRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckboxEcological.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mOnFilterSelectedListener.onAlphabeticalFilterSelected(true);
-                }
-            }
-        });
-
-        mConditionRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mOnFilterSelectedListener.onConditionFilterSelected(true);
-                }
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                mOnFilterSelectedListener.onEcologicalFilterSelected(isChecked);
             }
         });
 
         mButtonOk.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 mOnFilterSelectedListener.onFilterFinish();
             }
         });

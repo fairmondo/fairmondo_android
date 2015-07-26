@@ -52,6 +52,7 @@
     <string name="sort_price">Produkte nach Preis sortieren</string>
     <string name="sort_condition">Produkte nach Zustand sortieren</string>
     <string name="text_sort_title">Auswahl sortieren</string>
+    <string name="text_filter_title">Auswahl filtern</string>
     <string name="end_of_list">Sie haben das Ende der Liste erreicht</string>
     <string name="fragment_product_not_available_title">Artikel nicht mehr im Angebot</string>
     <string name="fragment_product_not_available_text">Der Anbieter dieses Artikels bietet diesen Artikel leider nicht mehr an.</string>
@@ -59,5 +60,7 @@
     <string name="adapter_image_condition_old">gebraucht</string>
     <string name="adapter_image_fair">fair</string>
     <string name="adapter_image_eco">öko</string>
+    <string name="text_filter_fair">Nur faire Produkte</string>
+    <string name="text_filter_ecological">Nur Öko-Produkte</string>
 
 </resources>

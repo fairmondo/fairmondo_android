@@ -11,23 +11,29 @@
 
     <TextView
         style="@style/basic_view.header"
-        android:text="@string/text_filter_title"/>
+        android:text="@string/text_sort_title"/>
 
-    <CheckBox
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/text_filter_fair"
-        android:id="@+id/fragment_filter_checkbox_fair"/>
+        android:padding="16dp">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/text_filter_ecological"
-        android:id="@+id/fragment_filter_checkbox_ecological"/>
+        <RadioButton
+            android:id="@+id/fragment_sort_price_radio_button"
+            android:text="@string/sort_price"
+            style="@style/basic_view.radio_button" />
+
+        <RadioButton
+            android:id="@+id/fragment_sort_alphabetical_radio_button"
+            android:text="@string/sort_alphabetically"
+            style="@style/basic_view.radio_button" />
+
+        <RadioButton
+            android:id="@+id/fragment_sort_condition_radio_button"
+            android:text="@string/sort_condition"
+            style="@style/basic_view.radio_button" />
+
+    </RadioGroup>
 
     <Button
         android:layout_width="match_parent"
@@ -35,7 +41,7 @@
         android:background="@drawable/background_button_general"
         android:text="@android:string/ok"
         android:textColor="@android:color/white"
-        android:id="@+id/fragment_filter_button_ok"
+        android:id="@+id/fragment_sort_button_ok"
         style="@style/Widget.AppCompat.ButtonBar"/>
 
 </LinearLayout>
