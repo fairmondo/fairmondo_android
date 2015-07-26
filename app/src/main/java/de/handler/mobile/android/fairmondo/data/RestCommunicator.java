@@ -186,8 +186,10 @@ public class RestCommunicator {
         if (mApp.isConnected()) {
             final Type listType = new TypeToken<List<FairmondoCategory>>() { }.getType();
             final List<de.handler.mobile.android.fairmondo.network.dto.product.FairmondoCategory> dtoCategories = mRestService.getCategories();
-            final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
-            mCategoriesListener.onCategoriesResponse(categories);
+            if (null != dtoCategories) {
+                final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
+                mCategoriesListener.onCategoriesResponse(categories);
+            }
         } else {
             this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
                 @Override

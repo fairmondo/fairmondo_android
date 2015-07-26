@@ -28,14 +28,19 @@
             android:text="@string/sort_alphabetically"
             style="@style/basic_view.radio_button" />
 
+        <RadioButton
+            android:id="@+id/fragment_filter_condition_radio_button"
+            android:text="@string/sort_condition"
+            style="@style/basic_view.radio_button" />
+
     </RadioGroup>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_button_general"
         android:text="@android:string/ok"
         android:textColor="@android:color/white"
-        android:background="@drawable/button_background"
         android:id="@+id/fragment_filter_button_ok"
         style="@style/Widget.AppCompat.ButtonBar"/>
 

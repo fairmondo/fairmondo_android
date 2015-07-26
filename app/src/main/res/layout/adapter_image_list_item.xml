@@ -14,7 +14,7 @@
         android:layout_weight="3"
         android:scaleType="centerCrop"
         android:paddingBottom="4dp"
-        android:id="@+id/image_adapter_image"
+        android:id="@+id/image_adapter_image_view_product"
         android:src="@drawable/fairmondo_small"
         android:contentDescription="@string/product_hint" />
 
@@ -32,18 +32,62 @@
             android:textSize="16sp"
             android:lines="2"
             android:ellipsize="end"
-            android:id="@+id/image_adapter_text"
+            android:id="@+id/image_adapter_text_view_title"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/image_adapter_price"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/image_adapter_text_view_price"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                android:id="@+id/image_adapter_container_tags"
+                tools:ignore="RtlHardcoded">
+
+                <TextView
+                    android:id="@+id/image_adapter_text_view_tag_fair"
+                    android:text="@string/adapter_image_fair"
+                    tools:visibility="visible"
+                    android:background="@drawable/background_round_blue"
+                    style="@style/text_view_tag"/>
+
+                <TextView
+                    android:id="@+id/image_adapter_text_view_tag_eco"
+                    android:text="@string/adapter_image_eco"
+                    tools:visibility="visible"
+                    android:background="@drawable/background_round_green"
+                    style="@style/text_view_tag"/>
+
+                <TextView
+                    android:id="@+id/image_adapter_text_view_condition_new"
+                    android:text="@string/adapter_image_condition_new"
+                    tools:visibility="visible"
+                    style="@style/text_view_condition" />
+
+                <TextView
+                    android:id="@+id/image_adapter_text_view_condition_old"
+                    android:text="@string/adapter_image_condition_old"
+                    tools:visibility="visible"
+                    style="@style/text_view_condition" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
+
 </LinearLayout>

@@ -6,15 +6,21 @@ package de.handler.mobile.android.fairmondo.presentation.interfaces;
 public interface OnFilterSelectedListener {
     /**
      * Informs the implementing activity that the price filter has been selected.
-     * @param selection the ste of the switch
+     * @param selection the state of the switch
      */
     void onPriceFilterSelected(boolean selection);
 
     /**
      * Informs the implementing activity that the price filter has been selected.
-     * @param selection the ste of the switch
+     * @param selection the state of the switch
      */
     void onAlphabeticalFilterSelected(boolean selection);
+
+    /**
+     * Informs the implementing activity that the condition filter has been selected.
+     * @param selection the state of the switch
+     */
+    void onConditionFilterSelected(boolean selection);
 
     /**
      * Indicates that the fragment should be closed.

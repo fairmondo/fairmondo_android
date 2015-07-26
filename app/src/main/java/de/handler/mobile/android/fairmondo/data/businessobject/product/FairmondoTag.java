@@ -18,23 +18,23 @@ public class FairmondoTag {
         return condition;
     }
 
-    public Boolean getFair() {
+    public Boolean isFair() {
         return fair;
     }
 
-    public Boolean getEcologic() {
+    public Boolean isEcologic() {
         return ecologic;
     }
 
-    public Boolean getSmallAndPrecious() {
+    public Boolean isSmallAndPrecious() {
         return smallAndPrecious;
     }
 
-    public Boolean getBorrowable() {
+    public Boolean isBorrowable() {
         return borrowable;
     }
 
-    public Boolean getSwappable() {
+    public Boolean isSwappable() {
         return swappable;
     }
 }

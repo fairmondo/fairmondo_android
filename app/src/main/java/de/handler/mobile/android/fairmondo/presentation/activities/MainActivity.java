@@ -197,7 +197,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
     @UiThread
     public void initCategoryFragment(@NonNull final List<FairmondoCategory> categories, boolean backstack) {
-        final CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
+        FairmondoCategory category = mApp.getLastCategory();
+        if (category == null) {
+            category = new FairmondoCategory();
+        }
+        final CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).mParentCategory(category.getName()).build();
         try {
             if (backstack) {
                 FragmentHelper.replaceFragmentWithTagToBackStack(R.id.main_products_container, categoryFragment, getSupportFragmentManager(), categoryFragment.getClass().getCanonicalName());
@@ -303,14 +307,12 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         this.hideProgressBar();
         mApp.setLastCategory(null);
 
-        // Reset Title
-        setTitle(getString(R.string.app_name));
-
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
             getSupportFragmentManager().popBackStack();
 
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 // Reset standard title
+                setTitle(getString(R.string.app_name));
                 this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
             }
         } else {

@@ -32,6 +32,8 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
  * Image Adapter used in GridView Fragments.
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
+    private final static String CONDITION_OLD = "old";
+    private final static String CONDITION_NEW = "new";
     private final Context mContext;
     private List<Product> mProducts;
 
@@ -82,6 +84,31 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 final String description = product.getTitle();
                 viewHolder.mTextViewTitle.setText(description);
 
+                if (null != product.getTags()) {
+                    // Set condition
+                    final String condition = product.getTags().getCondition();
+                    switch (condition) {
+                        case CONDITION_OLD:
+                            viewHolder.mConditionTextViewOld.setVisibility(View.VISIBLE);
+                            viewHolder.mConditionTextViewNew.setVisibility(View.GONE);
+                            break;
+                        case CONDITION_NEW:
+                            viewHolder.mConditionTextViewNew.setVisibility(View.VISIBLE);
+                            viewHolder.mConditionTextViewOld.setVisibility(View.GONE);
+                            break;
+                        default:
+                            // nothing is done here
+                    }
+
+                    // Make tags visible
+                    if (product.getTags().isEcologic()) {
+                        viewHolder.mTagEcoTextView.setVisibility(View.VISIBLE);
+                    }
+                    if (product.getTags().isFair()) {
+                        viewHolder.mTagFairTextView.setVisibility(View.VISIBLE);
+                    }
+                }
+
             } else {
                 viewHolder.mListItem.setVisibility(View.GONE);
             }
@@ -108,7 +135,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     public void setImage(@NonNull final ViewHolder viewHolder, @NonNull final Bitmap bitmap) {
-        viewHolder.mImageView.setLocalImageBitmap(bitmap);
+        viewHolder.mProductImageView.setLocalImageBitmap(bitmap);
     }
 
     @Override
@@ -123,7 +150,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
 
     protected static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final CustomNetworkImageView mImageView;
+        private final CustomNetworkImageView mProductImageView;
+        private final TextView mConditionTextViewOld;
+        private final TextView mConditionTextViewNew;
+        private final TextView mTagFairTextView;
+        private final TextView mTagEcoTextView;
         private final TextView mTextViewTitle;
         private final TextView mTextViewPrice;
         private final LinearLayout mListItem;
@@ -134,9 +165,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull final View view, @NonNull final Context context, @NonNull final List<Product> products) {
             super(view);
-            mImageView = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image);
-            mTextViewTitle = (TextView) view.findViewById(R.id.image_adapter_text);
-            mTextViewPrice = (TextView) view.findViewById(R.id.image_adapter_price);
+            mProductImageView = (CustomNetworkImageView) view.findViewById(R.id.image_adapter_image_view_product);
+            mConditionTextViewOld = (TextView) view.findViewById(R.id.image_adapter_text_view_condition_old);
+            mConditionTextViewNew = (TextView) view.findViewById(R.id.image_adapter_text_view_condition_new);
+            mTagFairTextView = (TextView) view.findViewById(R.id.image_adapter_text_view_tag_fair);
+            mTagEcoTextView = (TextView) view.findViewById(R.id.image_adapter_text_view_tag_eco);
+            mTextViewTitle = (TextView) view.findViewById(R.id.image_adapter_text_view_title);
+            mTextViewPrice = (TextView) view.findViewById(R.id.image_adapter_text_view_price);
             mListItem = (LinearLayout) view.findViewById(R.id.image_adapter_list_item);
             mListItem.setOnClickListener(this);
             mContext = context;

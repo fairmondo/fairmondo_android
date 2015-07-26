@@ -156,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_button"
             android:id="@+id/fragment_product_button_buy"
-            android:background="@drawable/button_background"
+            android:background="@drawable/background_button_general"
             android:text="@string/fragment_product_buy"
             android:textColor="@android:color/white"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"

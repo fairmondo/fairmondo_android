@@ -81,13 +81,19 @@ public class ProductSelectionActivity extends AbstractActivity implements OnFilt
 
     @Override
     public void onPriceFilterSelected(final boolean selection) {
-        List<Product> products = this.sortProductsForPrice(mProducts);
+        final List<Product> products = this.sortProductsForPrice(mProducts);
         this.startProductSelectionFragment(products);
     }
 
     @Override
     public void onAlphabeticalFilterSelected(final boolean selection) {
-        List<Product> products = this.sortProductsAlphabetically(mProducts);
+        final List<Product> products = this.sortProductsAlphabetically(mProducts);
+        this.startProductSelectionFragment(products);
+    }
+
+    @Override
+    public void onConditionFilterSelected(boolean selection) {
+        final List<Product> products = this.sortProductsForCondition(mProducts);
         this.startProductSelectionFragment(products);
     }
 
@@ -105,6 +111,12 @@ public class ProductSelectionActivity extends AbstractActivity implements OnFilt
     @NonNull
     private List<Product> sortProductsAlphabetically(@NonNull final List<Product> products) {
         Collections.sort(products, new ProductAlphabetComparator());
+        return products;
+    }
+
+    @NonNull
+    private List<Product> sortProductsForCondition(@NonNull final List<Product> products) {
+        Collections.sort(products, new ProductConditionComparator());
         return products;
     }
 
@@ -138,6 +150,19 @@ public class ProductSelectionActivity extends AbstractActivity implements OnFilt
         @Override
         public int compare(final Product leftProduct, final Product rightProduct) {
             return leftProduct.getTitle().compareTo(rightProduct.getTitle());
+        }
+    }
+
+    /**
+     * Class for comparing product titles alphabetically.
+     */
+    private final class ProductConditionComparator implements Comparator<Product> {
+        @Override
+        public int compare(final Product leftProduct, final Product rightProduct) {
+            if (null != leftProduct.getTags() && null != rightProduct.getTags()) {
+                return leftProduct.getTags().getCondition().compareTo(rightProduct.getTags().getCondition());
+            }
+            return 0;
         }
     }
 }

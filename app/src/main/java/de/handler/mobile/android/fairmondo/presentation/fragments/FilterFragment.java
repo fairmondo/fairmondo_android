@@ -27,6 +27,9 @@ public class FilterFragment extends Fragment {
     @ViewById(R.id.fragment_filter_alphabetical_radio_button)
     RadioButton mAlphabeticalRadioButton;
 
+    @ViewById(R.id.fragment_filter_condition_radio_button)
+    RadioButton mConditionRadioButton;
+
     @ViewById(R.id.fragment_filter_button_ok)
     Button mButtonOk;
 
@@ -59,6 +62,15 @@ public class FilterFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     mOnFilterSelectedListener.onAlphabeticalFilterSelected(true);
+                }
+            }
+        });
+
+        mConditionRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mOnFilterSelectedListener.onConditionFilterSelected(true);
                 }
             }
         });

@@ -2,6 +2,7 @@ package de.handler.mobile.android.fairmondo.network;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import org.springframework.core.NestedRuntimeException;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.presentation.controller.ProgressController;
+import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 
 
 /**
@@ -42,7 +44,7 @@ public class RestServiceErrorHandler implements RestErrorHandler {
 
     @UiThread
     public void showToast(@NonNull final String message) {
-        String toast = null;
+        String toast = message;
             if (mContext != null) {
                 if (message.contains("500") || message.contains("expected")) {
                     toast = mContext.getString(R.string.server_error);
@@ -53,7 +55,7 @@ public class RestServiceErrorHandler implements RestErrorHandler {
                 }
 
                 // Show a Toast in corresponding activity with error message
-                Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+                UIInformationController.displayToastInformation(mContext, toast);
             }
 
     }

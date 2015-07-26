@@ -38,6 +38,9 @@ public class CategoryFragment extends ListFragment {
     @FragmentArg
     Parcelable mCategoriesParcelable;
 
+    @FragmentArg
+    String mParentCategory;
+
     @Bean
     ProgressController mProgressController;
 
@@ -79,8 +82,8 @@ public class CategoryFragment extends ListFragment {
         }
 
         // Set title this category fragment
-        if (null != mApp.getLastCategory()) {
-            getActivity().setTitle(mApp.getLastCategory().getName());
+        if (null != mParentCategory) {
+            getActivity().setTitle(mParentCategory);
         }
 
         // Extract the title of each category
