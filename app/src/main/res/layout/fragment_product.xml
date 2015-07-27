@@ -33,13 +33,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/secondary_text_light"
                     android:layout_below="@id/fragment_product_image_view"
+                    android:layout_marginTop="-22dp"
+                    android:padding="2dp"
+                    android:paddingRight="15dp"
                     android:gravity="center"
                     android:visibility="gone"
                     android:text="@string/fragment_product_vat"
-                    android:layout_marginTop="-15dp"
-                    android:paddingRight="15dp"
                     android:id="@+id/fragment_product_textview_price_vat"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -51,7 +52,7 @@
                     android:paddingRight="20dp"
                     android:layout_marginTop="-23dp"
                     android:padding="2dp"
-                    android:layout_below="@id/fragment_product_textview_price_vat"
+                    android:layout_below="@id/fragment_product_image_view"
                     android:orientation="horizontal"
                     android:id="@+id/fragment_product_tags">
 

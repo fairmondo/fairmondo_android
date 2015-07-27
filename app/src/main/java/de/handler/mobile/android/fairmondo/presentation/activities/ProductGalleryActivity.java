@@ -87,7 +87,7 @@ public class ProductGalleryActivity extends AbstractActivity {
     // Build the string which is used to share a fairmondo
     // product recommendation with other android apps
     private String buildSharingText(final Product product) {
-        return getString(R.string.share_text) + product.getHtmlUrl();
+        return getString(R.string.share_text) + getString(R.string.base_url) + product.getSlug();
     }
 
     // Call to update the share intent

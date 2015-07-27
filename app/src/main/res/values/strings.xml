@@ -62,5 +62,6 @@
     <string name="adapter_image_eco">öko</string>
     <string name="text_filter_fair">Nur faire Produkte</string>
     <string name="text_filter_ecological">Nur Öko-Produkte</string>
+    <string name="base_url">https://www.fairmondo.de/articles/</string>
 
 </resources>
