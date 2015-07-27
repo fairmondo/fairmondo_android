@@ -33,7 +33,7 @@
                 android:layout_marginTop="-22dp"
                 android:padding="2dp"
                 android:paddingRight="15dp"
-                android:gravity="right"
+                android:gravity="center"
                 android:visibility="gone"
                 android:text="@string/fragment_product_vat"
                 android:id="@+id/fragment_product_textview_price_vat"
