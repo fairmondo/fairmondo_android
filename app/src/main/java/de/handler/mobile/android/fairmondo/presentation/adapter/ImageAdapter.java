@@ -102,9 +102,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     // Make tags visible
                     if (product.getTags().isEcologic()) {
                         viewHolder.mTagEcoTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        viewHolder.mTagEcoTextView.setVisibility(View.GONE);
                     }
                     if (product.getTags().isFair()) {
                         viewHolder.mTagFairTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        viewHolder.mTagFairTextView.setVisibility(View.GONE);
                     }
                 }
 

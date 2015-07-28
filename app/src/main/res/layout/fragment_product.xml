@@ -30,16 +30,17 @@
 
                 <!-- vat -->
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/background_round_grey"
                     android:layout_below="@id/fragment_product_image_view"
-                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:padding="2dp"
                     android:visibility="gone"
                     android:text="@string/fragment_product_vat"
-                    android:layout_marginTop="-15dp"
-                    android:paddingRight="15dp"
+                    android:layout_marginRight="15dp"
                     android:id="@+id/fragment_product_textview_price_vat"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -51,9 +52,10 @@
                     android:paddingRight="20dp"
                     android:layout_marginTop="-23dp"
                     android:padding="2dp"
-                    android:layout_below="@id/fragment_product_textview_price_vat"
+                    android:layout_below="@id/fragment_product_image_view"
                     android:orientation="horizontal"
-                    android:id="@+id/fragment_product_tags">
+                    android:id="@+id/fragment_product_tags"
+                    tools:ignore="RtlHardcoded">
 
                     <!-- condition -->
                     <TextView
