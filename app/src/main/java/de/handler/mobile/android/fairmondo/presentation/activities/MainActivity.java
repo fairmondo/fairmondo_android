@@ -49,9 +49,9 @@ import de.handler.mobile.android.fairmondo.presentation.controller.ProgressContr
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.CategoryFragment_;
+import de.handler.mobile.android.fairmondo.presentation.fragments.FeatureFragment;
+import de.handler.mobile.android.fairmondo.presentation.fragments.FeatureFragment_;
 import de.handler.mobile.android.fairmondo.presentation.fragments.TitleFragment_;
-import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment;
-import de.handler.mobile.android.fairmondo.presentation.fragments.WebFragment_;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.SharedPrefs_;
 
 
@@ -111,6 +111,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
         this.activateTransitions();
         // Fill the title fragment with content
         this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
+
         // request the categories to be able to fill the category fragment with content
         this.getCategories();
     }
@@ -229,11 +230,11 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     /**
      * Initializes the feature fragment if one is needed.
      * In case it is needed it should be called instead of initStartFragment()
-     * @param featuredProductsHtml a html string of the featured products of fairmondo.
+     * @param urls urls which lead to featured pages.
      */
-    private void initFeatureFragment(@NonNull final String featuredProductsHtml) {
-        final WebFragment featureFragment = WebFragment_.builder().mHtml(featuredProductsHtml).build();
-        FragmentHelper.replaceFragment(R.id.main_products_container, featureFragment, getSupportFragmentManager());
+    private void initFeatureFragment(@NonNull final List<String> urls) {
+        final FeatureFragment featureFragment = FeatureFragment_.builder().mUrlArrayList(Parcels.wrap(List.class, urls)).build();
+        FragmentHelper.replaceFragment(R.id.main_title_container, featureFragment, getSupportFragmentManager());
     }
 
     /**

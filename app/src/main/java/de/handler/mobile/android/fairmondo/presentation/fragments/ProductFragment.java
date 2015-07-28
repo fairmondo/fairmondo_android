@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +85,9 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
     @ViewById(R.id.fragment_product_textview_terms_title)
     TextView mTextViewTermsTitle;
 
+    @ViewById(R.id.fragment_product_textview_terms_body)
+    TextView mTextViewTermsBody;
+
     @ViewById(R.id.fragment_product_textview_description_body)
     TextView mTextViewDescriptionBody;
 
@@ -153,30 +157,33 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
         // Image
         String url = product.getTitleImageUrl();
         mProductImageView.setErrorImageResId(R.drawable.fairmondo);
-        if (null != product.getTitleImage() && !product.getTitleImage().getOriginalUrl().equals("")) {
+        if (null != product.getTitleImage() && !TextUtils.isEmpty(product.getTitleImage().getOriginalUrl())) {
             url = product.getTitleImage().getOriginalUrl();
         }
 
         mProductImageView.setImageUrl(url, mApp.getImageLoader());
 
         // Description
-        if (null != product.getContent() && !product.getContent().equals("")) {
+        if (null != product.getContent() && !TextUtils.isEmpty(product.getContent())) {
             mTextViewDescriptionBody.setText(this.parseHtml(product.getContent()));
         }
 
         // Terms
-        if (null != product.getSeller() && null != product.getSeller().getTerms() && !product.getSeller().getTerms().equals("")) {
-            mTextViewTermsTitle.setVisibility(View.VISIBLE);
-            mTextViewTermsTitle.setText(product.getSeller().getTerms());
+        if (null != product.getSeller() && null != product.getSeller().getTerms() && !TextUtils.isEmpty(product.getSeller().getTerms())) {
+            if (!product.getSeller().getTerms().contains("AGB")) {
+                mTextViewTermsTitle.setVisibility(View.VISIBLE);
+            }
+            mTextViewTermsBody.setVisibility(View.VISIBLE);
+            mTextViewTermsBody.setText(this.parseHtml(product.getSeller().getTerms()));
         }
 
         // Fair Percent
-        if (null != product.getTransportHtml() && !product.getTransportHtml().equals("")) {
+        if (null != product.getTransportHtml() && !TextUtils.isEmpty(product.getTransportHtml())) {
             mTextViewTransportBody.setText(this.parseHtml(product.getTransportHtml()));
         }
 
         // Payment
-        if (null != product.getPaymentHtml() && !product.getPaymentHtml().equals("")) {
+        if (null != product.getPaymentHtml() && !TextUtils.isEmpty(product.getPaymentHtml())) {
             mTextViewPaymentBody.setText(this.parseHtml(product.getPaymentHtml()));
         }
 
