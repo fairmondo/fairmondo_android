@@ -55,7 +55,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
-        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_image_list_item, viewGroup, false);
+        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_list_item, viewGroup, false);
         return new ViewHolder(view, mContext, mProducts);
     }
 
@@ -89,11 +89,11 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
                     switch (condition) {
                         case ProductConstants.CONDITION_OLD:
                             viewHolder.mConditionTextView.setVisibility(View.VISIBLE);
-                            viewHolder.mConditionTextView.setText(mContext.getString(R.string.adapter_image_condition_old));
+                            viewHolder.mConditionTextView.setText(mContext.getString(R.string.text_adapter_image_condition_old));
                             break;
                         case ProductConstants.CONDITION_NEW:
                             viewHolder.mConditionTextView.setVisibility(View.VISIBLE);
-                            viewHolder.mConditionTextView.setText(mContext.getString(R.string.adapter_image_condition_new));
+                            viewHolder.mConditionTextView.setText(mContext.getString(R.string.text_adapter_image_condition_new));
                             break;
                         default:
                             // nothing is done here

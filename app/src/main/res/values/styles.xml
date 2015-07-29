@@ -1,15 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="dialog_register_edittext">
-        <item name="android:inputType">text</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginLeft">4dp</item>
-        <item name="android:layout_marginRight">4dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
-    </style>
-
     <style name="textview_banner_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -27,47 +16,41 @@
 
     <style name="textview_banner_style_grid_view" parent="textview_banner_style">
         <item name="android:textSize">16sp</item>
-        <item name="android:padding">4dp</item>
+        <item name="android:padding">@dimen/spacing_s</item>
         <item name="android:background">@color/transparent_grey_80</item>
         <item name="android:lines">2</item>
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="style_grid_item">
+    <style name="style_list_item">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="style_features_image">
+    <style name="style_adapter_list_item">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:scaleType">centerCrop</item>
-        <item name="android:minHeight">150dp</item>
-    </style>
-
-    <style name="style_featured_text">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/transparent_grey_20</item>
-        <item name="android:textSize">28sp</item>
-        <item name="android:textColor">@color/transparent_white_80</item>
-        <item name="android:layout_marginBottom">20dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_height">@dimen/height_list_item</item>
+        <item name="android:paddingLeft">@dimen/margin_app</item>
+        <item name="android:paddingRight">@dimen/margin_app</item>
+        <item name="android:paddingTop">@dimen/spacing_m</item>
+        <item name="android:paddingBottom">@dimen/spacing_m</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="toolbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/spacing_s</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
     <style name="product_detail_section_title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_m</item>
+        <item name="android:layout_marginTop">@dimen/spacing_m</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>

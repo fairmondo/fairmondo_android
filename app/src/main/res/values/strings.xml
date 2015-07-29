@@ -1,63 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Fairmondo</string>
 
     <!-- action bar -->
     <string name="action_settings">Einstellungen</string>
     <string name="action_search">Suche</string>
-
-    <string name="search_hint">Suche auf Fairmondo</string>
-    <string name="product_hint">Fairmondo Produkt</string>
-    <string name="fairmondo_slogan">Gutes einfach entdecken</string>
-
-    <!-- spinner basic string -->
-    <string name="spinner_basic_item">"Wähle eine Kategorie"</string>
-    <string name="fragment_filter_search_in_title">In Artikelbeschreibung suchen</string>
+    <string name="action_cart">Warenkorb</string>
+    <string name="action_filter">Filter</string>
 
     <!-- rest error handler strings -->
-    <string name="server_error">Fehler bei der Server-Kommunikation</string>
-    <string name="server_temporarily_not_available">Der Server ist gerade nicht erreichbar…</string>
-    <string name="server_method_not_available">Die Methode ist auf dem Server nicht vorhanden</string>
+    <string name="error_server_communication">Fehler bei der Server-Kommunikation</string>
+    <string name="error_server_not_available">Der Server ist gerade nicht erreichbar…</string>
+    <string name="error_server_method_not_found">Die Methode ist auf dem Server nicht vorhanden</string>
+    <string name="error_app_not_connected">Die App ist nicht mit dem Internet verbunden</string>
+    <string name="error_app_item_amount_too_big">Der Artikel ist nicht in der Anzahl verfügbar</string>
+    <string name="error_app_no_categories">Keine Kategorien gefunden</string>
+
+    <!-- fragment specific strings -->
+    <string name="fragment_product_not_available_title">Artikel nicht mehr im Angebot</string>
+    <string name="fragment_product_not_available_text">Der Anbieter dieses Artikels bietet diesen Artikel leider nicht mehr an.</string>
     <string name="fragment_product_added_to_cart">Produkt in den Warenkorb gelegt</string>
-    <string name="question_buy_products">Die Produkte kaufen?</string>
-    <string name="action_cart">Warenkorb</string>
-    <string name="action_send">Kaufen</string>
-    <string name="cart_has_no_items">Keine Produkte im Warenkorb</string>
-    <string name="fragment_product_removed_from_cart">Produkt entfernt</string>
-    <string name="app_not_connected">Die App ist nicht mit dem Internet verbunden</string>
-    <string name="close_app">Nochmaliges Drücken beendet die Anwendung</string>
     <string name="fragment_product_description">Beschreibung</string>
     <string name="fragment_product_terms">AGB</string>
     <string name="fragment_product_donation">Spende</string>
     <string name="fragment_product_buy">Kaufen</string>
     <string name="fragment_product_selection_empty">Hier gibt es derzeit keine Produkte</string>
-    <string name="item_amount_too_big">Der Artikel ist nicht in der Anzahl verfügbar</string>
-    <string name="all_products">Alle Artikel</string>
-    <string name="fragment_product_transport">Versand</string>
     <string name="fragment_product_vat">exklusive Mehrwertsteuer</string>
-    <string name="fragment_product_payment">Bezahloptionen</string>
-    <string name="share_text">Ich habe ein tolles Produkt auf Fairmondo gefunden. Schau mal hier: \n</string>
     <string name="fragment_product_fair_percent">Das faire Prozent</string>
     <string name="fragment_product_tags">Tags</string>
-    <string name="view_snackbar_goto">Zum Warenkorb</string>
-    <string name="category_count_error">categories were null</string>
-    <string name="retry">noch einmal versuchen</string>
-    <string name="action_filter">Filter</string>
-    <string name="sort_alphabetically">Produkte alphabetisch sortieren</string>
-    <string name="sort_price">Produkte nach Preis sortieren</string>
-    <string name="sort_condition">Produkte nach Zustand sortieren</string>
+
+    <string name="text_cart_has_no_items">Keine Produkte im Warenkorb</string>
+    <string name="text_close_app">Nochmaliges Drücken beendet die Anwendung</string>
+    <string name="text_all_products">Stöbern</string>
+    <string name="text_share">Ich habe ein tolles Produkt auf Fairmondo gefunden. Schau mal hier: \n</string>
+    <string name="text_snackbar_goto">Zum Warenkorb</string>
+    <string name="text_retry">noch einmal versuchen</string>
+    <string name="text_sort_alphabetically">Produkte alphabetisch sortieren</string>
+    <string name="text_sort_price">Produkte nach Preis sortieren</string>
+    <string name="text_sort_condition">Produkte nach Zustand sortieren</string>
     <string name="text_sort_title">Auswahl sortieren</string>
     <string name="text_filter_title">Auswahl filtern</string>
-    <string name="end_of_list">Sie haben das Ende der Liste erreicht</string>
-    <string name="fragment_product_not_available_title">Artikel nicht mehr im Angebot</string>
-    <string name="fragment_product_not_available_text">Der Anbieter dieses Artikels bietet diesen Artikel leider nicht mehr an.</string>
-    <string name="adapter_image_condition_new">neu</string>
-    <string name="adapter_image_condition_old">gebraucht</string>
-    <string name="adapter_image_fair">fair</string>
-    <string name="adapter_image_eco">öko</string>
+    <string name="text_end_of_list">Sie haben das Ende der Liste erreicht</string>
     <string name="text_filter_fair">Nur faire Produkte</string>
     <string name="text_filter_ecological">Nur Öko-Produkte</string>
-    <string name="base_url">https://www.fairmondo.de/articles/</string>
+    <string name="text_adapter_image_condition_new">neu</string>
+    <string name="text_adapter_image_condition_old">gebraucht</string>
+    <string name="text_adapter_image_fair">fair</string>
+    <string name="text_adapter_image_eco">öko</string>
+    <string name="text_search_hint">Suche auf Fairmondo</string>
+    <string name="text_product_hint">Fairmondo Produkt</string>
+    <string name="text_fairmondo_slogan">Gutes einfach entdecken</string>
 
+    <string name="base_url">https://www.fairmondo.de/articles/</string>
 </resources>

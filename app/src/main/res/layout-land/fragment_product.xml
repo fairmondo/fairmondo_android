@@ -64,7 +64,7 @@
                 <TextView
                     style="@style/text_view_tag"
                     android:background="@drawable/background_round_blue"
-                    android:text="@string/adapter_image_fair"
+                    android:text="@string/text_adapter_image_fair"
                     tools:visibility="visible"
                     android:paddingBottom="15dp"
                     android:id="@+id/fragment_product_textview_tag_fair"
@@ -74,7 +74,7 @@
                 <TextView
                     style="@style/text_view_tag"
                     android:background="@drawable/background_round_green"
-                    android:text="@string/adapter_image_eco"
+                    android:text="@string/text_adapter_image_eco"
                     tools:visibility="visible"
                     android:paddingBottom="15dp"
                     android:id="@+id/fragment_product_textview_tag_ecological"
@@ -124,8 +124,7 @@
 
                 <!-- Terms -->
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/product_detail_section_title"
                     android:text="@string/fragment_product_terms"
                     android:layout_below="@id/fragment_product_textview_description_body"
                     android:id="@+id/fragment_product_textview_terms_title"

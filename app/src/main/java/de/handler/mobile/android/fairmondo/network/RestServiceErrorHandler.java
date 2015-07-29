@@ -45,11 +45,11 @@ public class RestServiceErrorHandler implements RestErrorHandler {
         String toast = message;
             if (mContext != null) {
                 if (message.contains("500") || message.contains("expected")) {
-                    toast = mContext.getString(R.string.server_error);
+                    toast = mContext.getString(R.string.error_server_communication);
                 } else if (message.contains("502") || message.contains("I/O error")) {
-                    toast = mContext.getString(R.string.server_temporarily_not_available);
+                    toast = mContext.getString(R.string.error_server_not_available);
                 } else if (message.contains("404")) {
-                    toast = mContext.getString(R.string.server_method_not_available);
+                    toast = mContext.getString(R.string.error_server_method_not_found);
                 }
 
                 // Show a Toast in corresponding activity with error message

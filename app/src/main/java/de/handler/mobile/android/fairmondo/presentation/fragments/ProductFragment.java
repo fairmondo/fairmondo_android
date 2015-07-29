@@ -201,10 +201,10 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
             final String condition = product.getTags().getCondition();
             switch (condition) {
                 case ProductConstants.CONDITION_OLD:
-                    this.initConditionText(R.string.adapter_image_condition_old);
+                    this.initConditionText(R.string.text_adapter_image_condition_old);
                     break;
                 case ProductConstants.CONDITION_NEW:
-                    this.initConditionText(R.string.adapter_image_condition_new);
+                    this.initConditionText(R.string.text_adapter_image_condition_new);
                     break;
                 default:
                     // nothing is done here

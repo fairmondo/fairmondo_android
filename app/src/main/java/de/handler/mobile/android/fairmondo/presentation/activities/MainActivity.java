@@ -110,7 +110,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
 
         this.activateTransitions();
         // Fill the title fragment with content
-        this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
+        this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.text_fairmondo_slogan));
 
         // request the categories to be able to fill the category fragment with content
         this.getCategories();
@@ -169,7 +169,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             CategoryFragment categoryFragment = CategoryFragment_.builder().mCategoriesParcelable(Parcels.wrap(List.class, categories)).build();
             FragmentHelper.replaceFragment(R.id.main_products_container, categoryFragment, getSupportFragmentManager());
         } else {
-            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.app_not_connected));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.error_app_not_connected));
         }
     }
 
@@ -183,7 +183,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
                 this.initCategoryFragment(categories, true);
             }
         } else {
-            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), getString(R.string.category_count_error));
+            UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), getString(R.string.error_app_no_categories));
         }
     }
 
@@ -192,7 +192,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             this.showProgressBar();
             mRestCommunicator.getProducts(searchRequest, categoryId);
         } else {
-            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.app_not_connected));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.error_app_not_connected));
         }
     }
 
@@ -259,7 +259,7 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
     void openCart() {
         final Cart cart = mApp.getCart();
         if (cart == null || cart.getCartItem() == null || cart.getCartItem().getRequestedQuantity() <= 0) {
-            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.cart_has_no_items));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.main_products_container), getString(R.string.text_cart_has_no_items));
         } else {
             WebActivity_.intent(this).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
         }
@@ -314,13 +314,13 @@ public class MainActivity extends AbstractActivity implements OnCategoriesListen
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 // Reset standard title
                 setTitle(getString(R.string.app_name));
-                this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.fairmondo_slogan));
+                this.initTitleFragment(R.drawable.ic_launcher_web, getString(R.string.text_fairmondo_slogan));
             }
         } else {
             // Handle Back Navigation - if shortly after another back is pushed exit app
             if (this.mLastBackPressTime < System.currentTimeMillis() - AGAIN_PRESS_TIME) {
                 this.mLastBackPressTime = System.currentTimeMillis();
-                UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.close_app));
+                UIInformationController.displayToastInformation(getApplicationContext(), getString(R.string.text_close_app));
             } else {
                 super.onBackPressed();
             }

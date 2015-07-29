@@ -107,7 +107,7 @@ public class RestCommunicator {
                 mProductListener.onProductsSearchResponse(products);
             }
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     getProducts(searchString);
@@ -130,7 +130,7 @@ public class RestCommunicator {
                 mProductListener.onProductsSearchResponse(products);
             }
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     getProducts(searchString, categoryId);
@@ -152,7 +152,7 @@ public class RestCommunicator {
                 mProductListener.onProductsSearchResponse(products);
             }
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     getProducts(searchString, categoryId);
@@ -172,7 +172,7 @@ public class RestCommunicator {
                 mDetailedProductListener.onDetailedProductResponse(product);
             }
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     getDetailedProduct(slug);
@@ -191,7 +191,7 @@ public class RestCommunicator {
                 mCategoriesListener.onCategoriesResponse(categories);
             }
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     getCategories();
@@ -209,7 +209,7 @@ public class RestCommunicator {
             final List<FairmondoCategory> categories = mApp.getModelMapper().map(dtoCategories, listType);
             mCategoriesListener.onSubCategoriesResponse(categories);
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     getSubCategories(id);
@@ -227,7 +227,7 @@ public class RestCommunicator {
             final String cookie = mRestService.getCookie("cart");
 
             if (null == cart || null == cart.getCartId()) {
-                this.makeToast(mContext.getString(R.string.item_amount_too_big));
+                this.makeToast(mContext.getString(R.string.error_app_item_amount_too_big));
             } else {
                 mApp.setCookie(cookie);
                 mPrefs.cookie().put(cookie);
@@ -235,7 +235,7 @@ public class RestCommunicator {
                 mCartChangeListener.onCartChanged(cart);
             }
         } else {
-            this.makeNetworkDialog(mContext.getString(R.string.app_not_connected), new OnNetworkAvailableListener() {
+            this.makeNetworkDialog(mContext.getString(R.string.error_app_not_connected), new OnNetworkAvailableListener() {
                 @Override
                 public void onNetworkAvailable() {
                     addToCard(productId);

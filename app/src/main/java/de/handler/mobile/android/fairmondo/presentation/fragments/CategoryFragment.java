@@ -86,7 +86,7 @@ public class CategoryFragment extends ListFragment {
 
         // Extract the title of each category
         final List<String> categoryStrings = new ArrayList<>(mCategories.size());
-        categoryStrings.add(getString(R.string.all_products));
+        categoryStrings.add(getString(R.string.text_all_products));
         for (final FairmondoCategory category : mCategories) {
             categoryStrings.add(category.getName());
         }

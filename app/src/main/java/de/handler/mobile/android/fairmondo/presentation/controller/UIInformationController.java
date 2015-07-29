@@ -37,9 +37,9 @@ public class UIInformationController {
      */
     public static AlertDialog displayDialogInformation(@NonNull final Context context, @NonNull final String errorMessage, @Nullable final OnNetworkAvailableListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(errorMessage).setTitle(R.string.app_not_connected);
+        builder.setMessage(errorMessage).setTitle(R.string.error_app_not_connected);
         if (null != listener) {
-            builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.text_retry, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     listener.onNetworkAvailable();
                 }

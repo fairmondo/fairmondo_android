@@ -76,7 +76,7 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
             @Override
             public void onProductsSearchResponse(List<Product> products) {
                 if (products == null) {
-                    UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), getString(R.string.end_of_list));
+                    UIInformationController.displaySnackbarInformation(findViewById(android.R.id.content), getString(R.string.text_end_of_list));
                     return;
                 }
 
@@ -123,7 +123,7 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
     void openCart() {
         final Cart cart = mApp.getCart();
         if (cart == null || cart.getCartItem() == null || cart.getCartItem().getRequestedQuantity() <= 0) {
-            UIInformationController.displaySnackbarInformation(findViewById(R.id.activity_product_selection_main_container), getString(R.string.cart_has_no_items));
+            UIInformationController.displaySnackbarInformation(findViewById(R.id.activity_product_selection_main_container), getString(R.string.text_cart_has_no_items));
         } else {
             WebActivity_.intent(this).mUri(cart.getCartUrl()).mCookie(mApp.getCookie()).start();
         }

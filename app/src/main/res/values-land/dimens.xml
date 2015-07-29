@@ -4,10 +4,14 @@
     <dimen name="margin_activity_vertical">56dp</dimen>
 
     <dimen name="margin_app">56dp</dimen>
+    <dimen name="spacing_s">4dp</dimen>
+    <dimen name="spacing_m">8dp</dimen>
 
     <!-- height -->
     <dimen name="height_button">56dp</dimen>
     <dimen name="height_grid_item">280dp</dimen>
     <dimen name="height_filter">64dp</dimen>
     <dimen name="height_list_item">96dp</dimen>
+
+    <dimen name="width_list_item_image">88dp</dimen>
 </resources>

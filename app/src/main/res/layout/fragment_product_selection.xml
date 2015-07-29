@@ -5,7 +5,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_product_category_gridview"
         android:scrollbars="vertical"
-        style="@style/style_grid_item"/>
+        style="@style/style_list_item"/>
 
     <TextView
         style="@style/empty_fragment_error"
