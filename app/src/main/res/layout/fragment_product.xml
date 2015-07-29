@@ -134,6 +134,14 @@
                         android:id="@+id/fragment_product_textview_terms_title"
                         android:visibility="gone"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_product_terms"
+                        android:layout_below="@id/fragment_product_textview_terms_title"
+                        android:id="@+id/fragment_product_textview_terms_body"
+                        android:visibility="gone"/>
+
                     <!-- fair percent -->
                     <TextView
                         style="@style/product_detail_section_title"
