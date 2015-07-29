@@ -2,7 +2,6 @@ package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 import android.app.Activity;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,7 +23,7 @@ import java.util.List;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
-import de.handler.mobile.android.fairmondo.presentation.adapter.ImageAdapter;
+import de.handler.mobile.android.fairmondo.presentation.adapter.ListItemAdapter;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnEndlessScrollListener;
 
 /**
@@ -90,7 +89,7 @@ public class ProductSelectionFragment extends Fragment {
         if (null == products) {
             products = new ArrayList<>();
         }
-        mRecyclerView.setAdapter(new ImageAdapter(getActivity(), products));
+        mRecyclerView.setAdapter(new ListItemAdapter(getActivity(), products));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addOnScrollListener(mOnScrollListener);
     }
@@ -99,7 +98,7 @@ public class ProductSelectionFragment extends Fragment {
     public void updateAdapter(@Nullable final List<Product> products) {
         this.checkListNull(products);
         if (null != products) {
-            ((ImageAdapter) mRecyclerView.getAdapter()).updateItems(products);
+            ((ListItemAdapter) mRecyclerView.getAdapter()).updateItems(products);
         }
         mLoading = true;
     }

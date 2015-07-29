@@ -23,9 +23,4 @@ public interface OnSortingSelectedListener {
      * @param selection the state of the switch
      */
     void onConditionSortSelected(boolean selection);
-
-    /**
-     * Indicates that the fragment should be closed.
-     */
-    void onSortFinish();
 }

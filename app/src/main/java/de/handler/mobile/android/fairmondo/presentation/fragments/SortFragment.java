@@ -1,16 +1,16 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnSortingSelectedListener;
@@ -18,22 +18,8 @@ import de.handler.mobile.android.fairmondo.presentation.interfaces.OnSortingSele
 /**
  * Shows the sorting options and reacts to user inputs.
  */
-@EFragment(R.layout.fragment_sort)
-public class SortFragment extends Fragment {
-    @ViewById(R.id.fragment_sort_price_radio_button)
-    RadioButton mPriceRadioButton;
-
-    @ViewById(R.id.fragment_sort_alphabetical_radio_button)
-    RadioButton mAlphabeticalRadioButton;
-
-    @ViewById(R.id.fragment_sort_condition_radio_button)
-    RadioButton mConditionRadioButton;
-
-    @ViewById(R.id.fragment_sort_button_ok)
-    Button mButtonOk;
-
+public class SortFragment extends DialogFragment {
     private OnSortingSelectedListener mOnSortingSelectedListener;
-
 
     @Override
     public void onAttach(final Activity activity) {
@@ -45,40 +31,44 @@ public class SortFragment extends Fragment {
         }
     }
 
-    @AfterViews
-    void init() {
-        mPriceRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (isChecked) {
-                    mOnSortingSelectedListener.onPriceSortSelected(true);
-                }
-            }
-        });
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View rootView = inflater.inflate(R.layout.fragment_sort, null);
 
-        mAlphabeticalRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (isChecked) {
-                    mOnSortingSelectedListener.onAlphabeticalSortSelected(true);
-                }
-            }
-        });
+        ((RadioButton) rootView.findViewById(R.id.fragment_sort_price_radio_button))
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                        if (isChecked) {
+                            mOnSortingSelectedListener.onPriceSortSelected(true);
+                        }
+                    }
+                });
 
-        mConditionRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (isChecked) {
-                    mOnSortingSelectedListener.onConditionSortSelected(true);
-                }
-            }
-        });
+        ((RadioButton) rootView.findViewById(R.id.fragment_sort_alphabetical_radio_button))
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                        if (isChecked) {
+                            mOnSortingSelectedListener.onPriceSortSelected(true);
+                        }
+                    }
+                });
 
-        mButtonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                mOnSortingSelectedListener.onSortFinish();
-            }
-        });
+        ((RadioButton) rootView.findViewById(R.id.fragment_sort_condition_radio_button))
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                        if (isChecked) {
+                            mOnSortingSelectedListener.onPriceSortSelected(true);
+                        }
+                    }
+                });
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(rootView).setTitle(R.string.text_sort_title).setPositiveButton(android.R.string.ok, null);
+        return builder.create();
     }
 }

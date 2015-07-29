@@ -15,10 +15,10 @@ buildscript {
 }
 
 ext {
-    supportLibraryVersion = "22.2.0"
+    supportLibraryVersion = "22.2.1"
     volleyVersion = "1.0.16"
     modelMapperVersion = "0.7.4"
-    androidAnnotationsVersion = "3.3.1"
+    androidAnnotationsVersion = "3.3.2"
     springVersion = "1.0.1.RELEASE"
     gsonVersion = "2.3.1"
     junitVersion = "4.12"

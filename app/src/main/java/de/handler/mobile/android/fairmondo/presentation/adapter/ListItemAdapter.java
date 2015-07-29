@@ -32,14 +32,14 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
 /**
  * Image Adapter used in GridView Fragments.
  */
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
+public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHolder> {
     private final Context mContext;
     private List<Product> mProducts;
 
     /**
      * Creates an instance of the ImageAdapter.
      */
-    public ImageAdapter(@NonNull final Context context, @NonNull final List<Product> products) {
+    public ListItemAdapter(@NonNull final Context context, @NonNull final List<Product> products) {
         mContext = context;
         mProducts = products;
     }
@@ -118,7 +118,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    private void loadImage(@NonNull final FairmondoApp app, @NonNull final ImageAdapter.ViewHolder viewHolder, @Nullable final String url) {
+    private void loadImage(@NonNull final FairmondoApp app, @NonNull final ListItemAdapter.ViewHolder viewHolder, @Nullable final String url) {
         if (url != null) {
             app.getImageLoader().get(url, new ImageLoader.ImageListener() {
                 @Override

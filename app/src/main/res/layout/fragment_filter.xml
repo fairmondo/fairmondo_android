@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/container_default.opaque"
+    style="@style/container_default"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="4dp"
     android:clickable="true"
     android:orientation="vertical"
     tools:ignore="UnusedAttribute">
-
-    <TextView
-        style="@style/basic_view.header"
-        android:text="@string/text_filter_title"/>
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -28,14 +24,5 @@
         android:layout_margin="16dp"
         android:text="@string/text_filter_ecological"
         android:id="@+id/fragment_filter_checkbox_ecological"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_button_general"
-        android:text="@android:string/ok"
-        android:textColor="@android:color/white"
-        android:id="@+id/fragment_filter_button_ok"
-        style="@style/Widget.AppCompat.ButtonBar"/>
 
 </LinearLayout>

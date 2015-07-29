@@ -3,7 +3,7 @@ package de.handler.mobile.android.fairmondo.presentation.activities;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.Toolbar;
 
 import org.androidannotations.annotations.AfterViews;
@@ -30,10 +30,10 @@ import de.handler.mobile.android.fairmondo.data.businessobject.product.Fairmondo
 import de.handler.mobile.android.fairmondo.data.interfaces.OnSearchResultListener;
 import de.handler.mobile.android.fairmondo.presentation.FragmentHelper;
 import de.handler.mobile.android.fairmondo.presentation.controller.UIInformationController;
-import de.handler.mobile.android.fairmondo.presentation.fragments.FilterFragment_;
+import de.handler.mobile.android.fairmondo.presentation.fragments.FilterFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment;
 import de.handler.mobile.android.fairmondo.presentation.fragments.ProductSelectionFragment_;
-import de.handler.mobile.android.fairmondo.presentation.fragments.SortFragment_;
+import de.handler.mobile.android.fairmondo.presentation.fragments.SortFragment;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnEndlessScrollListener;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnFilterSelectedListener;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnSortingSelectedListener;
@@ -59,8 +59,8 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
     @Bean
     RestCommunicator mRestCommunicator;
 
-    private Fragment mSortFragment;
-    private Fragment mFilterFragment;
+    private DialogFragment mSortFragment;
+    private DialogFragment mFilterFragment;
     private List<Product> mProducts;
 
     private boolean mFilterFairSelected;
@@ -87,8 +87,8 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
             }
         });
 
-        mSortFragment = SortFragment_.builder().build();
-        mFilterFragment = FilterFragment_.builder().build();
+        mSortFragment = new SortFragment();
+        mFilterFragment = new FilterFragment();
         mProducts = Parcels.unwrap(mProductListParcelable);
         this.startProductSelectionFragment(mProducts);
     }
@@ -134,7 +134,7 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
      */
     @OptionsItem(R.id.action_filter)
     void filterProducts() {
-        FragmentHelper.replaceFragment(android.R.id.content, mFilterFragment, getSupportFragmentManager());
+        mFilterFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override
@@ -159,11 +159,6 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
         }
         this.startProductSelectionFragment(products);
         mFilterEcologicalSelected = selected;
-    }
-
-    @Override
-    public void onFilterFinish() {
-        FragmentHelper.removeFragment(mFilterFragment, getSupportFragmentManager());
     }
 
     @NonNull
@@ -193,7 +188,7 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
      */
     @OptionsItem(R.id.action_sort)
     void sortProducts() {
-        FragmentHelper.replaceFragment(android.R.id.content, mSortFragment, getSupportFragmentManager());
+        mSortFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override
@@ -230,11 +225,6 @@ public class ProductSelectionActivity extends AbstractActivity implements OnSort
         }
         this.startProductSelectionFragment(products);
         mSortConditionSelected = selected;
-    }
-
-    @Override
-    public void onSortFinish() {
-        FragmentHelper.removeFragment(mSortFragment, getSupportFragmentManager());
     }
 
     @NonNull

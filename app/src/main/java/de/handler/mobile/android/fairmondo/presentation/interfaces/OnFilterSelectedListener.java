@@ -13,9 +13,4 @@ public interface OnFilterSelectedListener {
      * Callback for the filter "ecological".
      */
     void onEcologicalFilterSelected(boolean condition);
-
-    /**
-     * Closes the fragment.
-     */
-    void onFilterFinish();
 }
