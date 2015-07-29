@@ -1,6 +1,7 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,8 +24,10 @@ import java.util.List;
 
 import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
+import de.handler.mobile.android.fairmondo.presentation.activities.ProductGalleryActivity_;
 import de.handler.mobile.android.fairmondo.presentation.adapter.ListItemAdapter;
 import de.handler.mobile.android.fairmondo.presentation.interfaces.OnEndlessScrollListener;
+import de.handler.mobile.android.fairmondo.presentation.interfaces.OnRecyclerItemClickListener;
 
 /**
  * Displays all categories for products.
@@ -89,7 +92,15 @@ public class ProductSelectionFragment extends Fragment {
         if (null == products) {
             products = new ArrayList<>();
         }
-        mRecyclerView.setAdapter(new ListItemAdapter(getActivity(), products));
+        final ListItemAdapter listItemAdapter = new ListItemAdapter(getActivity(), products);
+        listItemAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener<Integer>() {
+            @Override
+            public void onRecyclerItemClicked(final View view, final Integer position) {
+                final ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, view.getScrollX(), view.getScrollY(), view.getWidth(), view.getHeight());
+                ProductGalleryActivity_.intent(getActivity()).mPosition(position).mProductsParcelable(mProductsParcelable).withOptions(options.toBundle()).start();
+            }
+        });
+        mRecyclerView.setAdapter(listItemAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addOnScrollListener(mOnScrollListener);
     }

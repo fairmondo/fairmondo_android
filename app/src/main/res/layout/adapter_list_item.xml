@@ -12,7 +12,7 @@
         android:paddingBottom="4dp"
         android:id="@+id/image_adapter_image_view_product"
         android:src="@drawable/fairmondo_small"
-        android:contentDescription="@string/text_product_hint" />
+        android:contentDescription="@string/text_product_hint"/>
 
     <LinearLayout
         android:layout_width="match_parent"

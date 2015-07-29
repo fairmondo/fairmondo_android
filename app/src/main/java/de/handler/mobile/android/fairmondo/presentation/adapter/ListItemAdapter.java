@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import de.handler.mobile.android.fairmondo.FairmondoApp;
@@ -25,7 +23,7 @@ import de.handler.mobile.android.fairmondo.R;
 import de.handler.mobile.android.fairmondo.data.businessobject.Product;
 import de.handler.mobile.android.fairmondo.presentation.FormatHelper;
 import de.handler.mobile.android.fairmondo.presentation.ProductConstants;
-import de.handler.mobile.android.fairmondo.presentation.activities.ProductGalleryActivity_;
+import de.handler.mobile.android.fairmondo.presentation.interfaces.OnRecyclerItemClickListener;
 import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImageView;
 
 
@@ -35,6 +33,7 @@ import de.handler.mobile.android.fairmondo.presentation.views.CustomNetworkImage
 public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHolder> {
     private final Context mContext;
     private List<Product> mProducts;
+    private OnRecyclerItemClickListener<Integer> mOnItemClickListener;
 
     /**
      * Creates an instance of the ImageAdapter.
@@ -151,8 +150,15 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
         return mProducts.size();
     }
 
+    /**
+     * Sets a onItemClick listener.
+     */
+    public void setOnRecyclerItemClickListener(final OnRecyclerItemClickListener<Integer> onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
 
-    protected static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final CustomNetworkImageView mProductImageView;
         private final TextView mConditionTextView;
         private final TextView mTagFairTextView;
@@ -185,11 +191,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
 
         @Override
         public void onClick(final View view) {
-            this.startProductGallery(mPosition);
-        }
-
-        private void startProductGallery(final int position) {
-            ProductGalleryActivity_.intent(mContext).mProductsParcelable(Parcels.wrap(List.class, mProducts)).mPosition(position).start();
+            mOnItemClickListener.onRecyclerItemClicked(view, mPosition);
         }
     }
 }

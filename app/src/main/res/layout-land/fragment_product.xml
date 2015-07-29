@@ -21,7 +21,7 @@
                 android:adjustViewBounds="true"
                 android:background="@android:color/white"
                 android:src="@drawable/fairmondo"
-                android:id="@+id/fragment_product_image_view" />
+                android:id="@+id/fragment_product_image_view"/>
 
             <!-- vat -->
             <TextView

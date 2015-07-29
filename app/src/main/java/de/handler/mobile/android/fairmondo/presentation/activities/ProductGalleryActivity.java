@@ -62,7 +62,7 @@ public class ProductGalleryActivity extends AbstractActivity {
     }
 
     private void setupViewPager(@NonNull final Integer position, @NonNull final List<Product> products) {
-        ProductPagerAdapter productPagerAdapter = new ProductPagerAdapter(getSupportFragmentManager(), products);
+        final ProductPagerAdapter productPagerAdapter = new ProductPagerAdapter(getSupportFragmentManager(), products);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(productPagerAdapter);
