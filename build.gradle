@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:2.0.0'
         // small Gradle plugin that helps out when using an annotation processor
         // --> Android Annotations
         // makes the build code "available" to android studio
@@ -15,7 +15,7 @@ buildscript {
 }
 
 ext {
-    supportLibraryVersion = "22.2.1"
+    supportLibraryVersion = "23.3.0"
     volleyVersion = "1.0.16"
     modelMapperVersion = "0.7.4"
     androidAnnotationsVersion = "3.3.2"

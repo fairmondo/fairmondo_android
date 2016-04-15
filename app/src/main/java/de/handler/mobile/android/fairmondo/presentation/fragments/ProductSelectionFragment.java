@@ -1,7 +1,7 @@
 package de.handler.mobile.android.fairmondo.presentation.fragments;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -64,10 +64,10 @@ public class ProductSelectionFragment extends Fragment {
     };
 
     @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(final Context context) {
+        super.onAttach(context);
         try {
-            mOnEndlessScrollListener = (OnEndlessScrollListener) activity;
+            mOnEndlessScrollListener = (OnEndlessScrollListener) context;
         } catch (final Exception e) {
             Log.d(getClass().getCanonicalName(), "Your Activity has to implement OnEndlessScrollListener");
             e.printStackTrace();

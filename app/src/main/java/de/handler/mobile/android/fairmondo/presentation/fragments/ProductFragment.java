@@ -141,7 +141,8 @@ public class ProductFragment extends Fragment implements OnCartChangeListener, O
                 value = field.get(product);
 
                 if (null != value) {
-                    notNull = !((value.equals("<div class=\"commendation\"></div>")) || value == 0);
+                    // TODO value == 0 prevents compiling: notNull = !((value.equals("<div class=\"commendation\"></div>")) || value == 0);
+                    notNull = !((value.equals("<div class=\"commendation\"></div>")));
                 }
             }
         } catch (final IllegalAccessException e) {
